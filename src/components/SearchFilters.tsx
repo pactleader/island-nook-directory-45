@@ -149,4 +149,25 @@ const SearchFilters = ({
       {showFilters && (
         <div className="border-t border-gray-200/50 p-4 max-h-80 overflow-y-auto">
           {filterGroups.map((group, groupIndex) => (
-            <div key={groupIndex} className={groupIndex > 0 ? 'mt-4 pt-4 border-t border-gray-
+            <div key={groupIndex} className={groupIndex > 0 ? 'mt-4 pt-4 border-t border-gray-200/50' : ''}>
+              <h3 className="font-medium text-gray-900 mb-2">{group.name}</h3>
+              <div className="flex flex-wrap gap-2">
+                {group.options.map((option, optionIndex) => (
+                  <button
+                    key={optionIndex}
+                    onClick={() => handleFilterSelect(group.name, option.value, group.multiSelect)}
+                    className={`filter-chip ${isFilterSelected(group.name, option.value) ? 'active' : ''}`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SearchFilters;

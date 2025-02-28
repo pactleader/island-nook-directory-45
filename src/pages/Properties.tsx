@@ -14,6 +14,7 @@ const Properties = () => {
   const [sortOption, setSortOption] = useState('newest');
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
+  const [showMap, setShowMap] = useState(true);
   
   // Filter groups for the search filters component
   const filterGroups = [
@@ -162,165 +163,329 @@ const Properties = () => {
     return count;
   };
   
+  // Toggle map visibility (for mobile responsiveness)
+  const toggleMap = () => {
+    setShowMap(!showMap);
+  };
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-24">
-        <div className="container mx-auto px-4">
-          <div className="mb-8">
+      <main className="flex-grow pt-20">
+        <div className="container mx-auto px-4 py-4">
+          <div className="mb-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Properties</h1>
             <p className="text-gray-600">Discover properties throughout the Northern Mariana Islands</p>
           </div>
           
-          {/* Search and Filters Row */}
-          <div className="mb-8">
-            <SearchFilters 
-              title="Find Your Perfect Property"
-              placeholder="Search by location, property name, or features"
-              filterGroups={filterGroups}
-              onSearch={handleSearch}
-            />
-          </div>
-          
-          {/* Results Controls */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-            <div className="mb-4 md:mb-0">
-              <p className="text-gray-600">
-                <span className="font-semibold text-gray-900">{properties.length}</span> properties found
-                {countActiveFilters() > 0 && (
-                  <button 
-                    onClick={clearFilters}
-                    className="ml-2 text-blue-600 hover:text-blue-800 inline-flex items-center"
-                  >
-                    <X size={14} className="mr-1" />
-                    <span>Clear filters</span>
-                  </button>
-                )}
-              </p>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              {/* View Toggle */}
-              <div className="flex items-center space-x-2 border border-gray-200 rounded-md overflow-hidden">
-                <button 
-                  onClick={() => setView('grid')}
-                  className={`p-2 ${view === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-                  aria-label="Grid View"
-                >
-                  <Grid size={18} />
-                </button>
-                <button 
-                  onClick={() => setView('list')}
-                  className={`p-2 ${view === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-                  aria-label="List View"
-                >
-                  <List size={18} />
-                </button>
-              </div>
-              
-              {/* Sort Dropdown */}
-              <div className="relative inline-block">
-                <button 
+          {/* Filter Bar - Side by side filters */}
+          <div className="mb-6 flex flex-wrap gap-2">
+            {filterGroups.map((group, index) => (
+              <div key={index} className="relative inline-block">
+                <button
                   className="flex items-center space-x-1 px-3 py-2 border border-gray-200 rounded-md hover:bg-gray-50"
                   onClick={() => {
-                    const element = document.getElementById('sort-dropdown');
+                    const element = document.getElementById(`filter-dropdown-${index}`);
                     if (element) {
+                      // Close other dropdowns first
+                      document.querySelectorAll('[id^="filter-dropdown-"]').forEach(el => {
+                        if (el.id !== `filter-dropdown-${index}`) {
+                          el.classList.add('hidden');
+                        }
+                      });
+                      
+                      // Toggle this dropdown
                       element.classList.toggle('hidden');
                     }
                   }}
                 >
-                  <span className="text-sm">Sort: </span>
-                  <span className="font-medium text-sm">
-                    {sortOption === 'newest' ? 'Newest' : 
-                     sortOption === 'oldest' ? 'Oldest' : 
-                     sortOption === 'price-asc' ? 'Price (Low to High)' : 
-                     sortOption === 'price-desc' ? 'Price (High to Low)' : 'Newest'}
-                  </span>
+                  <span className="text-sm font-medium">{group.name}</span>
                   <ChevronDown size={16} />
+                  
+                  {/* Badge for selected filter count */}
+                  {activeFilters[group.name] && (
+                    Array.isArray(activeFilters[group.name]) ? 
+                      activeFilters[group.name].length > 0 && (
+                        <span className="bg-gray-800 text-white text-xs rounded-full px-2 py-0.5 ml-1">
+                          {activeFilters[group.name].length}
+                        </span>
+                      ) : (
+                        <span className="bg-gray-800 text-white text-xs rounded-full px-2 py-0.5 ml-1">
+                          1
+                        </span>
+                      )
+                  )}
                 </button>
                 
                 <div 
-                  id="sort-dropdown"
-                  className="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10"
+                  id={`filter-dropdown-${index}`}
+                  className="hidden absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-20"
                 >
-                  <div className="py-1">
-                    {[
-                      { value: 'newest', label: 'Newest' },
-                      { value: 'oldest', label: 'Oldest' },
-                      { value: 'price-asc', label: 'Price (Low to High)' },
-                      { value: 'price-desc', label: 'Price (High to Low)' }
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          handleSortChange(option.value);
-                          const element = document.getElementById('sort-dropdown');
-                          if (element) {
-                            element.classList.add('hidden');
-                          }
-                        }}
-                        className={`w-full text-left px-4 py-2 text-sm ${
-                          sortOption === option.value 
-                            ? 'bg-gray-100 text-gray-900 font-medium' 
-                            : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
+                  <div className="p-3">
+                    <h3 className="font-medium text-gray-900 mb-2">{group.name}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {group.options.map((option, optIndex) => {
+                        const isSelected = activeFilters[group.name] ? 
+                          Array.isArray(activeFilters[group.name]) ? 
+                            activeFilters[group.name].includes(option.value) : 
+                            activeFilters[group.name] === option.value
+                          : false;
+                          
+                        return (
+                          <button
+                            key={optIndex}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              
+                              // Update filters
+                              const newFilters = {...activeFilters};
+                              
+                              if (group.multiSelect) {
+                                // For multiselect
+                                if (!Array.isArray(newFilters[group.name])) {
+                                  newFilters[group.name] = [];
+                                }
+                                
+                                if (isSelected) {
+                                  // Remove if already selected
+                                  newFilters[group.name] = (newFilters[group.name] as string[]).filter(v => v !== option.value);
+                                  if (newFilters[group.name].length === 0) {
+                                    delete newFilters[group.name];
+                                  }
+                                } else {
+                                  // Add if not selected
+                                  newFilters[group.name] = [...(newFilters[group.name] as string[] || []), option.value];
+                                }
+                              } else {
+                                // For single select
+                                if (isSelected) {
+                                  delete newFilters[group.name];
+                                } else {
+                                  newFilters[group.name] = option.value;
+                                }
+                                
+                                // Close dropdown after selection for single-select filters
+                                const element = document.getElementById(`filter-dropdown-${index}`);
+                                if (element) {
+                                  element.classList.add('hidden');
+                                }
+                              }
+                              
+                              // Apply filters
+                              setActiveFilters(newFilters);
+                              handleSearch(activeFilters.query || '', newFilters);
+                            }}
+                            className={`filter-chip ${isSelected ? 'active' : ''}`}
+                          >
+                            {option.label}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
+            ))}
+            
+            {/* Search input */}
+            <div className="relative flex-grow">
+              <input
+                type="text"
+                placeholder="Search by location, name, or features"
+                value={activeFilters.query || ''}
+                onChange={(e) => {
+                  const newFilters = {...activeFilters, query: e.target.value};
+                  setActiveFilters(newFilters);
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch(activeFilters.query || '', activeFilters);
+                  }
+                }}
+                className="input-field h-10 w-full"
+              />
+              <button
+                onClick={() => handleSearch(activeFilters.query || '', activeFilters)}
+                className="absolute right-1 top-1 p-2 text-gray-600 hover:text-gray-900 rounded-md transition-all-300"
+                aria-label="Search"
+              >
+                <Search size={18} />
+              </button>
             </div>
-          </div>
-          
-          {/* Property Listings */}
-          {properties.length === 0 ? (
-            <div className="bg-gray-50 rounded-lg p-8 text-center">
-              <Search size={32} className="mx-auto text-gray-400 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No properties found</h3>
-              <p className="text-gray-600 mb-4">
-                Try adjusting your search filters or search term to find properties
-              </p>
+            
+            {/* Clear filters button */}
+            {countActiveFilters() > 0 && (
               <button 
                 onClick={clearFilters}
-                className="btn-primary inline-flex items-center"
+                className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-all-300 inline-flex items-center"
               >
-                <X size={16} className="mr-2" />
-                <span>Clear all filters</span>
+                <X size={14} className="mr-1" />
+                <span>Clear filters</span>
               </button>
-            </div>
-          ) : (
-            <div className={view === 'grid' 
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              : "space-y-6"
-            }>
-              {properties.map(property => (
-                <PropertyCard key={property.id} property={property} />
-              ))}
-            </div>
-          )}
+            )}
+            
+            {/* Toggle map button (mobile only) */}
+            <button 
+              onClick={toggleMap}
+              className="md:hidden px-3 py-2 bg-gray-800 text-white rounded-md transition-all-300 ml-auto"
+            >
+              {showMap ? 'Hide Map' : 'Show Map'}
+            </button>
+          </div>
           
-          {/* Pagination */}
-          <div className="mt-12 flex justify-center">
-            <nav className="inline-flex rounded-md shadow">
-              <button className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                Previous
-              </button>
-              <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                1
-              </button>
-              <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                2
-              </button>
-              <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                3
-              </button>
-              <button className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                Next
-              </button>
-            </nav>
+          {/* Split Screen Layout */}
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Map Section - Left side on desktop, toggleable on mobile */}
+            {(showMap || window.innerWidth >= 768) && (
+              <div className="md:w-1/2 h-[400px] md:h-[calc(100vh-13rem)] rounded-lg overflow-hidden bg-gray-100 sticky top-24">
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-600">
+                  <div className="text-center p-4">
+                    <MapPin size={36} className="mx-auto mb-2" />
+                    <p className="text-lg font-medium">Map View</p>
+                    <p className="text-sm text-gray-500">Interactive map will display property locations</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Properties Section - Right side on desktop, full width when map hidden */}
+            <div className={`${showMap ? 'md:w-1/2' : 'w-full'} flex flex-col`}>
+              {/* Results Controls */}
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <p className="text-gray-600">
+                    <span className="font-semibold text-gray-900">{properties.length}</span> properties
+                  </p>
+                </div>
+                
+                <div className="flex items-center space-x-4">
+                  {/* View Toggle */}
+                  <div className="flex items-center space-x-2 border border-gray-200 rounded-md overflow-hidden">
+                    <button 
+                      onClick={() => setView('grid')}
+                      className={`p-2 ${view === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
+                      aria-label="Grid View"
+                    >
+                      <Grid size={18} />
+                    </button>
+                    <button 
+                      onClick={() => setView('list')}
+                      className={`p-2 ${view === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
+                      aria-label="List View"
+                    >
+                      <List size={18} />
+                    </button>
+                  </div>
+                  
+                  {/* Sort Dropdown */}
+                  <div className="relative inline-block">
+                    <button 
+                      className="flex items-center space-x-1 px-3 py-2 border border-gray-200 rounded-md hover:bg-gray-50"
+                      onClick={() => {
+                        const element = document.getElementById('sort-dropdown');
+                        if (element) {
+                          element.classList.toggle('hidden');
+                        }
+                      }}
+                    >
+                      <span className="text-sm">Sort: </span>
+                      <span className="font-medium text-sm">
+                        {sortOption === 'newest' ? 'Newest' : 
+                         sortOption === 'oldest' ? 'Oldest' : 
+                         sortOption === 'price-asc' ? 'Price (Low to High)' : 
+                         sortOption === 'price-desc' ? 'Price (High to Low)' : 'Newest'}
+                      </span>
+                      <ChevronDown size={16} />
+                    </button>
+                    
+                    <div 
+                      id="sort-dropdown"
+                      className="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10"
+                    >
+                      <div className="py-1">
+                        {[
+                          { value: 'newest', label: 'Newest' },
+                          { value: 'oldest', label: 'Oldest' },
+                          { value: 'price-asc', label: 'Price (Low to High)' },
+                          { value: 'price-desc', label: 'Price (High to Low)' }
+                        ].map((option) => (
+                          <button
+                            key={option.value}
+                            onClick={() => {
+                              handleSortChange(option.value);
+                              const element = document.getElementById('sort-dropdown');
+                              if (element) {
+                                element.classList.add('hidden');
+                              }
+                            }}
+                            className={`w-full text-left px-4 py-2 text-sm ${
+                              sortOption === option.value 
+                                ? 'bg-gray-100 text-gray-900 font-medium' 
+                                : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Property Listings */}
+              <div className="overflow-y-auto pb-8" style={{maxHeight: 'calc(100vh - 16rem)'}}>
+                {properties.length === 0 ? (
+                  <div className="bg-gray-50 rounded-lg p-8 text-center">
+                    <Search size={32} className="mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">No properties found</h3>
+                    <p className="text-gray-600 mb-4">
+                      Try adjusting your search filters or search term to find properties
+                    </p>
+                    <button 
+                      onClick={clearFilters}
+                      className="btn-primary inline-flex items-center"
+                    >
+                      <X size={16} className="mr-2" />
+                      <span>Clear all filters</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className={view === 'grid' 
+                    ? "grid grid-cols-1 sm:grid-cols-2 gap-4"
+                    : "space-y-4"
+                  }>
+                    {properties.map(property => (
+                      <PropertyCard key={property.id} property={property} />
+                    ))}
+                  </div>
+                )}
+              </div>
+              
+              {/* Pagination */}
+              {properties.length > 0 && (
+                <div className="mt-6 flex justify-center">
+                  <nav className="inline-flex rounded-md shadow">
+                    <button className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      Previous
+                    </button>
+                    <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                      1
+                    </button>
+                    <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      2
+                    </button>
+                    <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      3
+                    </button>
+                    <button className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                      Next
+                    </button>
+                  </nav>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>

@@ -34,81 +34,145 @@ export interface BusinessListing {
   updatedAt: string;
 }
 
+// Property Listings
+export interface PropertyListing {
+  id: string;
+  title: string;
+  price: number;
+  propertyType: string;
+  description: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  sqft?: number;
+  street: string;
+  village: string;
+  island: string;
+  zipCode: string;
+  features: string[];
+  images: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Vehicle Listings
+export interface VehicleListing {
+  id: string;
+  title: string;
+  price: number;
+  condition: 'new' | 'used';
+  year: number;
+  make: string;
+  model: string;
+  bodyStyle: string;
+  transmission: string;
+  mileage?: number;
+  description: string;
+  features: string[];
+  sellerType: 'dealer' | 'private';
+  sellerName: string;
+  sellerPhone: string;
+  sellerEmail: string;
+  images: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Blog Post
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  author: {
+    name: string;
+    avatar: string;
+    bio?: string;
+  };
+  featuredImage: string;
+  images?: string[];
+  publishedAt: string;
+  updatedAt: string;
+}
+
 // Mock Business Data
 export const mockBusinesses: BusinessListing[] = [
   {
-    id: '1',
-    name: 'Saipan Dive Shop',
-    category: 'tour-guides',
-    subcategory: 'diving',
-    description: 'Explore the underwater wonders of Saipan with our expert dive guides. We offer tours for all skill levels.',
+    id: "1",
+    name: "Saipan Dive Shop",
+    category: "tour-guides",
+    subcategory: "diving",
+    description: "Explore the underwater wonders of Saipan with our expert dive guides. We offer tours for all skill levels.",
     address: {
-      street: 'Beach Road',
-      village: 'Garapan',
-      island: 'Saipan',
-      zipCode: '96950'
+      street: "Beach Road",
+      village: "Garapan",
+      island: "Saipan",
+      zipCode: "96950"
     },
     contact: {
-      phone: '+16702341234',
-      email: 'info@saipandiveshop.com',
-      website: 'https://www.saipandiveshop.com'
+      phone: "+16702341234",
+      email: "info@saipandiveshop.com",
+      website: "https://www.saipandiveshop.com"
     },
     hours: {
-      monday: '9:00 AM - 5:00 PM',
-      tuesday: '9:00 AM - 5:00 PM',
-      wednesday: '9:00 AM - 5:00 PM',
-      thursday: '9:00 AM - 5:00 PM',
-      friday: '9:00 AM - 5:00 PM',
-      saturday: '9:00 AM - 5:00 PM',
-      sunday: 'Closed'
+      monday: "9:00 AM - 5:00 PM",
+      tuesday: "9:00 AM - 5:00 PM",
+      wednesday: "9:00 AM - 5:00 PM",
+      thursday: "9:00 AM - 5:00 PM",
+      friday: "9:00 AM - 5:00 PM",
+      saturday: "9:00 AM - 5:00 PM",
+      sunday: "Closed"
     },
     images: [
-      'https://images.unsplash.com/photo-1560523742-7f607c89c35a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      'https://images.unsplash.com/photo-1541424443437-e5997936ca2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      'https://images.unsplash.com/photo-1502085627461-6562994093c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+      "https://images.unsplash.com/photo-1560523742-7f607c89c35a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1541424443437-e5997936ca2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1502085627461-6562994093c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     ],
     rating: 4.8,
     reviews: 125,
     featured: true,
-    createdAt: '2023-01-15T08:00:00Z',
-    updatedAt: '2023-07-01T10:30:00Z',
+    sponsored: true,
+    createdAt: "2023-01-15T08:00:00Z",
+    updatedAt: "2023-07-01T10:30:00Z",
   },
   {
-    id: '2',
-    name: 'CNMI Medical Center',
-    category: 'healthcare',
-    subcategory: 'general-practice',
-    description: 'Providing comprehensive medical services to the people of CNMI. Our experienced team of doctors and nurses are here to care for you.',
+    id: "2",
+    name: "CNMI Medical Center",
+    category: "healthcare",
+    subcategory: "general-practice",
+    description: "Providing comprehensive medical services to the people of CNMI. Our experienced team of doctors and nurses are here to care for you.",
     address: {
-      street: 'Hospital Road',
-      village: 'As Terlague',
-      island: 'Saipan',
-      zipCode: '96950'
+      street: "Hospital Road",
+      village: "As Terlague",
+      island: "Saipan",
+      zipCode: "96950"
     },
     contact: {
-      phone: '+16702344111',
-      email: 'info@cnmimedical.com',
-      website: 'https://www.cnmimedical.com'
+      phone: "+16702344111",
+      email: "info@cnmimedical.com",
+      website: "https://www.cnmimedical.com"
     },
     hours: {
-      monday: '8:00 AM - 6:00 PM',
-      tuesday: '8:00 AM - 6:00 PM',
-      wednesday: '8:00 AM - 6:00 PM',
-      thursday: '8:00 AM - 6:00 PM',
-      friday: '8:00 AM - 6:00 PM',
-      saturday: '9:00 AM - 1:00 PM',
-      sunday: 'Closed'
+      monday: "8:00 AM - 6:00 PM",
+      tuesday: "8:00 AM - 6:00 PM",
+      wednesday: "8:00 AM - 6:00 PM",
+      thursday: "8:00 AM - 6:00 PM",
+      friday: "8:00 AM - 6:00 PM",
+      saturday: "9:00 AM - 1:00 PM",
+      sunday: "Closed"
     },
     images: [
-      'https://plus.unsplash.com/premium_photo-1663050484141-39325a13993a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      'https://images.unsplash.com/photo-1532938314630-e96f17bb43e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      'https://images.unsplash.com/photo-1505751172876-9aba5839239d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+      "https://plus.unsplash.com/premium_photo-1663050484141-39325a13993a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1532938314630-e96f17bb43e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1505751172876-9aba5839239d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     ],
     rating: 4.5,
     reviews: 89,
     featured: true,
-    createdAt: '2022-11-20T14:20:00Z',
-    updatedAt: '2023-06-15T09:45:00Z',
+    createdAt: "2022-11-20T14:20:00Z",
+    updatedAt: "2023-06-15T09:45:00Z",
   },
   {
     id: '3',
@@ -410,38 +474,39 @@ export const mockBusinesses: BusinessListing[] = [
     createdAt: '2021-10-01T08:00:00Z',
     updatedAt: '2022-11-15T14:20:00Z',
   },
-];
-
-// Business Categories
-export const businessCategories: { [key: string]: { label: string; subcategories: { label: string; value: string }[] } } = {
-  'healthcare': {
-    label: 'Healthcare',
-    subcategories: [
-      { label: 'General Practice', value: 'general-practice' },
-      { label: 'Specialist Clinic', value: 'specialist-clinic' },
-      { label: 'Dental', value: 'dental' },
-      { label: 'Optometry', value: 'optometry' },
-      { label: 'Pharmacy', value: 'pharmacy' },
+  {
+    id: "b001",
+    name: "Pacific Lawn Care",
+    category: "yard-services",
+    subcategory: "landscaping",
+    description: "Professional landscaping and lawn maintenance services for residential and commercial properties. We specialize in tropical garden design and maintenance.",
+    address: {
+      street: "123 Beach Road",
+      village: "Garapan",
+      island: "Saipan",
+      zipCode: "96950"
+    },
+    contact: {
+      phone: "(670) 234-5678",
+      email: "info@pacificlawncare.com",
+      website: "www.pacificlawncare.com"
+    },
+    hours: {
+      monday: "8:00 AM - 5:00 PM",
+      tuesday: "8:00 AM - 5:00 PM",
+      wednesday: "8:00 AM - 5:00 PM",
+      thursday: "8:00 AM - 5:00 PM",
+      friday: "8:00 AM - 5:00 PM",
+      saturday: "9:00 AM - 2:00 PM",
+      sunday: "Closed"
+    },
+    images: [
+      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&auto=format&fit=crop"
     ],
-  },
-  'religious': {
-    label: 'Religious',
-    subcategories: [
-      { label: 'Churches', value: 'churches' },
-      { label: 'Temples', value: 'temples' },
-      { label: 'Mosques', value: 'mosques' },
-      { label: 'Synagogues', value: 'synagogues' },
-      { label: 'Other', value: 'other' },
-    ],
-  },
-  'tour-guides': {
-    label: 'Tour Guides',
-    subcategories: [
-      { label: 'Sightseeing', value: 'sightseeing' },
-      { label: 'Diving', value: 'diving' },
-      { label: 'Hiking', value: 'hiking' },
-      { label: 'Fishing', value: 'fishing' },
-      { label: 'Transportation', value: 'transportation' },
-    ],
-  },
-};
+    rating: 4.7,
+    reviews: 28,
+    featured: true,
+    sponsored: true,
+    createdAt: "2023-06-12T08:30:00Z",
+    updatedAt: "

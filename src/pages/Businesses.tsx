@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, List, Search, Filter, ChevronDown, X, Building } from 'lucide-react';
+import { Grid, List, Search, ChevronDown, ChevronUp, X, Building } from 'lucide-react';
 import { mockBusinesses, businessCategories } from '../utils/mockData';
 import Navigation from '../components/Navigation';
 import BusinessCard from '../components/BusinessCard';
@@ -14,7 +13,7 @@ const Businesses = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeSubcategories, setActiveSubcategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
+  const [showCategories, setShowCategories] = useState(true);
   
   // Handle search
   const handleSearch = () => {
@@ -128,6 +127,14 @@ const Businesses = () => {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
+
+  // Define featured categories (Healthcare, Religious, Tour Guides)
+  const featuredCategories = ['healthcare', 'religious', 'tour-guides'];
+  
+  // Other categories excluding featured categories
+  const otherCategories = Object.keys(businessCategories).filter(
+    key => !featuredCategories.includes(key)
+  );
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -166,19 +173,6 @@ const Businesses = () => {
                   </button>
                 </div>
                 
-                <button 
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-all-300 flex items-center gap-1"
-                >
-                  <Filter size={16} />
-                  <span className="hidden sm:inline">Filters</span>
-                  {(activeCategory || activeSubcategories.length > 0) && (
-                    <span className="bg-gray-800 text-white text-xs rounded-full px-2 py-0.5 ml-1">
-                      {activeSubcategories.length || (activeCategory ? 1 : 0)}
-                    </span>
-                  )}
-                </button>
-                
                 {(activeCategory || activeSubcategories.length > 0 || searchQuery) && (
                   <button 
                     onClick={clearFilters}
@@ -190,29 +184,63 @@ const Businesses = () => {
               </div>
             </div>
             
-            {/* Category and Subcategory Filters */}
-            {showFilters && (
-              <div className="border-t border-gray-200 pt-4">
-                <h3 className="text-lg font-semibold mb-3">Categories</h3>
+            {/* Toggle for Category Selection */}
+            <div className="border-t border-gray-200 pt-3">
+              <button 
+                onClick={() => setShowCategories(!showCategories)}
+                className="flex items-center text-gray-700 hover:text-gray-900"
+              >
+                <span className="font-medium">Categories</span>
+                {showCategories ? 
+                  <ChevronUp size={18} className="ml-1" /> : 
+                  <ChevronDown size={18} className="ml-1" />
+                }
+              </button>
+            </div>
+            
+            {/* Category and Subcategory Filters - Always Visible */}
+            {showCategories && (
+              <div className="mt-3">
+                <h3 className="text-lg font-semibold mb-3">Browse by Category</h3>
                 
-                {/* Main Categories */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {Object.entries(businessCategories).map(([key, category]) => (
-                    <button
-                      key={key}
-                      onClick={() => handleCategorySelect(key)}
-                      className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
-                    >
-                      {category.label}
-                    </button>
-                  ))}
+                {/* Featured Categories Section */}
+                <div className="mb-4">
+                  <h4 className="text-sm text-gray-500 mb-2">Featured Categories</h4>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {featuredCategories.map((key) => (
+                      <button
+                        key={key}
+                        onClick={() => handleCategorySelect(key)}
+                        className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
+                      >
+                        {businessCategories[key as keyof typeof businessCategories].label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Other Categories Section */}
+                <div>
+                  <h4 className="text-sm text-gray-500 mb-2">Other Categories</h4>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {otherCategories.map((key) => (
+                      <button
+                        key={key}
+                        onClick={() => handleCategorySelect(key)}
+                        className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
+                      >
+                        {key === 'shopping-and-stores' ? 'Shopping & Stores' : businessCategories[key as keyof typeof businessCategories].label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 
                 {/* Subcategories (only shown when a category is selected) */}
                 {activeCategory && (
                   <div className="mt-4">
                     <h3 className="text-md font-medium mb-2">
-                      {businessCategories[activeCategory as keyof typeof businessCategories].label} Subcategories
+                      {activeCategory === 'shopping-and-stores' ? 'Shopping & Stores' : 
+                       businessCategories[activeCategory as keyof typeof businessCategories].label} Subcategories
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {businessCategories[activeCategory as keyof typeof businessCategories].subcategories.map((subcategory, index) => (
@@ -237,7 +265,10 @@ const Businesses = () => {
               <p className="text-gray-600">
                 <span className="font-semibold text-gray-900">{businesses.length}</span> businesses
                 {activeCategory && (
-                  <span> in <span className="font-medium">{businessCategories[activeCategory as keyof typeof businessCategories].label}</span></span>
+                  <span> in <span className="font-medium">
+                    {activeCategory === 'shopping-and-stores' ? 'Shopping & Stores' : 
+                     businessCategories[activeCategory as keyof typeof businessCategories].label}
+                  </span></span>
                 )}
                 {activeSubcategories.length > 0 && (
                   <span className="text-sm text-gray-500"> with {activeSubcategories.length} selected subcategories</span>

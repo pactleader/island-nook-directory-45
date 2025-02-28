@@ -1,4 +1,3 @@
-
 // Property Listings Data
 export type PropertyListing = {
   id: string;
@@ -23,29 +22,31 @@ export type PropertyListing = {
   updatedAt: string;
 };
 
-// Vehicle Listings Data
-export type VehicleListing = {
+// Vehicle Listings
+export interface VehicleListing {
   id: string;
   title: string;
-  description: string;
   price: number;
   condition: 'new' | 'used';
   year: number;
   make: string;
   model: string;
-  mileage?: number;
   bodyStyle: string;
-  fuelType: string;
   transmission: string;
-  images: string[];
-  color: string;
+  mileage?: number;
+  exteriorColor: string;
+  interiorColor: string;
+  fuelType: string;
+  engine: string;
   features: string[];
+  description: string;
   sellerType: 'dealer' | 'private';
   sellerName: string;
+  sellerLocation: string;
   sellerContact: string;
+  images: string[];
   createdAt: string;
-  updatedAt: string;
-};
+}
 
 // Business Listings Data
 export type BusinessCategory = 
@@ -349,133 +350,291 @@ export const mockProperties: PropertyListing[] = [
 
 export const mockVehicles: VehicleListing[] = [
   {
-    id: "veh-001",
-    title: "2022 Toyota RAV4 XLE",
-    description: "Well-maintained 2022 Toyota RAV4 XLE with low mileage. Features include backup camera, lane assist, and Bluetooth connectivity.",
-    price: 28500,
-    condition: "used",
+    id: 'v-001',
+    title: '2020 Toyota RAV4 XLE Premium AWD',
+    price: 28995,
+    condition: 'used',
+    year: 2020,
+    make: 'Toyota',
+    model: 'RAV4',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    mileage: 35420,
+    exteriorColor: 'Silver Sky Metallic',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '2.5L I4',
+    features: [
+      'Backup Camera',
+      'Bluetooth',
+      'Sunroof',
+      'AWD',
+      'Apple CarPlay',
+      'Android Auto',
+      'Keyless Entry',
+      'Lane Departure Warning'
+    ],
+    description: 'This 2020 Toyota RAV4 XLE Premium features a clean Carfax, AWD, and is loaded with features including a sunroof, power liftgate, and Toyota Safety Sense.',
+    sellerType: 'dealer',
+    sellerName: 'Toyota of Saipan',
+    sellerLocation: 'Garapan, Saipan',
+    sellerContact: '(670) 234-5678',
+    images: [
+      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1563720223185-11ff8a2c45c8?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-10-12T10:30:00Z'
+  },
+  {
+    id: 'v-002',
+    title: '2021 Honda Civic EX Sedan',
+    price: 23450,
+    condition: 'used',
+    year: 2021,
+    make: 'Honda',
+    model: 'Civic',
+    bodyStyle: 'Sedan',
+    transmission: 'CVT',
+    mileage: 18250,
+    exteriorColor: 'Modern Steel Metallic',
+    interiorColor: 'Gray',
+    fuelType: 'Gasoline',
+    engine: '1.5L Turbo I4',
+    features: [
+      'Backup Camera',
+      'Bluetooth',
+      'Honda Sensing',
+      'Apple CarPlay',
+      'Android Auto',
+      'Heated Seats',
+      'Keyless Entry'
+    ],
+    description: 'Low mileage 2021 Honda Civic EX with advanced safety features, excellent fuel economy, and a smooth ride. Perfect for island driving with great reliability.',
+    sellerType: 'dealer',
+    sellerName: 'Joeten Motors',
+    sellerLocation: 'Susupe, Saipan',
+    sellerContact: '(670) 234-4321',
+    images: [
+      'https://images.unsplash.com/photo-1533106418989-88406c7cc8ca?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-11-05T14:15:00Z'
+  },
+  {
+    id: 'v-003',
+    title: '2022 Ford Bronco Sport Big Bend',
+    price: 33995,
+    condition: 'used',
     year: 2022,
-    make: "Toyota",
-    model: "RAV4",
-    mileage: 15000,
-    bodyStyle: "SUV",
-    fuelType: "Gasoline",
-    transmission: "Automatic",
-    images: [
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b",
-      "https://images.unsplash.com/photo-1472396961693-142e6e269027"
-    ],
-    color: "Silver",
+    make: 'Ford',
+    model: 'Bronco Sport',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    mileage: 12560,
+    exteriorColor: 'Area 51 Blue',
+    interiorColor: 'Ebony Black',
+    fuelType: 'Gasoline',
+    engine: '1.5L EcoBoost',
     features: [
-      "Backup Camera", "Lane Assist", "Bluetooth", "Keyless Entry", "Cruise Control"
+      '4WD',
+      'Backup Camera',
+      'Bluetooth',
+      'Ford Co-Pilot360',
+      'Apple CarPlay',
+      'Android Auto',
+      'Terrain Management System'
     ],
-    sellerType: "private",
-    sellerName: "John Smith",
-    sellerContact: "john.smith@example.com",
-    createdAt: "2023-12-10T15:30:00Z",
-    updatedAt: "2023-12-10T15:30:00Z"
+    description: 'Barely used 2022 Ford Bronco Sport Big Bend. Perfect for exploring the islands with its 4WD capability and rugged styling. Loaded with tech features and still under warranty.',
+    sellerType: 'private',
+    sellerName: 'Michael Chen',
+    sellerLocation: 'San Jose, Tinian',
+    sellerContact: '(670) 788-1234',
+    images: [
+      'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1593055357429-62b6bbdad91f?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1546027032-5f49113406d5?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-12-02T09:45:00Z'
   },
   {
-    id: "veh-002",
-    title: "2023 Honda Civic EX - New",
-    description: "Brand new 2023 Honda Civic EX with manufacturer warranty. Includes Honda Sensing safety features and Apple CarPlay/Android Auto integration.",
-    price: 25999,
-    condition: "new",
+    id: 'v-004',
+    title: '2023 Kia Telluride SX Prestige',
+    price: 47990,
+    condition: 'new',
     year: 2023,
-    make: "Honda",
-    model: "Civic",
-    bodyStyle: "Sedan",
-    fuelType: "Gasoline",
-    transmission: "CVT",
-    images: [
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b"
-    ],
-    color: "Blue",
+    make: 'Kia',
+    model: 'Telluride',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    exteriorColor: 'Glacial White Pearl',
+    interiorColor: 'Terracotta',
+    fuelType: 'Gasoline',
+    engine: '3.8L V6',
     features: [
-      "Honda Sensing", "Apple CarPlay", "Android Auto", "Sunroof", "Heated Seats"
+      'AWD',
+      'Navigation',
+      'Premium Audio',
+      'Panoramic Sunroof',
+      'Heads-Up Display',
+      'Heated/Ventilated Seats',
+      '360-Degree Camera'
     ],
-    sellerType: "dealer",
-    sellerName: "Island Motors",
-    sellerContact: "sales@islandmotors.com",
-    createdAt: "2023-12-05T09:15:00Z",
-    updatedAt: "2023-12-05T09:15:00Z"
+    description: 'Brand new 2023 Kia Telluride SX Prestige with all the luxury features. This 7-passenger SUV offers premium comfort with Nappa leather, dual sunroofs, and the latest technology.',
+    sellerType: 'dealer',
+    sellerName: 'Triple J Motors',
+    sellerLocation: 'Garapan, Saipan',
+    sellerContact: '(670) 234-7135',
+    images: [
+      'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1621963899144-11f0ecd1833b?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2024-01-15T11:20:00Z'
   },
   {
-    id: "veh-003",
-    title: "2019 Ford F-150 XLT",
-    description: "Reliable 2019 Ford F-150 XLT with towing package. Perfect for work and island adventures.",
-    price: 32000,
-    condition: "used",
+    id: 'v-005',
+    title: '2019 Jeep Wrangler Unlimited Rubicon',
+    price: 41500,
+    condition: 'used',
     year: 2019,
-    make: "Ford",
-    model: "F-150",
-    mileage: 45000,
-    bodyStyle: "Truck",
-    fuelType: "Gasoline",
-    transmission: "Automatic",
-    images: [
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b"
-    ],
-    color: "Red",
+    make: 'Jeep',
+    model: 'Wrangler',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    mileage: 28750,
+    exteriorColor: 'Firecracker Red',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '3.6L V6',
     features: [
-      "Towing Package", "Bed Liner", "Backup Camera", "Bluetooth", "Power Windows"
+      '4WD',
+      'Removable Top',
+      'Off-Road Package',
+      'LED Lighting',
+      'Navigation',
+      'Premium Audio',
+      'Tow Package'
     ],
-    sellerType: "private",
-    sellerName: "Mike Johnson",
-    sellerContact: "mike.j@example.com",
-    createdAt: "2023-11-20T13:45:00Z",
-    updatedAt: "2023-11-20T13:45:00Z"
+    description: 'Adventure-ready 2019 Jeep Wrangler Unlimited Rubicon. Equipped with factory lift, premium wheels, and upgraded bumpers. Perfect for island exploration with 4WD capability.',
+    sellerType: 'private',
+    sellerName: 'Sarah Johnson',
+    sellerLocation: 'Songsong, Rota',
+    sellerContact: '(670) 788-5678',
+    images: [
+      'https://images.unsplash.com/photo-1608494402683-c8cc8e1ed0ec?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1626072778346-0ab6604d191c?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1625593383756-d020e4204b7e?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-09-25T15:30:00Z'
   },
   {
-    id: "veh-004",
-    title: "2022 Hyundai Tucson Limited",
-    description: "Luxury 2022 Hyundai Tucson Limited with panoramic sunroof, leather seats, and advanced safety features.",
-    price: 29500,
-    condition: "used",
+    id: 'v-006',
+    title: '2021 Subaru Forester Premium',
+    price: 29750,
+    condition: 'used',
+    year: 2021,
+    make: 'Subaru',
+    model: 'Forester',
+    bodyStyle: 'SUV',
+    transmission: 'CVT',
+    mileage: 15980,
+    exteriorColor: 'Horizon Blue Pearl',
+    interiorColor: 'Gray',
+    fuelType: 'Gasoline',
+    engine: '2.5L H4',
+    features: [
+      'AWD',
+      'Panoramic Moonroof',
+      'EyeSight Driver Assist',
+      'Heated Seats',
+      'Apple CarPlay',
+      'Android Auto',
+      'X-Mode'
+    ],
+    description: 'Well-maintained 2021 Subaru Forester Premium with Symmetrical All-Wheel Drive. Excellent for all weather conditions with advanced safety features and spacious interior.',
+    sellerType: 'dealer',
+    sellerName: 'Island Auto Gallery',
+    sellerLocation: 'Chalan Kanoa, Saipan',
+    sellerContact: '(670) 235-7890',
+    images: [
+      'https://images.unsplash.com/photo-1629897048514-3dd66175e0fe?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1631184973894-12080f5ef4da?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1628859017536-e8e3c4db8754?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-10-30T12:45:00Z'
+  },
+  {
+    id: 'v-007',
+    title: '2022 Tesla Model Y Long Range',
+    price: 56490,
+    condition: 'new',
     year: 2022,
-    make: "Hyundai",
-    model: "Tucson",
-    mileage: 18500,
-    bodyStyle: "SUV",
-    fuelType: "Gasoline",
-    transmission: "Automatic",
-    images: [
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b"
-    ],
-    color: "White",
+    make: 'Tesla',
+    model: 'Model Y',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    exteriorColor: 'Pearl White',
+    interiorColor: 'Black',
+    fuelType: 'Electric',
+    engine: 'Dual Motor Electric',
     features: [
-      "Panoramic Sunroof", "Leather Seats", "Navigation", "Blind Spot Detection", "Heated/Cooled Seats"
+      'AWD',
+      'Autopilot',
+      'Premium Interior',
+      'Glass Roof',
+      'Navigation',
+      '15" Touchscreen',
+      'Supercharging Capability'
     ],
-    sellerType: "dealer",
-    sellerName: "Pacific Auto",
-    sellerContact: "info@pacificauto.com",
-    createdAt: "2023-12-01T10:00:00Z",
-    updatedAt: "2023-12-01T10:00:00Z"
+    description: 'New 2022 Tesla Model Y Long Range with dual motor AWD. Features include premium interior, enhanced autopilot, and an incredible 330-mile range on a single charge.',
+    sellerType: 'dealer',
+    sellerName: 'EV Motors Saipan',
+    sellerLocation: 'San Antonio, Saipan',
+    sellerContact: '(670) 233-9876',
+    images: [
+      'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1619021109758-cc22446b726c?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1615834772906-d676102dd3e8?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2024-02-01T10:15:00Z'
   },
   {
-    id: "veh-005",
-    title: "2023 Mazda CX-5 - New",
-    description: "Brand new 2023 Mazda CX-5 with premium features including Bose sound system and advanced driver assistance technologies.",
-    price: 31500,
-    condition: "new",
-    year: 2023,
-    make: "Mazda",
-    model: "CX-5",
-    bodyStyle: "SUV",
-    fuelType: "Gasoline",
-    transmission: "Automatic",
-    images: [
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b"
-    ],
-    color: "Gray",
+    id: 'v-008',
+    title: '2020 Toyota Tacoma TRD Off-Road',
+    price: 36995,
+    condition: 'used',
+    year: 2020,
+    make: 'Toyota',
+    model: 'Tacoma',
+    bodyStyle: 'Truck',
+    transmission: 'Automatic',
+    mileage: 31250,
+    exteriorColor: 'Army Green',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '3.5L V6',
     features: [
-      "Bose Sound System", "Driver Assistance", "Leather Interior", "Power Liftgate", "Heated Steering Wheel"
+      '4WD',
+      'Off-Road Package',
+      'Bed Liner',
+      'Tow Package',
+      'Navigation',
+      'Blind Spot Monitor',
+      'Wireless Charging'
     ],
-    sellerType: "dealer",
-    sellerName: "Island Motors",
-    sellerContact: "sales@islandmotors.com",
-    createdAt: "2023-12-08T14:20:00Z",
-    updatedAt: "2023-12-08T14:20:00Z"
+    description: 'Rugged 2020 Toyota Tacoma TRD Off-Road with upgraded suspension, all-terrain tires, and skid plates. Perfect island truck with 4WD capability and excellent reliability.',
+    sellerType: 'private',
+    sellerName: 'David Torres',
+    sellerLocation: 'San Roque, Saipan',
+    sellerContact: '(670) 788-4321',
+    images: [
+      'https://images.unsplash.com/photo-1612911912304-c3c83c33f895?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1626072225909-ff7e325bead0?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1626072725148-ba70cc34b286?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-11-15T13:30:00Z'
   }
 ];
 

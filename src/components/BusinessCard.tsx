@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BusinessListing } from '../utils/mockData';
-import { Building, Phone, Star, DollarSign } from 'lucide-react';
+import { Building, Phone, Star } from 'lucide-react';
 
 interface BusinessCardProps {
   business: BusinessListing;
@@ -19,13 +19,8 @@ const BusinessCard = ({ business }: BusinessCardProps) => {
       .join(' ');
   };
   
-  // Calculate the size class based on whether the business is sponsored
-  const cardSizeClass = business.sponsored 
-    ? "scale-108 shadow-lg" // 8% larger with darker shadow
-    : "";
-  
   return (
-    <div className={`glass-card rounded-xl overflow-hidden hover-lift ${cardSizeClass}`}>
+    <div className="glass-card rounded-xl overflow-hidden hover-lift">
       <Link to={`/businesses/${business.id}`} className="block">
         {/* Image Container */}
         <div className="relative h-48 overflow-hidden">
@@ -64,16 +59,6 @@ const BusinessCard = ({ business }: BusinessCardProps) => {
               </span>
             </div>
           </div>
-          
-          {/* Sponsored Tag */}
-          {business.sponsored && (
-            <div className="absolute top-4 right-4 z-10">
-              <div className="flex items-center bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-                <DollarSign size={12} className="mr-1" />
-                <span>Sponsored</span>
-              </div>
-            </div>
-          )}
         </div>
         
         {/* Content */}

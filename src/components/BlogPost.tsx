@@ -30,12 +30,12 @@ const BlogPost = ({ post, compact = false }: BlogPostProps) => {
             {/* Blurred Image Placeholder */}
             <div
               className="absolute inset-0 bg-cover bg-center blur-md scale-105"
-              style={{ backgroundImage: `url(${post.featuredImage})` }}
+              style={{ backgroundImage: `url(${post.image})` }}
             ></div>
             
             {/* Actual Image */}
             <img
-              src={post.featuredImage}
+              src={post.image}
               alt={post.title}
               className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
                 imageLoaded ? 'opacity-100' : 'opacity-0'
@@ -81,12 +81,12 @@ const BlogPost = ({ post, compact = false }: BlogPostProps) => {
           {/* Blurred Image Placeholder */}
           <div
             className="absolute inset-0 bg-cover bg-center blur-md scale-105"
-            style={{ backgroundImage: `url(${post.featuredImage})` }}
+            style={{ backgroundImage: `url(${post.image})` }}
           ></div>
           
           {/* Actual Image */}
           <img
-            src={post.featuredImage}
+            src={post.image}
             alt={post.title}
             className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
               imageLoaded ? 'opacity-100' : 'opacity-0'

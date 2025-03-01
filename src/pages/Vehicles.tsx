@@ -1,104 +1,41 @@
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, List, Search, Filter, ChevronDown, X, Car, SlidersHorizontal } from 'lucide-react';
+import { Car, ShoppingCart, DollarSign, Calendar } from 'lucide-react';
 import { mockVehicles } from '../utils/mockData';
 import Navigation from '../components/Navigation';
 import VehicleCard from '../components/VehicleCard';
 import Footer from '../components/Footer';
 
+// Add this function after existing imports
+const FilterPresetButton = ({ label, active, onClick, icon: Icon }) => (
+  <button
+    onClick={onClick}
+    className={`px-4 py-2 rounded-md flex items-center ${
+      active ? 'bg-gray-800 text-white' : 'bg-white text-gray-800 border border-gray-200'
+    } hover:shadow-md transition-all duration-200`}
+  >
+    {Icon && <Icon size={16} className="mr-2" />}
+    <span>{label}</span>
+  </button>
+);
+
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState(mockVehicles);
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [sortOption, setSortOption] = useState('newest');
-  const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilters, setActiveFilters] = useState({});
   
-  // Filter groups
-  const filterGroups = [
-    {
-      name: 'Make',
-      options: [
-        { label: 'Toyota', value: 'toyota' },
-        { label: 'Honda', value: 'honda' },
-        { label: 'Ford', value: 'ford' },
-        { label: 'Kia', value: 'kia' },
-        { label: 'Jeep', value: 'jeep' },
-        { label: 'Subaru', value: 'subaru' },
-        { label: 'Tesla', value: 'tesla' }
-      ],
-      multiSelect: true
-    },
-    {
-      name: 'Body Style',
-      options: [
-        { label: 'Sedan', value: 'sedan' },
-        { label: 'SUV', value: 'suv' },
-        { label: 'Truck', value: 'truck' },
-        { label: 'Coupe', value: 'coupe' },
-        { label: 'Convertible', value: 'convertible' },
-        { label: 'Van', value: 'van' }
-      ],
-      multiSelect: true
-    },
-    {
-      name: 'Price Range',
-      options: [
-        { label: 'Under $10k', value: 'under-10k' },
-        { label: '$10k - $20k', value: '10k-20k' },
-        { label: '$20k - $30k', value: '20k-30k' },
-        { label: '$30k - $40k', value: '30k-40k' },
-        { label: '$40k - $50k', value: '40k-50k' },
-        { label: 'Over $50k', value: 'over-50k' }
-      ]
-    },
-    {
-      name: 'Year',
-      options: [
-        { label: '2023+', value: '2023-plus' },
-        { label: '2020-2022', value: '2020-2022' },
-        { label: '2015-2019', value: '2015-2019' },
-        { label: '2010-2014', value: '2010-2014' },
-        { label: 'Before 2010', value: 'before-2010' }
-      ]
-    },
-    {
-      name: 'Condition',
-      options: [
-        { label: 'New', value: 'new' },
-        { label: 'Used', value: 'used' }
-      ]
-    },
-    {
-      name: 'Seller Type',
-      options: [
-        { label: 'Dealer', value: 'dealer' },
-        { label: 'Private', value: 'private' }
-      ]
-    },
-    {
-      name: 'Features',
-      options: [
-        { label: 'Bluetooth', value: 'bluetooth' },
-        { label: 'Navigation', value: 'navigation' },
-        { label: 'Backup Camera', value: 'backup-camera' },
-        { label: 'Sunroof', value: 'sunroof' },
-        { label: 'Leather Seats', value: 'leather-seats' },
-        { label: 'Third Row Seats', value: 'third-row' },
-        { label: 'AWD/4WD', value: 'awd-4wd' }
-      ],
-      multiSelect: true
-    }
-  ];
+  // Add this new state for preset filters
+  const [activePreset, setActivePreset] = useState(null);
   
   // Handle search
-  const handleSearch = () => {
+  const applyFilters = (search: string, filters: Record<string, string>) => {
     let filteredVehicles = [...mockVehicles];
     
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filteredVehicles = filteredVehicles.filter(vehicle => 
+    if (search) {
+      const query = search.toLowerCase();
+      filteredVehicles = filteredVehicles.filter(vehicle =>
         vehicle.title.toLowerCase().includes(query) ||
         vehicle.description.toLowerCase().includes(query) ||
         vehicle.make.toLowerCase().includes(query) ||
@@ -106,30 +43,13 @@ const Vehicles = () => {
       );
     }
     
-    // Apply other filters (simplified version)
-    if (activeFilters.Make && Array.isArray(activeFilters.Make)) {
-      filteredVehicles = filteredVehicles.filter(vehicle => 
-        activeFilters.Make.includes(vehicle.make.toLowerCase())
+    // Apply additional filters
+    Object.keys(filters).forEach(key => {
+      const filterValue = filters[key];
+      filteredVehicles = filteredVehicles.filter(vehicle =>
+        vehicle[key] === filterValue
       );
-    }
-    
-    if (activeFilters['Body Style'] && Array.isArray(activeFilters['Body Style'])) {
-      filteredVehicles = filteredVehicles.filter(vehicle => 
-        activeFilters['Body Style'].includes(vehicle.bodyStyle.toLowerCase())
-      );
-    }
-    
-    if (activeFilters.Condition) {
-      filteredVehicles = filteredVehicles.filter(vehicle => 
-        vehicle.condition === activeFilters.Condition
-      );
-    }
-    
-    if (activeFilters['Seller Type']) {
-      filteredVehicles = filteredVehicles.filter(vehicle => 
-        vehicle.sellerType === activeFilters['Seller Type']
-      );
-    }
+    });
     
     // Apply sorting
     sortVehicles(filteredVehicles, sortOption);
@@ -152,17 +72,11 @@ const Vehicles = () => {
       case 'price-desc':
         sortedVehicles.sort((a, b) => b.price - a.price);
         break;
-      case 'newest':
-        sortedVehicles.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-        break;
-      case 'oldest':
-        sortedVehicles.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      case 'year-asc':
+        sortedVehicles.sort((a, b) => a.year - b.year);
         break;
       case 'year-desc':
         sortedVehicles.sort((a, b) => b.year - a.year);
-        break;
-      case 'year-asc':
-        sortedVehicles.sort((a, b) => a.year - b.year);
         break;
       default:
         break;
@@ -171,75 +85,33 @@ const Vehicles = () => {
     setVehicles(sortedVehicles);
   };
   
-  // Handle filter selection
-  const handleFilterSelect = (groupName: string, optionValue: string, multiSelect?: boolean) => {
-    setActiveFilters(prev => {
-      // For multiselect, we maintain an array of values
-      if (multiSelect) {
-        const currentValues = Array.isArray(prev[groupName]) ? [...prev[groupName] as string[]] : [];
-        
-        // Toggle selection: if already selected, remove it; otherwise, add it
-        if (currentValues.includes(optionValue)) {
-          const newValues = currentValues.filter(val => val !== optionValue);
-          return {
-            ...prev,
-            [groupName]: newValues.length > 0 ? newValues : undefined
-          };
-        } else {
-          return {
-            ...prev,
-            [groupName]: [...currentValues, optionValue]
-          };
-        }
-      } 
-      // For single select, we just store the value (or clear it if clicking the same one)
-      else {
-        if (prev[groupName] === optionValue) {
-          const { [groupName]: _, ...rest } = prev;
-          return rest;
-        } else {
-          return {
-            ...prev,
-            [groupName]: optionValue
-          };
-        }
-      }
-    });
-  };
-  
-  // Check if a filter is selected
-  const isFilterSelected = (groupName: string, optionValue: string) => {
-    const selectedValue = activeFilters[groupName];
+  // Add this function to handle preset filter clicks
+  const handlePresetClick = (preset) => {
+    setActivePreset(preset === activePreset ? null : preset);
     
-    if (Array.isArray(selectedValue)) {
-      return selectedValue.includes(optionValue);
-    } else {
-      return selectedValue === optionValue;
+    // Apply preset filters
+    let newFilters = {};
+    
+    if (preset === 'buy') {
+      newFilters = {
+        listingType: 'sale',
+      };
+    } else if (preset === 'sell') {
+      newFilters = {
+        listingType: 'sale',
+      };
+      // Add additional logic for sell perspective if needed
+    } else if (preset === 'rent') {
+      newFilters = {
+        listingType: 'rent',
+      };
     }
+    
+    // Apply these filters
+    setActiveFilters(newFilters);
+    applyFilters(searchQuery, newFilters);
   };
-  
-  // Clear all filters
-  const clearFilters = () => {
-    setActiveFilters({});
-    setSearchQuery('');
-    setVehicles(mockVehicles);
-  };
-  
-  // Count active filters
-  const countActiveFilters = () => {
-    let count = 0;
-    Object.keys(activeFilters).forEach(key => {
-      if (Array.isArray(activeFilters[key])) count += activeFilters[key].length;
-      else if (activeFilters[key]) count++;
-    });
-    return count;
-  };
-  
-  // Apply filters when they change
-  useEffect(() => {
-    handleSearch();
-  }, [activeFilters]);
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -247,8 +119,30 @@ const Vehicles = () => {
       <main className="flex-grow pt-20">
         <div className="container mx-auto px-4 py-4">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Vehicles</h1>
-            <p className="text-gray-600">Find your perfect vehicle in the Northern Mariana Islands</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Vehicles in the Marianas</h1>
+            <p className="text-gray-600">Find cars, trucks, and other vehicles across the islands</p>
+          </div>
+          
+          {/* Filter Preset Buttons */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            <FilterPresetButton 
+              label="Buy" 
+              active={activePreset === 'buy'} 
+              onClick={() => handlePresetClick('buy')}
+              icon={ShoppingCart}
+            />
+            <FilterPresetButton 
+              label="Sell" 
+              active={activePreset === 'sell'} 
+              onClick={() => handlePresetClick('sell')}
+              icon={DollarSign}
+            />
+            <FilterPresetButton 
+              label="Rent" 
+              active={activePreset === 'rent'} 
+              onClick={() => handlePresetClick('rent')}
+              icon={Calendar}
+            />
           </div>
           
           {/* Search Area */}
@@ -258,102 +152,37 @@ const Vehicles = () => {
                 <div className="relative flex-grow">
                   <input
                     type="text"
-                    placeholder="Search by make, model, or features"
+                    placeholder="Search for vehicles, make, model, or keywords"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyPress={(e) => {
                       if (e.key === 'Enter') {
-                        handleSearch();
+                        applyFilters(searchQuery, activeFilters);
                       }
                     }}
                     className="input-field pr-10 h-10 w-full"
                   />
                   <button
-                    onClick={handleSearch}
+                    onClick={() => applyFilters(searchQuery, activeFilters)}
                     className="absolute right-1 top-1 p-2 text-gray-600 hover:text-gray-900 rounded-md transition-all-300"
                     aria-label="Search"
                   >
-                    <Search size={18} />
+                    <Car size={18} />
                   </button>
                 </div>
                 
-                <button 
-                  onClick={clearFilters}
-                  className={`px-4 py-2 rounded-md transition-all-300 ${
-                    countActiveFilters() > 0 || searchQuery
-                      ? 'bg-gray-800 text-white hover:bg-gray-700'
-                      : 'bg-gray-200 text-gray-500'
-                  }`}
-                  disabled={countActiveFilters() === 0 && !searchQuery}
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
-            
-            {/* Filter Row */}
-            <div className="flex flex-wrap gap-2">
-              {filterGroups.map((group, index) => (
-                <div key={index} className="relative inline-block">
-                  <button
-                    className="flex items-center space-x-1 px-3 py-2 border border-gray-200 rounded-md hover:bg-gray-50"
+                {searchQuery && (
+                  <button 
                     onClick={() => {
-                      const element = document.getElementById(`filter-dropdown-${index}`);
-                      if (element) {
-                        // Close other dropdowns first
-                        document.querySelectorAll('[id^="filter-dropdown-"]').forEach(el => {
-                          if (el.id !== `filter-dropdown-${index}`) {
-                            el.classList.add('hidden');
-                          }
-                        });
-                        
-                        // Toggle this dropdown
-                        element.classList.toggle('hidden');
-                      }
+                      setSearchQuery('');
+                      applyFilters('', activeFilters);
                     }}
+                    className="px-4 py-2 bg-gray-800 text-white hover:bg-gray-700 rounded-md transition-all-300"
                   >
-                    <span className="text-sm font-medium">{group.name}</span>
-                    <ChevronDown size={16} />
-                    
-                    {/* Badge for selected filter count */}
-                    {activeFilters[group.name] && (
-                      Array.isArray(activeFilters[group.name]) ? 
-                        activeFilters[group.name].length > 0 && (
-                          <span className="bg-gray-800 text-white text-xs rounded-full px-2 py-0.5 ml-1">
-                            {activeFilters[group.name].length}
-                          </span>
-                        ) : (
-                          <span className="bg-gray-800 text-white text-xs rounded-full px-2 py-0.5 ml-1">
-                            1
-                          </span>
-                        )
-                    )}
+                    Clear
                   </button>
-                  
-                  <div 
-                    id={`filter-dropdown-${index}`}
-                    className="hidden absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-20"
-                  >
-                    <div className="p-3">
-                      <h3 className="font-medium text-gray-900 mb-2">{group.name}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {group.options.map((option, optIndex) => (
-                          <button
-                            key={optIndex}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleFilterSelect(group.name, option.value, group.multiSelect);
-                            }}
-                            className={`filter-chip ${isFilterSelected(group.name, option.value) ? 'active' : ''}`}
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                )}
+              </div>
             </div>
           </div>
           
@@ -397,12 +226,10 @@ const Vehicles = () => {
                 >
                   <span className="text-sm">Sort: </span>
                   <span className="font-medium text-sm">
-                    {sortOption === 'newest' ? 'Newest' : 
-                     sortOption === 'oldest' ? 'Oldest' : 
-                     sortOption === 'price-asc' ? 'Price (Low to High)' : 
-                     sortOption === 'price-desc' ? 'Price (High to Low)' :
-                     sortOption === 'year-desc' ? 'Year (Newest)' :
-                     sortOption === 'year-asc' ? 'Year (Oldest)' : 'Newest'}
+                    {sortOption === 'price-asc' ? 'Price (Low to High)' : 
+                     sortOption === 'price-desc' ? 'Price (High to Low)' : 
+                     sortOption === 'year-asc' ? 'Year (Oldest to Newest)' : 
+                     sortOption === 'year-desc' ? 'Year (Newest to Oldest)' : 'Relevance'}
                   </span>
                   <ChevronDown size={16} />
                 </button>
@@ -413,12 +240,10 @@ const Vehicles = () => {
                 >
                   <div className="py-1">
                     {[
-                      { value: 'newest', label: 'Newest Listing' },
-                      { value: 'oldest', label: 'Oldest Listing' },
-                      { value: 'price-asc', label: 'Price: Low to High' },
-                      { value: 'price-desc', label: 'Price: High to Low' },
-                      { value: 'year-desc', label: 'Year: Newest First' },
-                      { value: 'year-asc', label: 'Year: Oldest First' }
+                      { value: 'price-asc', label: 'Price (Low to High)' },
+                      { value: 'price-desc', label: 'Price (High to Low)' },
+                      { value: 'year-asc', label: 'Year (Oldest to Newest)' },
+                      { value: 'year-desc', label: 'Year (Newest to Oldest)' }
                     ].map((option) => (
                       <button
                         key={option.value}
@@ -453,7 +278,10 @@ const Vehicles = () => {
                 Try adjusting your search filters or search term
               </p>
               <button 
-                onClick={clearFilters}
+                onClick={() => {
+                  setSearchQuery('');
+                  applyFilters('', activeFilters);
+                }}
                 className="btn-primary inline-flex items-center"
               >
                 <X size={16} className="mr-2" />
@@ -501,4 +329,5 @@ const Vehicles = () => {
   );
 };
 
+import { Grid, List, Search, ChevronDown, X } from 'lucide-react';
 export default Vehicles;

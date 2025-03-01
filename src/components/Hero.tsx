@@ -1,12 +1,17 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { User, Users, Globe } from 'lucide-react';
 
 interface HeroProps {
   title: string;
   subtitle?: string;
   buttonText?: string;
   buttonLink?: string;
+  visitorButtonText?: string;
+  visitorButtonLink?: string;
+  localButtonText?: string;
+  localButtonLink?: string;
   backgroundImage?: string;
   overlayOpacity?: number;
   size?: 'small' | 'medium' | 'large';
@@ -17,6 +22,10 @@ const Hero = ({
   subtitle,
   buttonText,
   buttonLink = '/',
+  visitorButtonText,
+  visitorButtonLink = '/properties?user=visitor',
+  localButtonText,
+  localButtonLink = '/properties?user=local',
   backgroundImage = 'https://images.unsplash.com/photo-1501854140801-50d01698950b',
   overlayOpacity = 0.5,
   size = 'large'
@@ -75,7 +84,28 @@ const Hero = ({
             </p>
           )}
           
-          {buttonText && (
+          {/* User Type Buttons (Visitor/Local) */}
+          {(visitorButtonText && localButtonText) && (
+            <div className="flex flex-wrap justify-center gap-4 animate-slide-up opacity-0" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
+              <Link
+                to={visitorButtonLink}
+                className="inline-flex items-center px-6 py-3 bg-white text-gray-900 font-medium rounded-md hover:bg-gray-100 transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
+              >
+                <Globe size={18} className="mr-2" />
+                {visitorButtonText}
+              </Link>
+              <Link
+                to={localButtonLink}
+                className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-medium rounded-md hover:bg-gray-700 transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
+              >
+                <Users size={18} className="mr-2" />
+                {localButtonText}
+              </Link>
+            </div>
+          )}
+          
+          {/* Legacy single button (only shown if visitor/local buttons aren't provided) */}
+          {buttonText && !visitorButtonText && !localButtonText && (
             <div className="animate-slide-up opacity-0" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
               <Link
                 to={buttonLink}

@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
@@ -10,25 +9,22 @@ import Footer from '../components/Footer';
 import { mockProperties, mockVehicles, mockBusinesses, mockBlogPosts } from '../utils/mockData';
 import { Map, Car, Building, BookOpen, ChevronRight } from 'lucide-react';
 
-const Index = () => {
+const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation */}
       <Navigation />
       
-      {/* Hero Section */}
-      <Hero 
-        title="Discover the Northern Mariana Islands"
-        subtitle="Your complete directory for properties, vehicles, and local businesses"
-        buttonText="Explore Now"
-        buttonLink="/properties"
-        backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b"
+      <Hero
+        title="Discover the Marianas"
+        subtitle="Your comprehensive guide to the Northern Mariana Islands"
+        visitorButtonText="Search as a Visitor"
+        localButtonText="Search as a Local"
         size="large"
+        overlayOpacity={0.6}
+        backgroundImage="https://images.unsplash.com/photo-1566376071533-acb0bbab12fc"
       />
       
-      {/* Main Content */}
       <main>
-        {/* Featured Properties Section */}
         <section className="section-padding">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
@@ -63,7 +59,6 @@ const Index = () => {
           </div>
         </section>
         
-        {/* Featured Vehicles Section */}
         <section className="section-padding bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
@@ -98,7 +93,6 @@ const Index = () => {
           </div>
         </section>
         
-        {/* Featured Businesses Section */}
         <section className="section-padding">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
@@ -133,7 +127,6 @@ const Index = () => {
           </div>
         </section>
         
-        {/* Latest Blog Posts Section */}
         <section className="section-padding bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
@@ -169,10 +162,9 @@ const Index = () => {
         </section>
       </main>
       
-      {/* Footer */}
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default Home;

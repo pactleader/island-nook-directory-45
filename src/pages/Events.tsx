@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Calendar, Music, User, Building, Heart, Filter, Grid, List, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Calendar, Music, User, Building, Heart, Filter, Grid, List, ChevronDown, ChevronUp, MapPin, X } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import SearchFilters from '../components/SearchFilters';
@@ -153,8 +152,8 @@ const EventCard = ({ event }) => {
     switch(category) {
       case 'family-friendly': return <User size={18} />;
       case 'music': return <Music size={18} />;
-      case 'night-life': return <Moon size={18} />;
-      case 'community': return <Users size={18} />;
+      case 'night-life': return <Calendar size={18} />;
+      case 'community': return <User size={18} />;
       case 'business': return <Building size={18} />;
       case 'wellness': return <Heart size={18} />;
       default: return <Calendar size={18} />;

@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Building, Shield, AlertTriangle, Car, Briefcase, School, Library, DollarSign, Scale, Users, Crown, BuildingCommunity, Filter, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { Search, Building, Shield, AlertTriangle, Car, Briefcase, School, Library, DollarSign, Scale, User, Crown, Filter, ChevronDown, ChevronUp, X, MapPin, Clock, Phone, Grid, List } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import SearchFilters from '../components/SearchFilters';
@@ -212,9 +211,9 @@ const ServiceCard = ({ service }) => {
       case 'cultural-affairs': return <Library size={18} />;
       case 'financial-services': return <DollarSign size={18} />;
       case 'justice-and-courts': return <Scale size={18} />;
-      case 'labor-and-jobs': return <Users size={18} />;
+      case 'labor-and-jobs': return <User size={18} />;
       case 'governors-office': return <Crown size={18} />;
-      case 'mayors-offices': return <BuildingCommunity size={18} />;
+      case 'mayors-offices': return <Building size={18} />;
       default: return <Building size={18} />;
     }
   };

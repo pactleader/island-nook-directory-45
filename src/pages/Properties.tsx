@@ -115,10 +115,20 @@ const Properties = () => {
         sortedProperties.sort((a, b) => b.price - a.price);
         break;
       case 'newest':
-        sortedProperties.sort((a, b) => new Date(b.listedDate).getTime() - new Date(a.listedDate).getTime());
+        sortedProperties.sort((a, b) => {
+          // Use createdAt as fallback if listedDate is not available
+          const dateA = a.listedDate || a.createdAt;
+          const dateB = b.listedDate || b.createdAt;
+          return new Date(dateB).getTime() - new Date(dateA).getTime();
+        });
         break;
       case 'oldest':
-        sortedProperties.sort((a, b) => new Date(a.listedDate).getTime() - new Date(b.listedDate).getTime());
+        sortedProperties.sort((a, b) => {
+          // Use createdAt as fallback if listedDate is not available
+          const dateA = a.listedDate || a.createdAt;
+          const dateB = b.listedDate || b.createdAt;
+          return new Date(dateA).getTime() - new Date(dateB).getTime();
+        });
         break;
       default:
         break;
@@ -374,7 +384,7 @@ const Properties = () => {
                     }
                   }}
                 >
-                  <span className="text-sm">Sort: </span>
+                  <span className="text-sm">Sort: </span> 
                   <span className="font-medium text-sm">
                     {sortOption === 'newest' ? 'Newest' : 
                      sortOption === 'oldest' ? 'Oldest' : 

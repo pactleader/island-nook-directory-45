@@ -52,7 +52,6 @@ export interface PropertyListing {
   featured?: boolean;
   createdAt: string;
   updatedAt: string;
-  listedDate?: string;
 }
 
 // Vehicle Listings
@@ -600,8 +599,7 @@ export const mockProperties: PropertyListing[] = [
     ],
     featured: true,
     createdAt: "2023-05-12T08:30:00Z",
-    updatedAt: "2023-11-05T15:45:00Z",
-    listedDate: "2023-05-15T00:00:00Z"
+    updatedAt: "2023-11-05T15:45:00Z"
   },
   {
     id: "p002",
@@ -631,8 +629,7 @@ export const mockProperties: PropertyListing[] = [
     ],
     featured: false,
     createdAt: "2023-06-20T10:15:00Z",
-    updatedAt: "2023-10-10T12:30:00Z",
-    listedDate: "2023-06-25T00:00:00Z"
+    updatedAt: "2023-10-10T12:30:00Z"
   },
   {
     id: "p003",
@@ -660,171 +657,483 @@ export const mockProperties: PropertyListing[] = [
     ],
     featured: true,
     createdAt: "2023-02-05T09:00:00Z",
-    updatedAt: "2023-09-22T14:15:00Z",
-    listedDate: "2023-02-10T00:00:00Z"
+    updatedAt: "2023-09-22T14:15:00Z"
+  },
+  {
+    id: "p004",
+    title: "Island View Hotel for Sale",
+    propertyType: "hotel",
+    price: 7500000,
+    bedrooms: 32,
+    bathrooms: 35,
+    sqft: 28000,
+    description: "Established hotel with 32 rooms, restaurant, pool, and stunning ocean views. Strong tourist clientele and excellent reputation. Turnkey operation with trained staff.",
+    features: [
+      "32 Guest Rooms",
+      "Restaurant & Bar",
+      "Swimming Pool",
+      "Conference Room",
+      "Beach Access",
+      "Established Business",
+      "Staff Accommodations",
+      "Backup Generator"
+    ],
+    street: "101 Beach Road",
+    village: "Susupe",
+    island: "Saipan",
+    images: [
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&auto=format&fit=crop"
+    ],
+    featured: false,
+    createdAt: "2023-01-10T11:30:00Z",
+    updatedAt: "2023-08-15T16:45:00Z"
+  },
+  {
+    id: "p005",
+    title: "Development Land with Ocean Views",
+    propertyType: "land",
+    price: 950000,
+    sqft: 87120, // 2 acres
+    description: "Prime development land with spectacular ocean views. Ideal for residential subdivision or resort development. All utilities available at the property line.",
+    features: [
+      "Ocean Views",
+      "2 Acres",
+      "Utilities Available",
+      "Road Access",
+      "Cleared Land",
+      "Development Potential",
+      "Near Attractions",
+      "Zoned for Mixed-Use"
+    ],
+    street: "Marine Drive",
+    village: "Marpi",
+    island: "Saipan",
+    images: [
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1485996774424-5ce44db3837c?w=800&auto=format&fit=crop"
+    ],
+    featured: true,
+    createdAt: "2023-03-15T13:45:00Z",
+    updatedAt: "2023-07-20T09:30:00Z"
+  },
+  {
+    id: "p006",
+    title: "Qualifying Certificate Eligible Property",
+    propertyType: "economic-incentive",
+    price: 3200000,
+    sqft: 130680, // 3 acres
+    description: "Strategic investment opportunity eligible for CNMI Qualifying Certificate program with tax benefits. Ideal for major development projects with government incentives.",
+    features: [
+      "Qualifying Certificate Eligible",
+      "Tax Incentives",
+      "3 Acres",
+      "Utilities Ready",
+      "Development Ready",
+      "Master Plan Approved",
+      "Environmental Study Complete",
+      "Government Support"
+    ],
+    street: "202 Investment Way",
+    village: "Lower Base",
+    island: "Saipan",
+    images: [
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=800&auto=format&fit=crop"
+    ],
+    featured: false,
+    createdAt: "2022-12-01T08:00:00Z",
+    updatedAt: "2023-06-05T11:15:00Z"
   }
 ];
 
-// Mock Vehicles (you'll need to add this)
+// Mock Vehicles
 export const mockVehicles: VehicleListing[] = [
   {
-    id: "v001",
-    title: "2019 Toyota Tacoma TRD Off-Road",
-    price: 34995,
-    condition: "used",
-    year: 2019,
-    make: "Toyota",
-    model: "Tacoma",
-    bodyStyle: "Pickup Truck",
-    transmission: "Automatic",
-    mileage: 35000,
-    exteriorColor: "Magnetic Gray",
-    interiorColor: "Black",
-    fuelType: "Gasoline",
-    engine: "3.5L V6",
-    features: [
-      "4WD",
-      "Navigation System",
-      "Bluetooth",
-      "Backup Camera",
-      "Tow Package",
-      "Roof Rack",
-      "Bed Liner",
-      "Off-Road Package"
-    ],
-    description: "Well-maintained 2019 Toyota Tacoma TRD Off-Road with low mileage. Perfect for island living and off-road adventures. Includes factory warranty.",
-    sellerType: "dealer",
-    sellerName: "Island Motors",
-    sellerLocation: "Garapan, Saipan",
-    sellerContact: "(670) 234-5678",
-    images: [
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&auto=format&fit=crop"
-    ],
-    createdAt: "2023-04-15T10:30:00Z"
-  },
-  {
-    id: "v002",
-    title: "2020 Honda CR-V EX-L",
-    price: 29500,
-    condition: "used",
+    id: 'v-001',
+    title: '2020 Toyota RAV4 XLE Premium AWD',
+    price: 28995,
+    condition: 'used',
     year: 2020,
-    make: "Honda",
-    model: "CR-V",
-    bodyStyle: "SUV",
-    transmission: "CVT",
-    mileage: 22500,
-    exteriorColor: "Pearl White",
-    interiorColor: "Tan Leather",
-    fuelType: "Gasoline",
-    engine: "1.5L Turbo",
+    make: 'Toyota',
+    model: 'RAV4',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    mileage: 35420,
+    exteriorColor: 'Silver Sky Metallic',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '2.5L I4',
     features: [
-      "AWD",
-      "Leather Seats",
-      "Sunroof",
-      "Apple CarPlay",
-      "Android Auto",
-      "Lane Keep Assist",
-      "Adaptive Cruise Control",
-      "Heated Seats"
+      'Backup Camera',
+      'Bluetooth',
+      'Sunroof',
+      'AWD',
+      'Apple CarPlay',
+      'Android Auto',
+      'Keyless Entry',
+      'Lane Departure Warning'
     ],
-    description: "One-owner 2020 Honda CR-V EX-L with low mileage and all maintenance records. Perfect family vehicle with plenty of cargo space and excellent fuel economy.",
-    sellerType: "private",
-    sellerName: "John Smith",
-    sellerLocation: "San Vicente, Saipan",
-    sellerContact: "(670) 788-1234",
+    description: 'This 2020 Toyota RAV4 XLE Premium features a clean Carfax, AWD, and is loaded with features including a sunroof, power liftgate, and Toyota Safety Sense.',
+    sellerType: 'dealer',
+    sellerName: 'Toyota of Saipan',
+    sellerLocation: 'Garapan, Saipan',
+    sellerContact: '(670) 234-5678',
     images: [
-      "https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&auto=format&fit=crop"
+      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1563720223185-11ff8a2c45c8?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=800&auto=format&fit=crop'
     ],
-    createdAt: "2023-05-20T14:45:00Z"
+    createdAt: '2023-10-12T10:30:00Z'
   },
   {
-    id: "v003",
-    title: "2023 Hyundai Tucson Limited",
-    price: 37995,
-    condition: "new",
-    year: 2023,
-    make: "Hyundai",
-    model: "Tucson",
-    bodyStyle: "SUV",
-    transmission: "Automatic",
-    mileage: 15,
-    exteriorColor: "Amazon Gray",
-    interiorColor: "Black",
-    fuelType: "Hybrid",
-    engine: "1.6L Turbo Hybrid",
+    id: 'v-002',
+    title: '2021 Honda Civic EX Sedan',
+    price: 23450,
+    condition: 'used',
+    year: 2021,
+    make: 'Honda',
+    model: 'Civic',
+    bodyStyle: 'Sedan',
+    transmission: 'CVT',
+    mileage: 18250,
+    exteriorColor: 'Modern Steel Metallic',
+    interiorColor: 'Gray',
+    fuelType: 'Gasoline',
+    engine: '1.5L Turbo I4',
     features: [
-      "AWD",
-      "Panoramic Sunroof",
-      "360-degree Camera",
-      "Wireless Charging",
-      "Remote Smart Parking Assist",
-      "Ventilated Front Seats",
-      "Bose Premium Audio",
-      "10.25-inch Touchscreen"
+      'Backup Camera',
+      'Bluetooth',
+      'Honda Sensing',
+      'Apple CarPlay',
+      'Android Auto',
+      'Heated Seats',
+      'Keyless Entry'
     ],
-    description: "Brand new 2023 Hyundai Tucson Limited Hybrid with full factory warranty. Cutting-edge technology, excellent fuel efficiency, and spacious interior make this the perfect vehicle for island living.",
-    sellerType: "dealer",
-    sellerName: "Marianas Auto Group",
-    sellerLocation: "Chalan Kanoa, Saipan",
-    sellerContact: "(670) 235-6789",
+    description: 'Low mileage 2021 Honda Civic EX with advanced safety features, excellent fuel economy, and a smooth ride. Perfect for island driving with great reliability.',
+    sellerType: 'dealer',
+    sellerName: 'Joeten Motors',
+    sellerLocation: 'Susupe, Saipan',
+    sellerContact: '(670) 234-4321',
     images: [
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&auto=format&fit=crop"
+      'https://images.unsplash.com/photo-1533106418989-88406c7cc8ca?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&auto=format&fit=crop'
     ],
-    createdAt: "2023-06-10T09:15:00Z"
+    createdAt: '2023-11-05T14:15:00Z'
+  },
+  {
+    id: 'v-003',
+    title: '2022 Ford Bronco Sport Big Bend',
+    price: 33995,
+    condition: 'used',
+    year: 2022,
+    make: 'Ford',
+    model: 'Bronco Sport',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    mileage: 12560,
+    exteriorColor: 'Area 51 Blue',
+    interiorColor: 'Ebony Black',
+    fuelType: 'Gasoline',
+    engine: '1.5L EcoBoost',
+    features: [
+      '4WD',
+      'Backup Camera',
+      'Bluetooth',
+      'Ford Co-Pilot360',
+      'Apple CarPlay',
+      'Android Auto',
+      'Terrain Management System'
+    ],
+    description: 'Barely used 2022 Ford Bronco Sport Big Bend. Perfect for exploring the islands with its 4WD capability and rugged styling. Loaded with tech features and still under warranty.',
+    sellerType: 'private',
+    sellerName: 'Michael Chen',
+    sellerLocation: 'San Jose, Tinian',
+    sellerContact: '(670) 788-1234',
+    images: [
+      'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1593055357429-62b6bbdad91f?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1546027032-5f49113406d5?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-12-02T09:45:00Z'
+  },
+  {
+    id: 'v-004',
+    title: '2023 Kia Telluride SX Prestige',
+    price: 47990,
+    condition: 'new',
+    year: 2023,
+    make: 'Kia',
+    model: 'Telluride',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    exteriorColor: 'Glacial White Pearl',
+    interiorColor: 'Terracotta',
+    fuelType: 'Gasoline',
+    engine: '3.8L V6',
+    features: [
+      'AWD',
+      'Navigation',
+      'Premium Audio',
+      'Panoramic Sunroof',
+      'Heads-Up Display',
+      'Heated/Ventilated Seats',
+      '360-Degree Camera'
+    ],
+    description: 'Brand new 2023 Kia Telluride SX Prestige with all the luxury features. This 7-passenger SUV offers premium comfort with Nappa leather, dual sunroofs, and the latest technology.',
+    sellerType: 'dealer',
+    sellerName: 'Triple J Motors',
+    sellerLocation: 'Garapan, Saipan',
+    sellerContact: '(670) 234-7135',
+    images: [
+      'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1621963899144-11f0ecd1833b?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2024-01-15T11:20:00Z'
+  },
+  {
+    id: 'v-005',
+    title: '2019 Jeep Wrangler Unlimited Rubicon',
+    price: 41500,
+    condition: 'used',
+    year: 2019,
+    make: 'Jeep',
+    model: 'Wrangler',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    mileage: 28750,
+    exteriorColor: 'Firecracker Red',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '3.6L V6',
+    features: [
+      '4WD',
+      'Removable Top',
+      'Off-Road Package',
+      'LED Lighting',
+      'Navigation',
+      'Premium Audio',
+      'Tow Package'
+    ],
+    description: 'Adventure-ready 2019 Jeep Wrangler Unlimited Rubicon. Equipped with factory lift, premium wheels, and upgraded bumpers. Perfect for island exploration with 4WD capability.',
+    sellerType: 'private',
+    sellerName: 'Sarah Johnson',
+    sellerLocation: 'Songsong, Rota',
+    sellerContact: '(670) 788-5678',
+    images: [
+      'https://images.unsplash.com/photo-1608494402683-c8cc8e1ed0ec?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1626072778346-0ab6604d191c?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1625593383756-d020e4204b7e?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-09-25T15:30:00Z'
+  },
+  {
+    id: 'v-006',
+    title: '2021 Subaru Forester Premium',
+    price: 29750,
+    condition: 'used',
+    year: 2021,
+    make: 'Subaru',
+    model: 'Forester',
+    bodyStyle: 'SUV',
+    transmission: 'CVT',
+    mileage: 15980,
+    exteriorColor: 'Horizon Blue Pearl',
+    interiorColor: 'Gray',
+    fuelType: 'Gasoline',
+    engine: '2.5L H4',
+    features: [
+      'AWD',
+      'Panoramic Moonroof',
+      'EyeSight Driver Assist',
+      'Heated Seats',
+      'Apple CarPlay',
+      'Android Auto',
+      'X-Mode'
+    ],
+    description: 'Well-maintained 2021 Subaru Forester Premium with Symmetrical All-Wheel Drive. Excellent for all weather conditions with advanced safety features and spacious interior.',
+    sellerType: 'dealer',
+    sellerName: 'Island Auto Gallery',
+    sellerLocation: 'Chalan Kanoa, Saipan',
+    sellerContact: '(670) 235-7890',
+    images: [
+      'https://images.unsplash.com/photo-1629897048514-3dd66175e0fe?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1631184973894-12080f5ef4da?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1628859017536-e8e3c4db8754?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-10-30T12:45:00Z'
+  },
+  {
+    id: 'v-007',
+    title: '2022 Tesla Model Y Long Range',
+    price: 56490,
+    condition: 'new',
+    year: 2022,
+    make: 'Tesla',
+    model: 'Model Y',
+    bodyStyle: 'SUV',
+    transmission: 'Automatic',
+    exteriorColor: 'Pearl White',
+    interiorColor: 'Black',
+    fuelType: 'Electric',
+    engine: 'Dual Motor Electric',
+    features: [
+      'AWD',
+      'Autopilot',
+      'Premium Interior',
+      'Glass Roof',
+      'Navigation',
+      '15" Touchscreen',
+      'Supercharging Capability'
+    ],
+    description: 'New 2022 Tesla Model Y Long Range with dual motor AWD. Features include premium interior, enhanced autopilot, and an incredible 330-mile range on a single charge.',
+    sellerType: 'dealer',
+    sellerName: 'EV Motors Saipan',
+    sellerLocation: 'San Antonio, Saipan',
+    sellerContact: '(670) 233-9876',
+    images: [
+      'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1619021109758-cc22446b726c?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1615834772906-d676102dd3e8?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2024-02-01T10:15:00Z'
+  },
+  {
+    id: 'v-008',
+    title: '2020 Toyota Tacoma TRD Off-Road',
+    price: 36995,
+    condition: 'used',
+    year: 2020,
+    make: 'Toyota',
+    model: 'Tacoma',
+    bodyStyle: 'Truck',
+    transmission: 'Automatic',
+    mileage: 31250,
+    exteriorColor: 'Army Green',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '3.5L V6',
+    features: [
+      '4WD',
+      'Off-Road Package',
+      'Bed Liner',
+      'Tow Package',
+      'Navigation',
+      'Blind Spot Monitor',
+      'Wireless Charging'
+    ],
+    description: 'Rugged 2020 Toyota Tacoma TRD Off-Road with upgraded suspension, all-terrain tires, and skid plates. Perfect island truck with 4WD capability and excellent reliability.',
+    sellerType: 'private',
+    sellerName: 'David Torres',
+    sellerLocation: 'San Roque, Saipan',
+    sellerContact: '(670) 788-4321',
+    images: [
+      'https://images.unsplash.com/photo-1612911912304-c3c83c33f895?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1626072225909-ff7e325bead0?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1626072725148-ba70cc34b286?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-11-15T13:30:00Z'
   }
 ];
 
 // Mock Blog Posts
 export const mockBlogPosts: BlogPost[] = [
   {
-    id: "blog001",
-    title: "Top 10 Beaches in the Northern Marianas",
-    slug: "top-10-beaches-northern-marianas",
-    excerpt: "Discover the most beautiful beaches across Saipan, Tinian, and Rota, from popular tourist spots to hidden local gems.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl...",
+    id: "blog-001",
+    title: "10 Best Beaches in the Northern Mariana Islands",
+    slug: "10-best-beaches-northern-mariana-islands",
+    excerpt: "Discover the pristine shores and hidden gems among the Northern Mariana Islands' most beautiful beaches.",
+    content: "The Northern Mariana Islands boast some of the most stunning beaches in the Pacific. From the powdery white sands of Micro Beach to the historic shores of Chalan Kanoa Beach, there's a perfect spot for every type of beach lover...",
     author: {
       name: "Maria Santos",
       avatar: "https://randomuser.me/api/portraits/women/12.jpg"
     },
-    category: "Travel",
-    tags: ["beaches", "tourism", "travel", "Saipan", "Tinian", "Rota"],
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop",
+    category: "travel",
+    tags: ["beaches", "travel", "swimming", "snorkeling"],
+    image: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=800&auto=format&fit=crop",
     featured: true,
-    publishedAt: "2023-04-15T10:00:00Z"
+    publishedAt: "2023-04-15T08:00:00Z"
   },
   {
-    id: "blog002",
-    title: "Living in Saipan: A Local's Guide to Island Life",
-    slug: "living-in-saipan-locals-guide",
-    excerpt: "Everything you need to know about living in Saipan, from housing and transportation to shopping and entertainment.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl...",
+    id: "blog-002",
+    title: "A Guide to Tropical Storm Preparedness",
+    slug: "tropical-storm-preparedness-guide",
+    excerpt: "Essential tips and resources for preparing your home and family for the tropical storm season.",
+    content: "Living in the Marianas means being prepared for tropical storms and typhoons. This comprehensive guide covers everything from securing your property to creating an emergency kit and evacuation plan...",
     author: {
-      name: "James Fitial",
+      name: "John Rivera",
       avatar: "https://randomuser.me/api/portraits/men/32.jpg"
     },
-    category: "Lifestyle",
-    tags: ["living", "Saipan", "expats", "housing", "tips"],
-    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&auto=format&fit=crop",
+    category: "safety",
+    tags: ["typhoon", "preparedness", "safety", "emergency"],
+    image: "https://images.unsplash.com/photo-1612356300593-99d81f8817a4?w=800&auto=format&fit=crop",
     featured: false,
-    publishedAt: "2023-05-22T14:30:00Z"
+    publishedAt: "2023-05-22T10:30:00Z"
   },
   {
-    id: "blog003",
-    title: "Investing in CNMI Real Estate: What You Need to Know",
-    slug: "investing-cnmi-real-estate-guide",
-    excerpt: "A comprehensive guide to real estate investment opportunities in the Commonwealth of the Northern Mariana Islands.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl...",
+    id: "blog-003",
+    title: "Island Real Estate Market Trends for 2023",
+    slug: "island-real-estate-market-trends-2023",
+    excerpt: "Analysis of the current real estate market in the Northern Mariana Islands and predictions for the future.",
+    content: "The real estate market in the CNMI has shown remarkable resilience and growth in recent years. This article examines current trends, popular neighborhoods, investment opportunities, and expert predictions for the remainder of 2023...",
     author: {
-      name: "David Chen",
-      avatar: "https://randomuser.me/api/portraits/men/47.jpg"
+      name: "David Camacho",
+      avatar: "https://randomuser.me/api/portraits/men/45.jpg"
     },
-    category: "Real Estate",
-    tags: ["investment", "real estate", "property", "business", "CNMI"],
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop",
+    category: "real-estate",
+    tags: ["real estate", "investment", "market trends", "property"],
+    image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&auto=format&fit=crop",
     featured: true,
-    publishedAt: "2023-06-10T09:15:00Z"
+    publishedAt: "2023-06-05T09:15:00Z"
+  },
+  {
+    id: "blog-004",
+    title: "Traditional Chamorro Recipes: A Culinary Journey",
+    slug: "traditional-chamorro-recipes",
+    excerpt: "Explore the rich flavors and techniques of traditional Chamorro cuisine with these authentic recipes.",
+    content: "Chamorro cuisine is a delicious blend of indigenous, Spanish, Filipino, and American influences. Learn how to prepare classic dishes like kelaguen, red rice, and chicken estufao with these traditional family recipes...",
+    author: {
+      name: "Ana Borja",
+      avatar: "https://randomuser.me/api/portraits/women/22.jpg"
+    },
+    category: "culture",
+    tags: ["food", "cooking", "chamorro", "recipes"],
+    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop",
+    featured: false,
+    publishedAt: "2023-07-12T11:45:00Z"
+  },
+  {
+    id: "blog-005",
+    title: "Transportation Guide: Getting Around the Islands",
+    slug: "transportation-guide-northern-mariana-islands",
+    excerpt: "Tips and information on the best ways to navigate transportation on Saipan, Tinian, and Rota.",
+    content: "Getting around the Northern Mariana Islands can be challenging without proper planning. This guide covers rental car options, public transportation, island hopping by ferry and small aircraft, and insider tips for saving time and money...",
+    author: {
+      name: "Mark Tenorio",
+      avatar: "https://randomuser.me/api/portraits/men/67.jpg"
+    },
+    category: "travel",
+    tags: ["transportation", "travel tips", "car rental", "island hopping"],
+    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&auto=format&fit=crop",
+    featured: false,
+    publishedAt: "2023-08-03T13:20:00Z"
+  },
+  {
+    id: "blog-006",
+    title: "Best Hiking Trails in the Marianas",
+    slug: "best-hiking-trails-marianas",
+    excerpt: "Discover the most scenic and rewarding hiking paths across Saipan, Tinian, and Rota.",
+    content: "From the challenging climb to Mt. Tapochau to the historic Forbidden Island trail, the Northern Mariana Islands offer numerous hiking opportunities for outdoor enthusiasts. This article details the best trails, difficulty levels, and what to expect along the way...",
+    author: {
+      name: "James Cruz",
+      avatar: "https://randomuser.me/api/portraits/men/52.jpg"
+    },
+    category: "outdoors",
+    tags: ["hiking", "outdoors", "nature", "trails"],
+    image: "https://images.unsplash.com/photo-1501554728187-ce583db33af7?w=800&auto=format&fit=crop",
+    featured: true,
+    publishedAt: "2023-09-18T07:50:00Z"
   }
 ];

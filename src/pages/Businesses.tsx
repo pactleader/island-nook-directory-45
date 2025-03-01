@@ -1,23 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, List, Search, ChevronDown, ChevronUp, X, Building, Globe, Users } from 'lucide-react';
+import { Grid, List, Search, ChevronDown, ChevronUp, X, Building } from 'lucide-react';
 import { mockBusinesses, businessCategories } from '../utils/mockData';
 import Navigation from '../components/Navigation';
 import BusinessCard from '../components/BusinessCard';
 import Footer from '../components/Footer';
-
-// Add this reusable button component
-const FilterPresetButton = ({ label, active, onClick, icon: Icon }) => (
-  <button
-    onClick={onClick}
-    className={`px-4 py-2 rounded-md flex items-center ${
-      active ? 'bg-gray-800 text-white' : 'bg-white text-gray-800 border border-gray-200'
-    } hover:shadow-md transition-all duration-200`}
-  >
-    {Icon && <Icon size={16} className="mr-2" />}
-    <span>{label}</span>
-  </button>
-);
 
 const Businesses = () => {
   const [businesses, setBusinesses] = useState(mockBusinesses);
@@ -27,37 +14,6 @@ const Businesses = () => {
   const [activeSubcategories, setActiveSubcategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showCategories, setShowCategories] = useState(true);
-  
-  // Add new state for preset filters
-  const [activePreset, setActivePreset] = useState(null);
-  
-  // Define tourist and local category sets
-  const touristCategories = ['tour-guides', 'restaurants', 'shopping-and-stores', 'healthcare', 'religious'];
-  const localCategories = Object.keys(businessCategories).filter(cat => cat !== 'tour-guides');
-  
-  // Handle preset filter clicks
-  const handlePresetClick = (preset) => {
-    setActivePreset(preset === activePreset ? null : preset);
-    
-    // Clear existing filters first
-    setActiveCategory(null);
-    setActiveSubcategories([]);
-    
-    if (preset === 'tourist') {
-      // For tourists, show only specific categories
-      setBusinesses(mockBusinesses.filter(business => 
-        touristCategories.includes(business.category)
-      ));
-    } else if (preset === 'local') {
-      // For locals, show all categories except tour guides
-      setBusinesses(mockBusinesses.filter(business => 
-        business.category !== 'tour-guides'
-      ));
-    } else {
-      // If no preset is active, show all businesses
-      setBusinesses(mockBusinesses);
-    }
-  };
   
   // Handle search
   const handleSearch = () => {
@@ -199,22 +155,6 @@ const Businesses = () => {
           <div className="mb-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Business Directory</h1>
             <p className="text-gray-600">Find local businesses and services throughout the Northern Mariana Islands</p>
-          </div>
-          
-          {/* Filter Preset Buttons */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            <FilterPresetButton 
-              label="Tourist" 
-              active={activePreset === 'tourist'} 
-              onClick={() => handlePresetClick('tourist')}
-              icon={Globe}
-            />
-            <FilterPresetButton 
-              label="Local" 
-              active={activePreset === 'local'} 
-              onClick={() => handlePresetClick('local')}
-              icon={Users}
-            />
           </div>
           
           {/* Search Area */}

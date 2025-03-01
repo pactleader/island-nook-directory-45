@@ -128,8 +128,18 @@ const Businesses = () => {
       .join(' ');
   };
 
-  // Define featured categories (Healthcare, Religious, Tour Guides)
-  const featuredCategories = ['healthcare', 'religious', 'tour-guides'];
+  // Define featured categories 
+  const featuredCategories = [
+    'tour-guides', 
+    'restaurants', 
+    'professional-services', 
+    'mechanics-and-cars', 
+    'home-contractors', 
+    'shopping-and-stores', 
+    'healthcare', 
+    'religious',
+    'other'
+  ];
   
   // Other categories excluding featured categories
   const otherCategories = Object.keys(businessCategories).filter(
@@ -198,7 +208,7 @@ const Businesses = () => {
               </button>
             </div>
             
-            {/* Category and Subcategory Filters - Always Visible */}
+            {/* Category and Subcategory Filters */}
             {showCategories && (
               <div className="mt-3">
                 <h3 className="text-lg font-semibold mb-3">Browse by Category</h3>
@@ -213,34 +223,44 @@ const Businesses = () => {
                         onClick={() => handleCategorySelect(key)}
                         className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
                       >
-                        {businessCategories[key] ? businessCategories[key].label : formatCategoryName(key)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Other Categories Section */}
-                <div>
-                  <h4 className="text-sm text-gray-500 mb-2">Other Categories</h4>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {otherCategories.map((key) => (
-                      <button
-                        key={key}
-                        onClick={() => handleCategorySelect(key)}
-                        className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
-                      >
-                        {key === 'shopping-and-stores' ? 'Shopping & Stores' : 
+                        {key === 'shopping-and-stores' ? 'Stores & Shopping' :
+                         key === 'mechanics-and-cars' ? 'Mechanics' :
+                         key === 'home-contractors' ? 'Home & Building Contractors' :
+                         key === 'professional-services' ? 'Professional Services' :
+                         key === 'other' ? 'Other Services' :
                          (businessCategories[key] ? businessCategories[key].label : formatCategoryName(key))}
                       </button>
                     ))}
                   </div>
                 </div>
                 
+                {/* Other Categories Section - Only shown if there are any non-featured categories */}
+                {otherCategories.length > 0 && (
+                  <div>
+                    <h4 className="text-sm text-gray-500 mb-2">Other Categories</h4>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {otherCategories.map((key) => (
+                        <button
+                          key={key}
+                          onClick={() => handleCategorySelect(key)}
+                          className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
+                        >
+                          {(businessCategories[key] ? businessCategories[key].label : formatCategoryName(key))}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
                 {/* Subcategories (only shown when a category is selected) */}
                 {activeCategory && businessCategories[activeCategory] && (
                   <div className="mt-4">
                     <h3 className="text-md font-medium mb-2">
-                      {activeCategory === 'shopping-and-stores' ? 'Shopping & Stores' : 
+                      {activeCategory === 'shopping-and-stores' ? 'Stores & Shopping' : 
+                       activeCategory === 'mechanics-and-cars' ? 'Mechanics' :
+                       activeCategory === 'home-contractors' ? 'Home & Building Contractors' :
+                       activeCategory === 'professional-services' ? 'Professional Services' :
+                       activeCategory === 'other' ? 'Other Services' :
                        businessCategories[activeCategory].label} Subcategories
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -267,7 +287,11 @@ const Businesses = () => {
                 <span className="font-semibold text-gray-900">{businesses.length}</span> businesses
                 {activeCategory && businessCategories[activeCategory] && (
                   <span> in <span className="font-medium">
-                    {activeCategory === 'shopping-and-stores' ? 'Shopping & Stores' : 
+                    {activeCategory === 'shopping-and-stores' ? 'Stores & Shopping' : 
+                     activeCategory === 'mechanics-and-cars' ? 'Mechanics' :
+                     activeCategory === 'home-contractors' ? 'Home & Building Contractors' :
+                     activeCategory === 'professional-services' ? 'Professional Services' :
+                     activeCategory === 'other' ? 'Other Services' :
                      businessCategories[activeCategory].label}
                   </span></span>
                 )}

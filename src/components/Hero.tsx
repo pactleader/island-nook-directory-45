@@ -75,15 +75,33 @@ const Hero = ({
             </p>
           )}
           
-          {buttonText && (
-            <div className="animate-slide-up opacity-0" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
+          {/* Display the dual buttons for visitor and local if buttonText is not explicitly provided */}
+          {!buttonText ? (
+            <div className="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up opacity-0" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
               <Link
-                to={buttonLink}
+                to="/properties"
                 className="inline-block px-6 py-3 bg-white text-gray-900 font-medium rounded-md hover:bg-gray-100 transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
               >
-                {buttonText}
+                Search as a Visitor
+              </Link>
+              <Link
+                to="/properties"
+                className="inline-block px-6 py-3 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-800 transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
+              >
+                Search as a Local
               </Link>
             </div>
+          ) : (
+            buttonText && (
+              <div className="animate-slide-up opacity-0" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
+                <Link
+                  to={buttonLink}
+                  className="inline-block px-6 py-3 bg-white text-gray-900 font-medium rounded-md hover:bg-gray-100 transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
+                >
+                  {buttonText}
+                </Link>
+              </div>
+            )
           )}
         </div>
       </div>

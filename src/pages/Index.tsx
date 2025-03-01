@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
@@ -20,8 +19,6 @@ const Index = () => {
       <Hero 
         title="Discover the Northern Mariana Islands"
         subtitle="Your complete directory for properties, vehicles, and local businesses"
-        buttonText="Explore Now"
-        buttonLink="/properties"
         backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b"
         size="large"
       />

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Map, Car, Building, List } from 'lucide-react';
+import { Home, Map, Car, Building, List, Calendar, Landmark } from 'lucide-react';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -52,6 +52,8 @@ const Navigation = () => {
             <NavLink to="/properties" icon={<Map size={16} />} label="Properties" isActive={isActive('/properties')} />
             <NavLink to="/vehicles" icon={<Car size={16} />} label="Vehicles" isActive={isActive('/vehicles')} />
             <NavLink to="/businesses" icon={<Building size={16} />} label="Businesses" isActive={isActive('/businesses')} />
+            <NavLink to="/events" icon={<Calendar size={16} />} label="Events" isActive={isActive('/events')} />
+            <NavLink to="/government-services" icon={<Landmark size={16} />} label="Government" isActive={isActive('/government-services')} />
             <NavLink to="/blog" icon={<List size={16} />} label="Blog" isActive={isActive('/blog')} />
           </nav>
           
@@ -131,6 +133,8 @@ const MobileMenu = () => {
               <MobileNavLink to="/properties" icon={<Map size={18} />} label="Properties" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Vehicles" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/businesses" icon={<Building size={18} />} label="Businesses" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/events" icon={<Calendar size={18} />} label="Events" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/government-services" icon={<Landmark size={18} />} label="Government" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/blog" icon={<List size={18} />} label="Blog" onClick={() => setIsOpen(false)} />
             </ul>
           </nav>

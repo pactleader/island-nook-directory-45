@@ -28,6 +28,8 @@ const Footer = () => {
               <FooterLink to="/properties" label="Properties" />
               <FooterLink to="/vehicles" label="Vehicles" />
               <FooterLink to="/businesses" label="Businesses" />
+              <FooterLink to="/events" label="Events" />
+              <FooterLink to="/government-services" label="Government Services" />
               <FooterLink to="/blog" label="Blog" />
             </ul>
           </div>

@@ -213,7 +213,7 @@ const Businesses = () => {
                         onClick={() => handleCategorySelect(key)}
                         className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
                       >
-                        {businessCategories[key as keyof typeof businessCategories].label}
+                        {businessCategories[key] ? businessCategories[key].label : formatCategoryName(key)}
                       </button>
                     ))}
                   </div>
@@ -229,21 +229,22 @@ const Businesses = () => {
                         onClick={() => handleCategorySelect(key)}
                         className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
                       >
-                        {key === 'shopping-and-stores' ? 'Shopping & Stores' : businessCategories[key as keyof typeof businessCategories].label}
+                        {key === 'shopping-and-stores' ? 'Shopping & Stores' : 
+                         (businessCategories[key] ? businessCategories[key].label : formatCategoryName(key))}
                       </button>
                     ))}
                   </div>
                 </div>
                 
                 {/* Subcategories (only shown when a category is selected) */}
-                {activeCategory && (
+                {activeCategory && businessCategories[activeCategory] && (
                   <div className="mt-4">
                     <h3 className="text-md font-medium mb-2">
                       {activeCategory === 'shopping-and-stores' ? 'Shopping & Stores' : 
-                       businessCategories[activeCategory as keyof typeof businessCategories].label} Subcategories
+                       businessCategories[activeCategory].label} Subcategories
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      {businessCategories[activeCategory as keyof typeof businessCategories].subcategories.map((subcategory, index) => (
+                      {businessCategories[activeCategory].subcategories.map((subcategory, index) => (
                         <button
                           key={index}
                           onClick={() => handleSubcategorySelect(subcategory.value)}
@@ -264,10 +265,10 @@ const Businesses = () => {
             <div>
               <p className="text-gray-600">
                 <span className="font-semibold text-gray-900">{businesses.length}</span> businesses
-                {activeCategory && (
+                {activeCategory && businessCategories[activeCategory] && (
                   <span> in <span className="font-medium">
                     {activeCategory === 'shopping-and-stores' ? 'Shopping & Stores' : 
-                     businessCategories[activeCategory as keyof typeof businessCategories].label}
+                     businessCategories[activeCategory].label}
                   </span></span>
                 )}
                 {activeSubcategories.length > 0 && (

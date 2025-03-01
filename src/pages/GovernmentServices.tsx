@@ -5,213 +5,168 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SearchFilters from '../components/SearchFilters';
-import { 
-  Siren, Car, Briefcase, Cloud, Sparkles, School, 
-  Building, DollarSign, Scale, Briefcase as Job, 
-  GraduationCap, Home, MoreHorizontal, 
-  MapPin, Clock, Phone, 
-  List as ListIcon, 
-  Grid as GridIcon
-} from 'lucide-react';
+import { AlertTriangle, Car, Building, FileText, School, Heart, Landmark, Scale, Briefcase, Crown, Home, MoreHorizontal, MapPin, Clock, Phone } from 'lucide-react';
 
 // Mock data for government services
-const mockGovServices = [
+const mockServices = [
   {
     id: 1,
-    name: "Emergency Management Office",
-    description: "Disaster preparedness, response, and recovery services for the CNMI.",
-    image: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc",
-    address: "Caller Box 10007, Saipan, MP 96950",
-    phone: "(670) 237-8000",
-    email: "cnmiemo@gov.mp",
-    website: "https://cnmiemo.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
+    title: "Emergency Medical Services",
+    description: "24/7 emergency medical response services for the Northern Mariana Islands.",
+    image: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b",
+    address: "123 Healthcare Drive, Saipan",
+    hours: "24/7",
+    phone: "(670) 234-8950",
+    website: "https://example.gov/ems",
     category: "Emergency Response",
     featured: true
   },
   {
     id: 2,
-    name: "Bureau of Motor Vehicles",
-    description: "Driver's licensing, vehicle registration, and related services.",
-    image: "https://images.unsplash.com/photo-1556155092-490a1ba16284",
-    address: "Chalan Kanoa, Saipan, MP 96950",
+    title: "Driver's License Office",
+    description: "Obtain, renew, or replace your driver's license and state identification cards.",
+    image: "https://images.unsplash.com/photo-1517026575980-3e1e2dedeab4",
+    address: "456 Government Center, Saipan",
+    hours: "Monday-Friday: 8:00 AM - 4:00 PM",
     phone: "(670) 664-9066",
-    email: "bmv@gov.mp",
-    website: "https://bmv.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
+    website: "https://example.gov/dloffice",
     category: "Motor Vehicle",
     featured: true
   },
   {
     id: 3,
-    name: "Business License Office",
-    description: "Issue and renewal of business licenses for all commercial activities in the CNMI.",
-    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72",
-    address: "Capitol Hill, Saipan, MP 96950",
+    title: "Business Licensing Division",
+    description: "Process and issue business licenses and permits for all commercial activities in the islands.",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85",
+    address: "789 Commerce Plaza, Saipan",
+    hours: "Monday-Friday: 8:00 AM - 4:00 PM",
     phone: "(670) 664-3000",
-    email: "business@gov.mp",
-    website: "https://business.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
+    website: "https://example.gov/business",
     category: "Business and Licenses",
     featured: false
   },
   {
     id: 4,
-    name: "Building Safety Office",
-    description: "Building permits, inspections, and code enforcement services.",
+    title: "Building Permit Office",
+    description: "Apply for and obtain building permits and inspections for construction projects.",
     image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5",
-    address: "Oleai, Saipan, MP 96950",
-    phone: "(670) 234-2268",
-    email: "buildingsafety@gov.mp",
-    website: "https://buildingsafety.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
+    address: "321 Construction Ave, Saipan",
+    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
+    phone: "(670) 664-2200",
+    website: "https://example.gov/permits",
     category: "Permitting and Climate",
     featured: false
   },
   {
     id: 5,
-    name: "Public School System",
-    description: "K-12 education services for the Commonwealth.",
+    title: "Public School District Office",
+    description: "Administrative office for the public school system in the Northern Mariana Islands.",
     image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
-    address: "Capitol Hill, Saipan, MP 96950",
-    phone: "(670) 237-3001",
-    email: "info@cnmipss.org",
-    website: "https://www.cnmipss.org",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
+    address: "555 Education Lane, Saipan",
+    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
+    phone: "(670) 237-3000",
+    website: "https://example.gov/education",
     category: "Education and Child Care",
     featured: true
   },
   {
     id: 6,
-    name: "Department of Finance",
-    description: "Treasury, taxation, and financial management for the CNMI government.",
-    image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad",
-    address: "Capitol Hill, Saipan, MP 96950",
-    phone: "(670) 664-1100",
-    email: "finance@gov.mp",
-    website: "https://finance.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Financial Services",
-    featured: false
-  },
-  {
-    id: 7,
-    name: "Superior Court of the CNMI",
-    description: "Trial court for civil and criminal cases in the Commonwealth.",
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f",
-    address: "Susupe, Saipan, MP 96950",
-    phone: "(670) 235-4128",
-    email: "info@justice.gov.mp",
-    website: "https://www.justice.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Justice and Courts",
-    featured: false
-  },
-  {
-    id: 8,
-    name: "Department of Labor",
-    description: "Employment services, labor standards enforcement, and workforce development.",
-    image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0",
-    address: "Capitol Hill, Saipan, MP 96950",
-    phone: "(670) 664-3196",
-    email: "labor@gov.mp",
-    website: "https://labor.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Labor and Jobs",
-    featured: false
-  },
-  {
-    id: 9,
-    name: "Office of the Governor",
-    description: "Executive branch leadership and administration of government operations.",
-    image: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
-    address: "Capitol Hill, Saipan, MP 96950",
-    phone: "(670) 664-2200",
-    email: "governor@gov.mp",
-    website: "https://governor.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Governors Office",
-    featured: true
-  },
-  {
-    id: 10,
-    name: "Mayor's Office of Saipan",
-    description: "Local government services for the island of Saipan.",
-    image: "https://images.unsplash.com/photo-1577495508326-19a1b3cf65b1",
-    address: "Chalan Kanoa, Saipan, MP 96950",
-    phone: "(670) 234-6208",
-    email: "mayor@saipan.gov.mp",
-    website: "https://saipan.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Mayors Offices",
-    featured: false
-  },
-  {
-    id: 11,
-    name: "Commonwealth Healthcare Corporation",
-    description: "Public health services and hospital operations for the CNMI.",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-    address: "Navy Hill, Saipan, MP 96950",
-    phone: "(670) 234-8950",
-    email: "info@chcc.gov.mp",
-    website: "https://www.chcc.gov.mp",
-    hours: "24/7 Emergency Services",
-    category: "Other Programs",
-    featured: true
-  },
-  {
-    id: 12,
-    name: "Department of Lands and Natural Resources",
-    description: "Environmental protection, agriculture, and natural resource management.",
-    image: "https://images.unsplash.com/photo-1511497584788-876760111969",
-    address: "Lower Base, Saipan, MP 96950",
-    phone: "(670) 322-9834",
-    email: "dlnr@gov.mp",
-    website: "https://dlnr.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Permitting and Climate",
-    featured: false
-  },
-  {
-    id: 13,
-    name: "Department of Community and Cultural Affairs",
-    description: "Cultural preservation, library services, and community programs.",
-    image: "https://images.unsplash.com/photo-1511225317751-5c2d61819d58",
-    address: "Capitol Hill, Saipan, MP 96950",
-    phone: "(670) 664-2587",
-    email: "dcca@gov.mp",
-    website: "https://dcca.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
+    title: "Cultural Heritage Museum",
+    description: "Preserve and celebrate the cultural heritage of the Northern Mariana Islands.",
+    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04",
+    address: "777 History Road, Saipan",
+    hours: "Tuesday-Sunday: 10:00 AM - 5:00 PM",
+    phone: "(670) 664-2160",
+    website: "https://example.gov/museum",
     category: "Cultural Affairs",
     featured: false
   },
   {
-    id: 14,
-    name: "Commonwealth Election Commission",
-    description: "Voter registration and election administration for the CNMI.",
-    image: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c",
-    address: "Susupe, Saipan, MP 96950",
-    phone: "(670) 235-8683",
-    email: "cec@gov.mp",
-    website: "https://cec.gov.mp",
-    hours: "Monday - Friday: 7:30 AM - 4:30 PM",
-    category: "Other Programs",
+    id: 7,
+    title: "Revenue and Taxation Division",
+    description: "Manage tax collection and financial services for the government and residents.",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f",
+    address: "888 Finance Street, Saipan",
+    hours: "Monday-Friday: 8:00 AM - 4:00 PM",
+    phone: "(670) 664-1000",
+    website: "https://example.gov/tax",
+    category: "Financial Services",
     featured: false
   },
+  {
+    id: 8,
+    title: "Superior Court",
+    description: "The trial court of general jurisdiction for the Northern Mariana Islands.",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f",
+    address: "999 Justice Boulevard, Saipan",
+    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
+    phone: "(670) 235-4210",
+    website: "https://example.gov/court",
+    category: "Justice and Courts",
+    featured: true
+  },
+  {
+    id: 9,
+    title: "Department of Labor",
+    description: "Protect workers' rights and regulate employment practices throughout the islands.",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216",
+    address: "111 Worker's Plaza, Saipan",
+    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
+    phone: "(670) 664-3196",
+    website: "https://example.gov/labor",
+    category: "Labor and Jobs",
+    featured: false
+  },
+  {
+    id: 10,
+    title: "Office of the Governor",
+    description: "Executive office for the leadership of the Commonwealth of the Northern Mariana Islands.",
+    image: "https://images.unsplash.com/photo-1536093058399-3e9f9fad20c8",
+    address: "Capitol Hill, Saipan",
+    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
+    phone: "(670) 664-2200",
+    website: "https://example.gov/governor",
+    category: "Governors Office",
+    featured: true
+  },
+  {
+    id: 11,
+    title: "Saipan Mayor's Office",
+    description: "Local government services and support for the municipality of Saipan.",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4",
+    address: "222 Municipal Drive, Saipan",
+    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
+    phone: "(670) 234-6208",
+    website: "https://example.gov/saipan",
+    category: "Mayors Offices",
+    featured: false
+  },
+  {
+    id: 12,
+    title: "Veterans Affairs Office",
+    description: "Support and resources for military veterans living in the Northern Mariana Islands.",
+    image: "https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c",
+    address: "333 Veterans Memorial Road, Saipan",
+    hours: "Monday-Friday: 8:00 AM - 4:00 PM",
+    phone: "(670) 664-2650",
+    website: "https://example.gov/veterans",
+    category: "Other Programs",
+    featured: false
+  }
 ];
 
 // Government service categories with their respective icons
 const serviceCategories = [
-  { name: "Emergency Response", icon: <Siren size={20} /> },
+  { name: "Emergency Response", icon: <AlertTriangle size={20} /> },
   { name: "Motor Vehicle", icon: <Car size={20} /> },
-  { name: "Business and Licenses", icon: <Briefcase size={20} /> },
-  { name: "Permitting and Climate", icon: <Cloud size={20} /> },
+  { name: "Business and Licenses", icon: <Building size={20} /> },
+  { name: "Permitting and Climate", icon: <FileText size={20} /> },
   { name: "Education and Child Care", icon: <School size={20} /> },
-  { name: "Cultural Affairs", icon: <Sparkles size={20} /> },
-  { name: "Financial Services", icon: <DollarSign size={20} /> },
+  { name: "Cultural Affairs", icon: <Heart size={20} /> },
+  { name: "Financial Services", icon: <Landmark size={20} /> },
   { name: "Justice and Courts", icon: <Scale size={20} /> },
-  { name: "Labor and Jobs", icon: <Job size={20} /> },
-  { name: "Governors Office", icon: <GraduationCap size={20} /> },
+  { name: "Labor and Jobs", icon: <Briefcase size={20} /> },
+  { name: "Governors Office", icon: <Crown size={20} /> },
   { name: "Mayors Offices", icon: <Home size={20} /> },
   { name: "Other Programs", icon: <MoreHorizontal size={20} /> },
 ];
@@ -224,11 +179,11 @@ const filterGroups = [
     multiSelect: true
   },
   {
-    name: "Island",
+    name: "Availability",
     options: [
-      { label: "Saipan", value: "saipan" },
-      { label: "Tinian", value: "tinian" },
-      { label: "Rota", value: "rota" },
+      { label: "Open Now", value: "openNow" },
+      { label: "Open Weekends", value: "weekends" },
+      { label: "24/7 Services", value: "allHours" },
     ]
   }
 ];
@@ -236,30 +191,30 @@ const filterGroups = [
 const GovernmentServices = () => {
   const [activeView, setActiveView] = useState('grid');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [filteredServices, setFilteredServices] = useState(mockGovServices);
+  const [filteredServices, setFilteredServices] = useState(mockServices);
 
   // Handle category selection
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     
     if (category === 'All') {
-      setFilteredServices(mockGovServices);
+      setFilteredServices(mockServices);
     } else {
-      setFilteredServices(mockGovServices.filter(service => service.category === category));
+      setFilteredServices(mockServices.filter(service => service.category === category));
     }
   };
 
   // Handle search and filter
   const handleSearch = (search: string, filters: Record<string, string | string[]>) => {
-    let results = [...mockGovServices];
+    let results = [...mockServices];
     
     // Apply search text filter
     if (search) {
       const searchLower = search.toLowerCase();
       results = results.filter(service => 
-        service.name.toLowerCase().includes(searchLower) ||
+        service.title.toLowerCase().includes(searchLower) ||
         service.description.toLowerCase().includes(searchLower) ||
-        service.category.toLowerCase().includes(searchLower)
+        service.address.toLowerCase().includes(searchLower)
       );
     }
     
@@ -268,11 +223,18 @@ const GovernmentServices = () => {
       results = results.filter(service => filters.Category.includes(service.category));
     }
     
-    // Apply island filter if selected
-    if (filters.Island) {
-      // This is a mock implementation - we'd need real island data for each service
-      // to implement this properly
-      console.log("Would filter by island:", filters.Island);
+    // Apply availability filter if selected
+    if (filters.Availability) {
+      const availabilityFilter = filters.Availability;
+      if (availabilityFilter === 'openNow') {
+        // This would require real-time hours information - simplified for demo
+        results = results.filter(service => service.hours !== "Closed");
+      } else if (availabilityFilter === 'weekends') {
+        // Simplified for demo purposes
+        results = results.filter(service => service.hours.includes("Saturday") || service.hours.includes("Sunday"));
+      } else if (availabilityFilter === 'allHours') {
+        results = results.filter(service => service.hours.includes("24/7"));
+      }
     }
     
     setFilteredServices(results);
@@ -285,37 +247,46 @@ const GovernmentServices = () => {
       
       {/* Hero Section */}
       <Hero 
-        title="Government Services"
-        subtitle="Access information about government services in the Northern Mariana Islands"
-        buttonText="Contact Government"
+        title="Government Services Directory"
+        subtitle="Find official government services, departments, and resources"
+        buttonText="Submit a Service"
         buttonLink="/contact"
-        backgroundImage="https://images.unsplash.com/photo-1541872703-74c5e44368f9"
+        backgroundImage="https://images.unsplash.com/photo-1482731088297-5a958afae8c0"
         size="medium"
       />
       
       {/* Main Content */}
       <main className="flex-1 py-10">
         <div className="container mx-auto px-4">
-          {/* Category Filters */}
-          <div className="mb-8 overflow-x-auto">
-            <div className="flex space-x-2 pb-2">
-              <button
+          {/* Category Tiles */}
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Browse Services by Category</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+              <div 
                 onClick={() => handleCategoryChange('All')}
-                className={`category-pill ${activeCategory === 'All' ? 'active' : ''}`}
+                className={`category-tile flex flex-col items-center justify-center p-4 rounded-lg transition-all cursor-pointer h-28 ${
+                  activeCategory === 'All' 
+                    ? 'bg-blue-600 text-white shadow-md transform scale-105' 
+                    : 'bg-blue-100 text-gray-800 hover:bg-blue-200'
+                }`}
               >
-                <Building size={18} />
-                <span>All Services</span>
-              </button>
+                <Building size={32} className="mb-2" />
+                <span className="text-center font-medium">All Services</span>
+              </div>
               
               {serviceCategories.map((category, index) => (
-                <button
+                <div
                   key={index}
                   onClick={() => handleCategoryChange(category.name)}
-                  className={`category-pill ${activeCategory === category.name ? 'active' : ''}`}
+                  className={`category-tile flex flex-col items-center justify-center p-4 rounded-lg transition-all cursor-pointer h-28 ${
+                    activeCategory === category.name 
+                      ? 'bg-blue-600 text-white shadow-md transform scale-105' 
+                      : 'bg-blue-100 text-gray-800 hover:bg-blue-200'
+                  }`}
                 >
-                  {category.icon}
-                  <span>{category.name}</span>
-                </button>
+                  <div className="mb-2 text-2xl">{category.icon}</div>
+                  <span className="text-center font-medium text-sm">{category.name}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -345,55 +316,71 @@ const GovernmentServices = () => {
                     className={`p-2 rounded ${activeView === 'grid' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
                     aria-label="Grid view"
                   >
-                    <GridIcon size={20} />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                   </button>
                   <button 
                     onClick={() => setActiveView('list')}
                     className={`p-2 rounded ${activeView === 'list' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
                     aria-label="List view"
                   >
-                    <ListIcon size={20} />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
                   </button>
                 </div>
               </div>
               
               {/* Featured Services Section (only show when no filters are applied) */}
-              {activeCategory === 'All' && filteredServices.length === mockGovServices.length && (
+              {activeCategory === 'All' && filteredServices.length === mockServices.length && (
                 <div className="mb-8">
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">Featured Services</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {filteredServices
                       .filter(service => service.featured)
-                      .slice(0, 4)
+                      .slice(0, 2)
                       .map(service => (
                         <div key={service.id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                           <div className="aspect-w-16 aspect-h-9 relative">
-                            <img src={service.image} alt={service.name} className="object-cover w-full h-48" />
-                            <div className="absolute top-4 left-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                            <img src={service.image} alt={service.title} className="object-cover w-full h-48" />
+                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
                               {service.category}
                             </div>
                           </div>
                           <div className="p-6">
-                            <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
+                            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                             <p className="text-gray-600 mb-4">{service.description}</p>
-                            <div className="flex items-center text-gray-500 mb-2">
-                              <MapPin size={16} className="mr-2 flex-shrink-0" />
-                              <span className="truncate">{service.address}</span>
+                            
+                            <div className="space-y-3">
+                              <div className="flex items-center text-gray-500">
+                                <MapPin size={16} className="mr-2 flex-shrink-0" />
+                                <span>{service.address}</span>
+                              </div>
+                              
+                              <div className="flex items-center text-gray-500">
+                                <Clock size={16} className="mr-2 flex-shrink-0" />
+                                <span>{service.hours}</span>
+                              </div>
+                              
+                              <div className="flex items-center text-gray-500">
+                                <Phone size={16} className="mr-2 flex-shrink-0" />
+                                <span>{service.phone}</span>
+                              </div>
                             </div>
-                            <div className="flex items-center text-gray-500 mb-2">
-                              <Clock size={16} className="mr-2 flex-shrink-0" />
-                              <span>{service.hours}</span>
+                            
+                            <div className="mt-5 flex justify-between">
+                              <a 
+                                href={service.website} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 font-medium"
+                              >
+                                Visit Website
+                              </a>
+                              <Link 
+                                to={`/government-services/${service.id}`} 
+                                className="inline-block px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
+                              >
+                                Details
+                              </Link>
                             </div>
-                            <div className="flex items-center text-gray-500 mb-4">
-                              <Phone size={16} className="mr-2 flex-shrink-0" />
-                              <span>{service.phone}</span>
-                            </div>
-                            <Link 
-                              to={`/government-services/${service.id}`} 
-                              className="inline-block mt-2 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
-                            >
-                              View Details
-                            </Link>
                           </div>
                         </div>
                       ))}
@@ -406,63 +393,73 @@ const GovernmentServices = () => {
                 <div className={activeView === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-6'}>
                   {filteredServices.map(service => (
                     activeView === 'grid' ? (
-                      <div key={service.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
+                      <div key={service.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all">
                         <div className="relative">
-                          <img src={service.image} alt={service.name} className="w-full h-48 object-cover" />
-                          <div className="absolute top-4 left-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                          <img src={service.image} alt={service.title} className="w-full h-40 object-cover" />
+                          <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
                             {service.category}
                           </div>
                         </div>
                         <div className="p-5">
-                          <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
+                          <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
                           <p className="text-gray-600 text-sm mb-4 line-clamp-2">{service.description}</p>
                           <div className="flex items-center text-gray-500 text-sm mb-2">
                             <MapPin size={16} className="mr-2 flex-shrink-0" />
                             <span className="truncate">{service.address}</span>
                           </div>
-                          <div className="flex items-center text-gray-500 text-sm mb-3">
+                          <div className="flex items-center text-gray-500 text-sm mb-4">
                             <Phone size={16} className="mr-2 flex-shrink-0" />
                             <span>{service.phone}</span>
                           </div>
                           <Link 
                             to={`/government-services/${service.id}`} 
-                            className="inline-block mt-1 px-3 py-1.5 text-sm bg-gray-900 text-white rounded hover:bg-gray-800 transition-all-300"
+                            className="inline-block mt-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
                           >
                             View Details
                           </Link>
                         </div>
                       </div>
                     ) : (
-                      <div key={service.id} className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
+                      <div key={service.id} className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all">
                         <div className="md:w-1/3 relative">
-                          <img src={service.image} alt={service.name} className="w-full h-48 md:h-full object-cover" />
-                          <div className="absolute top-4 left-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                          <img src={service.image} alt={service.title} className="w-full h-48 md:h-full object-cover" />
+                          <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
                             {service.category}
                           </div>
                         </div>
                         <div className="md:w-2/3 p-5">
-                          <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
+                          <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                           <p className="text-gray-600 mb-4">{service.description}</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
-                            <div className="flex items-center text-gray-500 text-sm">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                            <div className="flex items-center text-gray-500">
                               <MapPin size={16} className="mr-2 flex-shrink-0" />
-                              <span className="truncate">{service.address}</span>
+                              <span>{service.address}</span>
                             </div>
-                            <div className="flex items-center text-gray-500 text-sm">
-                              <Phone size={16} className="mr-2 flex-shrink-0" />
-                              <span>{service.phone}</span>
-                            </div>
-                            <div className="flex items-center text-gray-500 text-sm md:col-span-2">
+                            <div className="flex items-center text-gray-500">
                               <Clock size={16} className="mr-2 flex-shrink-0" />
                               <span>{service.hours}</span>
                             </div>
+                            <div className="flex items-center text-gray-500">
+                              <Phone size={16} className="mr-2 flex-shrink-0" />
+                              <span>{service.phone}</span>
+                            </div>
                           </div>
-                          <Link 
-                            to={`/government-services/${service.id}`} 
-                            className="inline-block mt-2 px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-all-300"
-                          >
-                            View Details
-                          </Link>
+                          <div className="flex justify-between">
+                            <a 
+                              href={service.website} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:text-blue-800 font-medium"
+                            >
+                              Visit Website
+                            </a>
+                            <Link 
+                              to={`/government-services/${service.id}`} 
+                              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
+                            >
+                              View Details
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     )
@@ -476,9 +473,9 @@ const GovernmentServices = () => {
                   <button 
                     onClick={() => {
                       setActiveCategory('All');
-                      setFilteredServices(mockGovServices);
+                      setFilteredServices(mockServices);
                     }}
-                    className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors"
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                   >
                     Reset Filters
                   </button>
@@ -489,33 +486,31 @@ const GovernmentServices = () => {
         </div>
       </main>
       
-      {/* Government Information CTA Section */}
+      {/* CTA Section */}
       <section className="bg-gray-100 py-12">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-4">Need more government information?</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-4">Need assistance with government services?</h2>
           <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-            Contact the CNMI Governor's Office for additional assistance with government services.
+            Our team can help guide you through available resources and connect you with the right department.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a 
-              href="tel:+16706642200" 
-              className="inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-800 transition-colors"
-            >
-              <Phone size={16} className="mr-2" />
-              Call (670) 664-2200
-            </a>
-            <Link 
-              to="/contact" 
-              className="inline-flex items-center justify-center px-6 py-3 bg-white text-gray-900 border border-gray-300 font-medium rounded-md hover:bg-gray-50 transition-colors"
-            >
-              Contact Online
-            </Link>
-          </div>
+          <Link 
+            to="/contact" 
+            className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Contact Us
+          </Link>
         </div>
       </section>
       
       {/* Footer */}
       <Footer />
+
+      {/* Add styles for category tiles */}
+      <style jsx>{`
+        .category-tile {
+          transition: all 0.3s ease;
+        }
+      `}</style>
     </div>
   );
 };

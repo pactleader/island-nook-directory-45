@@ -273,26 +273,35 @@ const Events = () => {
       {/* Main Content */}
       <main className="flex-1 py-10">
         <div className="container mx-auto px-4">
-          {/* Category Filters */}
-          <div className="mb-8 overflow-x-auto">
-            <div className="flex space-x-2 pb-2">
-              <button
+          {/* Category Tiles */}
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Browse Events by Category</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+              <div 
                 onClick={() => handleCategoryChange('All')}
-                className={`category-pill ${activeCategory === 'All' ? 'active' : ''}`}
+                className={`category-tile flex flex-col items-center justify-center p-4 rounded-lg transition-all cursor-pointer ${
+                  activeCategory === 'All' 
+                    ? 'bg-purple-600 text-white shadow-md transform scale-105' 
+                    : 'bg-purple-100 text-gray-800 hover:bg-purple-200'
+                }`}
               >
-                <Calendar size={18} />
-                <span>All Events</span>
-              </button>
+                <Calendar size={32} className="mb-2" />
+                <span className="text-center font-medium">All Events</span>
+              </div>
               
               {eventCategories.map((category, index) => (
-                <button
+                <div
                   key={index}
                   onClick={() => handleCategoryChange(category.name)}
-                  className={`category-pill ${activeCategory === category.name ? 'active' : ''}`}
+                  className={`category-tile flex flex-col items-center justify-center p-4 rounded-lg transition-all cursor-pointer ${
+                    activeCategory === category.name 
+                      ? 'bg-purple-600 text-white shadow-md transform scale-105' 
+                      : 'bg-purple-100 text-gray-800 hover:bg-purple-200'
+                  }`}
                 >
-                  {category.icon}
-                  <span>{category.name}</span>
-                </button>
+                  <div className="mb-2">{category.icon}</div>
+                  <span className="text-center font-medium">{category.name}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -476,6 +485,33 @@ const Events = () => {
       
       {/* Footer */}
       <Footer />
+
+      {/* Add styles for category tiles and pills */}
+      <style jsx>{`
+        .category-tile {
+          min-height: 120px;
+          transition: all 0.3s ease;
+        }
+        .category-pill {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          background-color: #f3f4f6;
+          border-radius: 9999px;
+          font-size: 0.875rem;
+          font-weight: 500;
+          white-space: nowrap;
+          transition: all 0.3s ease;
+        }
+        .category-pill.active {
+          background-color: #4f46e5;
+          color: white;
+        }
+        .category-pill:hover:not(.active) {
+          background-color: #e5e7eb;
+        }
+      `}</style>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 // Business Listings
 export interface BusinessListing {
   id: string;
@@ -599,7 +600,8 @@ export const mockProperties: PropertyListing[] = [
     ],
     featured: true,
     createdAt: "2023-05-12T08:30:00Z",
-    updatedAt: "2023-11-05T15:45:00Z"
+    updatedAt: "2023-11-05T15:45:00Z",
+    listedDate: "2023-05-15T00:00:00Z"
   },
   {
     id: "p002",
@@ -629,7 +631,8 @@ export const mockProperties: PropertyListing[] = [
     ],
     featured: false,
     createdAt: "2023-06-20T10:15:00Z",
-    updatedAt: "2023-10-10T12:30:00Z"
+    updatedAt: "2023-10-10T12:30:00Z",
+    listedDate: "2023-06-25T00:00:00Z"
   },
   {
     id: "p003",
@@ -657,4 +660,171 @@ export const mockProperties: PropertyListing[] = [
     ],
     featured: true,
     createdAt: "2023-02-05T09:00:00Z",
-    updatedAt:
+    updatedAt: "2023-09-22T14:15:00Z",
+    listedDate: "2023-02-10T00:00:00Z"
+  }
+];
+
+// Mock Vehicles (you'll need to add this)
+export const mockVehicles: VehicleListing[] = [
+  {
+    id: "v001",
+    title: "2019 Toyota Tacoma TRD Off-Road",
+    price: 34995,
+    condition: "used",
+    year: 2019,
+    make: "Toyota",
+    model: "Tacoma",
+    bodyStyle: "Pickup Truck",
+    transmission: "Automatic",
+    mileage: 35000,
+    exteriorColor: "Magnetic Gray",
+    interiorColor: "Black",
+    fuelType: "Gasoline",
+    engine: "3.5L V6",
+    features: [
+      "4WD",
+      "Navigation System",
+      "Bluetooth",
+      "Backup Camera",
+      "Tow Package",
+      "Roof Rack",
+      "Bed Liner",
+      "Off-Road Package"
+    ],
+    description: "Well-maintained 2019 Toyota Tacoma TRD Off-Road with low mileage. Perfect for island living and off-road adventures. Includes factory warranty.",
+    sellerType: "dealer",
+    sellerName: "Island Motors",
+    sellerLocation: "Garapan, Saipan",
+    sellerContact: "(670) 234-5678",
+    images: [
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&auto=format&fit=crop"
+    ],
+    createdAt: "2023-04-15T10:30:00Z"
+  },
+  {
+    id: "v002",
+    title: "2020 Honda CR-V EX-L",
+    price: 29500,
+    condition: "used",
+    year: 2020,
+    make: "Honda",
+    model: "CR-V",
+    bodyStyle: "SUV",
+    transmission: "CVT",
+    mileage: 22500,
+    exteriorColor: "Pearl White",
+    interiorColor: "Tan Leather",
+    fuelType: "Gasoline",
+    engine: "1.5L Turbo",
+    features: [
+      "AWD",
+      "Leather Seats",
+      "Sunroof",
+      "Apple CarPlay",
+      "Android Auto",
+      "Lane Keep Assist",
+      "Adaptive Cruise Control",
+      "Heated Seats"
+    ],
+    description: "One-owner 2020 Honda CR-V EX-L with low mileage and all maintenance records. Perfect family vehicle with plenty of cargo space and excellent fuel economy.",
+    sellerType: "private",
+    sellerName: "John Smith",
+    sellerLocation: "San Vicente, Saipan",
+    sellerContact: "(670) 788-1234",
+    images: [
+      "https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&auto=format&fit=crop"
+    ],
+    createdAt: "2023-05-20T14:45:00Z"
+  },
+  {
+    id: "v003",
+    title: "2023 Hyundai Tucson Limited",
+    price: 37995,
+    condition: "new",
+    year: 2023,
+    make: "Hyundai",
+    model: "Tucson",
+    bodyStyle: "SUV",
+    transmission: "Automatic",
+    mileage: 15,
+    exteriorColor: "Amazon Gray",
+    interiorColor: "Black",
+    fuelType: "Hybrid",
+    engine: "1.6L Turbo Hybrid",
+    features: [
+      "AWD",
+      "Panoramic Sunroof",
+      "360-degree Camera",
+      "Wireless Charging",
+      "Remote Smart Parking Assist",
+      "Ventilated Front Seats",
+      "Bose Premium Audio",
+      "10.25-inch Touchscreen"
+    ],
+    description: "Brand new 2023 Hyundai Tucson Limited Hybrid with full factory warranty. Cutting-edge technology, excellent fuel efficiency, and spacious interior make this the perfect vehicle for island living.",
+    sellerType: "dealer",
+    sellerName: "Marianas Auto Group",
+    sellerLocation: "Chalan Kanoa, Saipan",
+    sellerContact: "(670) 235-6789",
+    images: [
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&auto=format&fit=crop"
+    ],
+    createdAt: "2023-06-10T09:15:00Z"
+  }
+];
+
+// Mock Blog Posts
+export const mockBlogPosts: BlogPost[] = [
+  {
+    id: "blog001",
+    title: "Top 10 Beaches in the Northern Marianas",
+    slug: "top-10-beaches-northern-marianas",
+    excerpt: "Discover the most beautiful beaches across Saipan, Tinian, and Rota, from popular tourist spots to hidden local gems.",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl...",
+    author: {
+      name: "Maria Santos",
+      avatar: "https://randomuser.me/api/portraits/women/12.jpg"
+    },
+    category: "Travel",
+    tags: ["beaches", "tourism", "travel", "Saipan", "Tinian", "Rota"],
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop",
+    featured: true,
+    publishedAt: "2023-04-15T10:00:00Z"
+  },
+  {
+    id: "blog002",
+    title: "Living in Saipan: A Local's Guide to Island Life",
+    slug: "living-in-saipan-locals-guide",
+    excerpt: "Everything you need to know about living in Saipan, from housing and transportation to shopping and entertainment.",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl...",
+    author: {
+      name: "James Fitial",
+      avatar: "https://randomuser.me/api/portraits/men/32.jpg"
+    },
+    category: "Lifestyle",
+    tags: ["living", "Saipan", "expats", "housing", "tips"],
+    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&auto=format&fit=crop",
+    featured: false,
+    publishedAt: "2023-05-22T14:30:00Z"
+  },
+  {
+    id: "blog003",
+    title: "Investing in CNMI Real Estate: What You Need to Know",
+    slug: "investing-cnmi-real-estate-guide",
+    excerpt: "A comprehensive guide to real estate investment opportunities in the Commonwealth of the Northern Mariana Islands.",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl...",
+    author: {
+      name: "David Chen",
+      avatar: "https://randomuser.me/api/portraits/men/47.jpg"
+    },
+    category: "Real Estate",
+    tags: ["investment", "real estate", "property", "business", "CNMI"],
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop",
+    featured: true,
+    publishedAt: "2023-06-10T09:15:00Z"
+  }
+];

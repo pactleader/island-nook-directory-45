@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, Search, Filter, ChevronDown, X, Car, SlidersHorizontal } from 'lucide-react';
@@ -77,6 +78,16 @@ const Vehicles = () => {
         { label: '$30k - $40k', value: '30k-40k' },
         { label: '$40k - $50k', value: '40k-50k' },
         { label: 'Over $50k', value: 'over-50k' }
+      ]
+    },
+    {
+      name: 'Mileage',
+      options: [
+        { label: 'Under 10,000', value: 'under-10k-miles' },
+        { label: '10,000 - 30,000', value: '10k-30k-miles' },
+        { label: '30,000 - 60,000', value: '30k-60k-miles' },
+        { label: '60,000 - 100,000', value: '60k-100k-miles' },
+        { label: 'Over 100,000', value: 'over-100k-miles' }
       ]
     },
     {
@@ -346,10 +357,12 @@ const Vehicles = () => {
                   
                   {isDropdownOpen(`filter-dropdown-${index}`) && (
                     <div 
-                      className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg"
+                      className="absolute left-0 mt-2 w-96 bg-white border border-gray-200 rounded-md shadow-lg"
                       style={{ 
-                        zIndex: 99999,
+                        zIndex: 999999,
                         position: 'absolute',
+                        maxHeight: '200px', 
+                        overflowY: 'auto',
                         backgroundColor: 'white',
                         boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
                       }}
@@ -425,10 +438,12 @@ const Vehicles = () => {
                 
                 {isDropdownOpen('sort-dropdown') && (
                   <div 
-                    className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg"
+                    className="absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-md shadow-lg"
                     style={{ 
-                      zIndex: 99999,
+                      zIndex: 999999,
                       position: 'absolute',
+                      maxHeight: '200px', 
+                      overflowY: 'auto',
                       backgroundColor: 'white',
                       boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
                     }}

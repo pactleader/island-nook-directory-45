@@ -506,7 +506,7 @@ const GovernmentServices = () => {
       <Footer />
 
       {/* Add styles for category tiles */}
-      <style jsx>{`
+      <style>{`
         .category-tile {
           transition: all 0.3s ease;
         }

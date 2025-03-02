@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
@@ -487,7 +486,7 @@ const Events = () => {
       <Footer />
 
       {/* Add styles for category tiles and pills */}
-      <style jsx>{`
+      <style>{`
         .category-tile {
           min-height: 120px;
           transition: all 0.3s ease;

@@ -332,7 +332,8 @@ const Vehicles = () => {
                   
                   <div 
                     id={`filter-dropdown-${index}`}
-                    className="hidden absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-[100]"
+                    className="hidden absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-[9999]"
+                    style={{ backgroundColor: 'white' }}
                   >
                     <div className="p-3">
                       <h3 className="font-medium text-gray-900 mb-2">{group.name}</h3>
@@ -409,7 +410,8 @@ const Vehicles = () => {
                 
                 <div 
                   id="sort-dropdown"
-                  className="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-[100]"
+                  className="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-[9999]"
+                  style={{ backgroundColor: 'white' }}
                 >
                   <div className="py-1">
                     {[

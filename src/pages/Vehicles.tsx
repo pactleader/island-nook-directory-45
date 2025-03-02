@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, Search, Filter, ChevronDown, X, Car, SlidersHorizontal } from 'lucide-react';
 import { mockVehicles } from '../utils/mockData';
@@ -13,6 +12,34 @@ const Vehicles = () => {
   const [sortOption, setSortOption] = useState('newest');
   const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
   const [searchQuery, setSearchQuery] = useState('');
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  
+  // Create a ref for detecting clicks outside of dropdowns
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  
+  // Toggle dropdown visibility
+  const toggleDropdown = (id: string) => {
+    setOpenDropdown(openDropdown === id ? null : id);
+  };
+  
+  // Check if a specific dropdown is open
+  const isDropdownOpen = (id: string) => {
+    return openDropdown === id;
+  };
   
   // Filter groups
   const filterGroups = [
@@ -292,25 +319,12 @@ const Vehicles = () => {
             </div>
             
             {/* Filter Row */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" ref={dropdownRef}>
               {filterGroups.map((group, index) => (
                 <div key={index} className="relative inline-block">
                   <button
                     className="flex items-center space-x-1 px-3 py-2 border border-gray-200 rounded-md hover:bg-gray-50"
-                    onClick={() => {
-                      const element = document.getElementById(`filter-dropdown-${index}`);
-                      if (element) {
-                        // Close other dropdowns first
-                        document.querySelectorAll('[id^="filter-dropdown-"]').forEach(el => {
-                          if (el.id !== `filter-dropdown-${index}`) {
-                            el.classList.add('hidden');
-                          }
-                        });
-                        
-                        // Toggle this dropdown
-                        element.classList.toggle('hidden');
-                      }
-                    }}
+                    onClick={() => toggleDropdown(`filter-dropdown-${index}`)}
                   >
                     <span className="text-sm font-medium">{group.name}</span>
                     <ChevronDown size={16} />
@@ -330,29 +344,35 @@ const Vehicles = () => {
                     )}
                   </button>
                   
-                  <div 
-                    id={`filter-dropdown-${index}`}
-                    className="hidden absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-[9999]"
-                    style={{ backgroundColor: 'white' }}
-                  >
-                    <div className="p-3">
-                      <h3 className="font-medium text-gray-900 mb-2">{group.name}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {group.options.map((option, optIndex) => (
-                          <button
-                            key={optIndex}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleFilterSelect(group.name, option.value, group.multiSelect);
-                            }}
-                            className={`filter-chip ${isFilterSelected(group.name, option.value) ? 'active' : ''}`}
-                          >
-                            {option.label}
-                          </button>
-                        ))}
+                  {isDropdownOpen(`filter-dropdown-${index}`) && (
+                    <div 
+                      className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg"
+                      style={{ 
+                        zIndex: 99999,
+                        position: 'absolute',
+                        backgroundColor: 'white',
+                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                      }}
+                    >
+                      <div className="p-3">
+                        <h3 className="font-medium text-gray-900 mb-2">{group.name}</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {group.options.map((option, optIndex) => (
+                            <button
+                              key={optIndex}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleFilterSelect(group.name, option.value, group.multiSelect);
+                              }}
+                              className={`filter-chip ${isFilterSelected(group.name, option.value) ? 'active' : ''}`}
+                            >
+                              {option.label}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -389,12 +409,7 @@ const Vehicles = () => {
               <div className="relative inline-block">
                 <button 
                   className="flex items-center space-x-1 px-3 py-2 border border-gray-200 rounded-md hover:bg-gray-50"
-                  onClick={() => {
-                    const element = document.getElementById('sort-dropdown');
-                    if (element) {
-                      element.classList.toggle('hidden');
-                    }
-                  }}
+                  onClick={() => toggleDropdown('sort-dropdown')}
                 >
                   <span className="text-sm">Sort: </span>
                   <span className="font-medium text-sm">
@@ -408,40 +423,43 @@ const Vehicles = () => {
                   <ChevronDown size={16} />
                 </button>
                 
-                <div 
-                  id="sort-dropdown"
-                  className="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-[9999]"
-                  style={{ backgroundColor: 'white' }}
-                >
-                  <div className="py-1">
-                    {[
-                      { value: 'newest', label: 'Newest Listing' },
-                      { value: 'oldest', label: 'Oldest Listing' },
-                      { value: 'price-asc', label: 'Price: Low to High' },
-                      { value: 'price-desc', label: 'Price: High to Low' },
-                      { value: 'year-desc', label: 'Year: Newest First' },
-                      { value: 'year-asc', label: 'Year: Oldest First' }
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          handleSortChange(option.value);
-                          const element = document.getElementById('sort-dropdown');
-                          if (element) {
-                            element.classList.add('hidden');
-                          }
-                        }}
-                        className={`w-full text-left px-4 py-2 text-sm ${
-                          sortOption === option.value 
-                            ? 'bg-gray-100 text-gray-900 font-medium' 
-                            : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
+                {isDropdownOpen('sort-dropdown') && (
+                  <div 
+                    className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg"
+                    style={{ 
+                      zIndex: 99999,
+                      position: 'absolute',
+                      backgroundColor: 'white',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    }}
+                  >
+                    <div className="py-1">
+                      {[
+                        { value: 'newest', label: 'Newest Listing' },
+                        { value: 'oldest', label: 'Oldest Listing' },
+                        { value: 'price-asc', label: 'Price: Low to High' },
+                        { value: 'price-desc', label: 'Price: High to Low' },
+                        { value: 'year-desc', label: 'Year: Newest First' },
+                        { value: 'year-asc', label: 'Year: Oldest First' }
+                      ].map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => {
+                            handleSortChange(option.value);
+                            setOpenDropdown(null);
+                          }}
+                          className={`w-full text-left px-4 py-2 text-sm ${
+                            sortOption === option.value 
+                              ? 'bg-gray-100 text-gray-900 font-medium' 
+                              : 'text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

@@ -9,10 +9,13 @@ import NotFound from "./pages/NotFound";
 import PropertyDetails from "./pages/PropertyDetails";
 import Properties from "./pages/Properties";
 import Vehicles from "./pages/Vehicles";
+import VehicleDetails from "./pages/VehicleDetails";
 import Businesses from "./pages/Businesses";
+import BusinessDetails from "./pages/BusinessDetails";
 import Events from "./pages/Events";
 import GovernmentServices from "./pages/GovernmentServices";
 import Hotels from "./pages/Hotels";
+import HotelDetails from "./pages/HotelDetails";
 import AskLocal from "./pages/AskLocal";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -30,8 +33,11 @@ const App = () => (
           <Route path="/properties" element={<Properties />} />
           <Route path="/properties/:id" element={<PropertyDetails />} />
           <Route path="/vehicles" element={<Vehicles />} />
+          <Route path="/vehicles/:id" element={<VehicleDetails />} />
           <Route path="/hotels" element={<Hotels />} />
+          <Route path="/hotels/:id" element={<HotelDetails />} />
           <Route path="/businesses" element={<Businesses />} />
+          <Route path="/businesses/:id" element={<BusinessDetails />} />
           <Route path="/events" element={<Events />} />
           <Route path="/government-services" element={<GovernmentServices />} />
           <Route path="/ask-local" element={<AskLocal />} />

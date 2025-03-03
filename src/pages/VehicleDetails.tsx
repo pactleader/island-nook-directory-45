@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Separator } from '@/components/ui/separator';
@@ -17,9 +16,8 @@ import {
   Calendar,
   Car,
   Fuel,
-  Speedometer,
-  BarChart,
   Gauge,
+  BarChart,
   Star,
   Phone,
   Mail,
@@ -139,7 +137,7 @@ const VehicleDetails = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Speedometer className="h-5 w-5 text-primary" />
+                <Gauge className="h-5 w-5 text-primary" />
                 <div>
                   <div className="font-medium">{vehicle.mileage?.toLocaleString() || 'New'}</div>
                   <div className="text-sm text-muted-foreground">Mileage</div>

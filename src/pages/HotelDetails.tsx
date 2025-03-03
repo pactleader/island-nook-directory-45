@@ -18,7 +18,7 @@ import {
   Bed,
   Bath,
   Home,
-  SquareFeet,
+  Square,
   Users,
   Wifi,
   Utensils,
@@ -121,7 +121,7 @@ const HotelDetails = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <SquareFeet className="h-5 w-5 text-primary" />
+                <Square className="h-5 w-5 text-primary" />
                 <div>
                   <div className="font-medium">{hotel.sqft.toLocaleString()} sqft</div>
                   <div className="text-sm text-muted-foreground">Area</div>

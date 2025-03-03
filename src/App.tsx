@@ -12,6 +12,10 @@ import Vehicles from "./pages/Vehicles";
 import Businesses from "./pages/Businesses";
 import Events from "./pages/Events";
 import GovernmentServices from "./pages/GovernmentServices";
+import Hotels from "./pages/Hotels";
+import AskLocal from "./pages/AskLocal";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const queryClient = new QueryClient();
 
@@ -26,9 +30,14 @@ const App = () => (
           <Route path="/properties" element={<Properties />} />
           <Route path="/properties/:id" element={<PropertyDetails />} />
           <Route path="/vehicles" element={<Vehicles />} />
+          <Route path="/hotels" element={<Hotels />} />
           <Route path="/businesses" element={<Businesses />} />
           <Route path="/events" element={<Events />} />
           <Route path="/government-services" element={<GovernmentServices />} />
+          <Route path="/explore" element={<NotFound />} />
+          <Route path="/ask-local" element={<AskLocal />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

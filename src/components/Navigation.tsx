@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Map, Car, Building, List, Calendar, Landmark } from 'lucide-react';
+import { Home, Map, Car, Building, List, Calendar, Landmark, User, LogIn } from 'lucide-react';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -49,13 +49,27 @@ const Navigation = () => {
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             <NavLink to="/" icon={<Home size={16} />} label="Home" isActive={isActive('/')} />
-            <NavLink to="/properties" icon={<Map size={16} />} label="Properties" isActive={isActive('/properties')} />
-            <NavLink to="/vehicles" icon={<Car size={16} />} label="Vehicles" isActive={isActive('/vehicles')} />
-            <NavLink to="/businesses" icon={<Building size={16} />} label="Businesses" isActive={isActive('/businesses')} />
+            <NavLink to="/properties" icon={<Map size={16} />} label="Homes & Real Estate" isActive={isActive('/properties')} />
+            <NavLink to="/vehicles" icon={<Car size={16} />} label="Cars & Rentals" isActive={isActive('/vehicles')} />
+            <NavLink to="/hotels" icon={<Building size={16} />} label="Hotels & Stays" isActive={isActive('/hotels')} />
+            <NavLink to="/businesses" icon={<Building size={16} />} label="Shopping & Services" isActive={isActive('/businesses')} />
             <NavLink to="/events" icon={<Calendar size={16} />} label="Events" isActive={isActive('/events')} />
             <NavLink to="/government-services" icon={<Landmark size={16} />} label="Government" isActive={isActive('/government-services')} />
-            <NavLink to="/blog" icon={<List size={16} />} label="Blog" isActive={isActive('/blog')} />
+            <NavLink to="/explore" icon={<List size={16} />} label="Explore" isActive={isActive('/explore')} />
+            <NavLink to="/ask-local" icon={<List size={16} />} label="Ask a Local" isActive={isActive('/ask-local')} />
           </nav>
+          
+          {/* Auth links */}
+          <div className="hidden md:flex items-center space-x-2">
+            <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
+              <LogIn size={16} className="mr-1" />
+              <span>Login</span>
+            </Link>
+            <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
+              <User size={16} className="mr-1" />
+              <span>Sign Up</span>
+            </Link>
+          </div>
           
           {/* Mobile Navigation */}
           <div className="md:hidden">
@@ -130,12 +144,26 @@ const MobileMenu = () => {
           <nav className="flex-1 px-4 py-6 overflow-y-auto">
             <ul className="space-y-4">
               <MobileNavLink to="/" icon={<Home size={18} />} label="Home" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/properties" icon={<Map size={18} />} label="Properties" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Vehicles" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/businesses" icon={<Building size={18} />} label="Businesses" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/properties" icon={<Map size={18} />} label="Homes & Real Estate" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Cars & Rentals" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/hotels" icon={<Building size={18} />} label="Hotels & Stays" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/businesses" icon={<Building size={18} />} label="Shopping & Services" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/events" icon={<Calendar size={18} />} label="Events" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/government-services" icon={<Landmark size={18} />} label="Government" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/blog" icon={<List size={18} />} label="Blog" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/explore" icon={<List size={18} />} label="Explore" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/ask-local" icon={<List size={18} />} label="Ask a Local" onClick={() => setIsOpen(false)} />
+              <li className="border-t border-gray-200 my-4 pt-4">
+                <div className="flex flex-col space-y-2">
+                  <Link to="/login" className="flex items-center p-3 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(false)}>
+                    <LogIn size={18} className="text-gray-500 mr-3" />
+                    <span className="font-medium">Login</span>
+                  </Link>
+                  <Link to="/signup" className="flex items-center p-3 rounded-lg bg-gray-900 text-white" onClick={() => setIsOpen(false)}>
+                    <User size={18} className="mr-3" />
+                    <span className="font-medium">Sign Up</span>
+                  </Link>
+                </div>
+              </li>
             </ul>
           </nav>
         </div>

@@ -24,7 +24,10 @@ const mockHotels: PropertyListing[] = [
       'https://images.unsplash.com/photo-1551918120-9739cb430c6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
     ],
     propertyType: 'hotel',
-    createdAt: '2023-10-01T00:00:00.000Z'
+    features: ['Free WiFi', 'Swimming Pool', 'Restaurant', 'Beach Access'],
+    street: '123 Beach Road',
+    createdAt: '2023-10-01T00:00:00.000Z',
+    updatedAt: '2023-11-01T00:00:00.000Z'
   },
   {
     id: 'hotel-2',
@@ -41,7 +44,10 @@ const mockHotels: PropertyListing[] = [
       'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
     ],
     propertyType: 'hotel',
-    createdAt: '2023-09-21T00:00:00.000Z'
+    features: ['Free WiFi', 'Swimming Pool', 'Spa', 'Private Beach'],
+    street: '456 Beach Road',
+    createdAt: '2023-09-21T00:00:00.000Z',
+    updatedAt: '2023-10-15T00:00:00.000Z'
   },
   {
     id: 'hotel-3',
@@ -58,7 +64,10 @@ const mockHotels: PropertyListing[] = [
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
     ],
     propertyType: 'hotel',
-    createdAt: '2023-08-15T00:00:00.000Z'
+    features: ['Free WiFi', 'Infinity Pool', 'Ocean View', 'Restaurant'],
+    street: '789 Cliff Road',
+    createdAt: '2023-08-15T00:00:00.000Z',
+    updatedAt: '2023-09-20T00:00:00.000Z'
   },
   {
     id: 'hotel-4',
@@ -75,7 +84,10 @@ const mockHotels: PropertyListing[] = [
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
     ],
     propertyType: 'hotel',
-    createdAt: '2023-07-25T00:00:00.000Z'
+    features: ['Free WiFi', 'Water Park', 'Family Activities', 'Entertainment'],
+    street: '101 Resort Drive',
+    createdAt: '2023-07-25T00:00:00.000Z',
+    updatedAt: '2023-08-30T00:00:00.000Z'
   },
   {
     id: 'hotel-5',
@@ -92,7 +104,10 @@ const mockHotels: PropertyListing[] = [
       'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
     ],
     propertyType: 'hotel',
-    createdAt: '2023-06-10T00:00:00.000Z'
+    features: ['Free WiFi', 'City Center', 'Budget-Friendly', 'Shopping Nearby'],
+    street: '222 Downtown Street',
+    createdAt: '2023-06-10T00:00:00.000Z',
+    updatedAt: '2023-07-15T00:00:00.000Z'
   },
   {
     id: 'hotel-6',
@@ -109,7 +124,10 @@ const mockHotels: PropertyListing[] = [
       'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
     ],
     propertyType: 'hotel',
-    createdAt: '2023-09-05T00:00:00.000Z'
+    features: ['All-Inclusive', 'Water Sports', 'Multiple Restaurants', 'Activities'],
+    street: '333 Club Drive',
+    createdAt: '2023-09-05T00:00:00.000Z',
+    updatedAt: '2023-10-10T00:00:00.000Z'
   }
 ];
 
@@ -272,8 +290,9 @@ const Hotels = () => {
     
     // Apply location filter
     if (filters['Location'] && Array.isArray(filters['Location']) && filters['Location'].length > 0) {
+      const locations = filters['Location'] as string[];
       filteredHotels = filteredHotels.filter(hotel => 
-        filters['Location'].some(location => 
+        locations.some(location => 
           hotel.village.toLowerCase() === location.replace('-', ' ')
         )
       );

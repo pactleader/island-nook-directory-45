@@ -13,10 +13,13 @@ import VehicleDetails from "./pages/VehicleDetails";
 import Businesses from "./pages/Businesses";
 import BusinessDetails from "./pages/BusinessDetails";
 import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 import GovernmentServices from "./pages/GovernmentServices";
+import GovernmentServiceDetails from "./pages/GovernmentServiceDetails";
 import Hotels from "./pages/Hotels";
 import HotelDetails from "./pages/HotelDetails";
 import AskLocal from "./pages/AskLocal";
+import AskLocalDetails from "./pages/AskLocalDetails";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
@@ -39,8 +42,11 @@ const App = () => (
           <Route path="/businesses" element={<Businesses />} />
           <Route path="/businesses/:id" element={<BusinessDetails />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetails />} />
           <Route path="/government-services" element={<GovernmentServices />} />
+          <Route path="/government-services/:id" element={<GovernmentServiceDetails />} />
           <Route path="/ask-local" element={<AskLocal />} />
+          <Route path="/ask-local/:id" element={<AskLocalDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

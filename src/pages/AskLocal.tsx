@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { Search, ChevronDown, ChevronUp, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Search, ChevronDown, ChevronUp, MessageCircle, MapPin, Camera, Mountain, Waves, Compass, Anchor, Plane, Bike, History } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
@@ -10,10 +11,20 @@ interface FAQ {
   category: string;
 }
 
+interface AttactionCard {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  location: string;
+}
+
 const AskLocal = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeAttractionCategory, setActiveAttractionCategory] = useState<string | null>(null);
   
   // FAQ data
   const faqs: FAQ[] = [
@@ -68,6 +79,112 @@ const AskLocal = () => {
       category: "culture"
     }
   ];
+
+  // Attractions data
+  const attractions: AttactionCard[] = [
+    {
+      id: 'attr1',
+      title: 'Managaha Island',
+      description: 'A small, beautiful island off the coast of Saipan perfect for snorkeling, swimming, and water sports.',
+      category: 'places',
+      image: 'https://images.unsplash.com/photo-1589519160732-576f165b9aad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr2',
+      title: 'Mount Tapochau',
+      description: 'The highest point on Saipan offering panoramic views of the entire island and surrounding ocean.',
+      category: 'hikes',
+      image: 'https://images.unsplash.com/photo-1541789094913-f3809a8f3ba5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr3',
+      title: 'Grotto',
+      description: 'A natural limestone cavern and popular diving spot with stunning blue waters and marine life.',
+      category: 'diving',
+      image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr4',
+      title: 'Micro Beach',
+      description: 'A pristine white sand beach with calm waters, perfect for families and beginners learning water sports.',
+      category: 'beaches',
+      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr5',
+      title: 'American Memorial Park',
+      description: 'A national park commemorating the Marianas Campaign of World War II with museum exhibits and walking trails.',
+      category: 'historical',
+      image: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr6',
+      title: 'Bird Island',
+      description: 'A small uninhabited island and wildlife sanctuary with a scenic lookout point accessible via a short hike.',
+      category: 'places',
+      image: 'https://images.unsplash.com/photo-1547550842-9d0127e3f041?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr7',
+      title: 'Forbidden Island',
+      description: 'A remote, secluded beach accessible via a challenging hike, offering pristine beauty and natural pools.',
+      category: 'hikes',
+      image: 'https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr8',
+      title: 'Tinian Blowhole',
+      description: 'A natural sea cave where ocean waves push through a small opening, creating spectacular water spouts.',
+      category: 'places',
+      image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1556&q=80',
+      location: 'Tinian'
+    },
+    {
+      id: 'attr9',
+      title: 'Atomic Bomb Pits',
+      description: 'Historical site where the atomic bombs were loaded onto planes during World War II.',
+      category: 'historical',
+      image: 'https://images.unsplash.com/photo-1533331639-74f1863c7b7c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Tinian'
+    },
+    {
+      id: 'attr10',
+      title: 'Mariana Skydiving',
+      description: 'Experience the thrill of skydiving over the beautiful blue waters and lush landscapes of Saipan.',
+      category: 'adventure',
+      image: 'https://images.unsplash.com/photo-1521673252667-37172a97f7a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr11',
+      title: 'Marianas Trench Tours',
+      description: 'Guided boat tours to view the deepest part of the world\'s oceans from the surface.',
+      category: 'tours',
+      image: 'https://images.unsplash.com/photo-1503177847378-d2048487fa46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      location: 'Saipan'
+    },
+    {
+      id: 'attr12',
+      title: 'Marpi Point',
+      description: 'Historical site and scenic lookout with important World War II significance.',
+      category: 'historical',
+      image: 'https://images.unsplash.com/photo-1566176555872-8064459c95af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80',
+      location: 'Saipan'
+    }
+  ];
+  
+  // Get unique categories
+  const categories = Array.from(new Set(faqs.map(faq => faq.category)));
+  
+  // Get unique attraction categories
+  const attractionCategories = Array.from(new Set(attractions.map(attr => attr.category)));
   
   // Filter FAQs based on search and category
   const filteredFAQs = faqs.filter(faq => {
@@ -81,13 +198,37 @@ const AskLocal = () => {
     
     return matchesSearch && matchesCategory;
   });
-  
-  // Get unique categories
-  const categories = Array.from(new Set(faqs.map(faq => faq.category)));
+
+  // Filter attractions based on category
+  const filteredAttractions = attractions.filter(attr => {
+    return !activeAttractionCategory || attr.category === activeAttractionCategory;
+  });
   
   // Toggle FAQ expansion
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  // Get icon for attraction category
+  const getCategoryIcon = (category: string) => {
+    switch(category) {
+      case 'places':
+        return <MapPin size={18} />;
+      case 'hikes':
+        return <Mountain size={18} />;
+      case 'beaches':
+        return <Waves size={18} />;
+      case 'diving':
+        return <Anchor size={18} />;
+      case 'historical':
+        return <History size={18} />;
+      case 'adventure':
+        return <Compass size={18} />;
+      case 'tours':
+        return <Plane size={18} />;
+      default:
+        return <Bike size={18} />;
+    }
   };
   
   return (
@@ -98,7 +239,7 @@ const AskLocal = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Ask a Local</h1>
-            <p className="text-gray-600">Get answers to common questions about the Northern Mariana Islands</p>
+            <p className="text-gray-600">Get answers to common questions and discover the best attractions in the Northern Mariana Islands</p>
           </div>
           
           {/* Search Bar */}
@@ -140,6 +281,7 @@ const AskLocal = () => {
           
           {/* FAQs */}
           <div className="space-y-4 mb-10">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Frequently Asked Questions</h2>
             {filteredFAQs.length > 0 ? (
               filteredFAQs.map((faq, index) => (
                 <div key={index} className="glass-card rounded-lg overflow-hidden">
@@ -166,6 +308,63 @@ const AskLocal = () => {
                 </p>
               </div>
             )}
+          </div>
+
+          {/* Attractions Directory */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Discover Local Attractions</h2>
+            
+            {/* Attraction Categories */}
+            <div className="mb-6">
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveAttractionCategory(null)}
+                  className={`filter-chip ${!activeAttractionCategory ? 'active' : ''}`}
+                >
+                  All Attractions
+                </button>
+                {attractionCategories.map((category, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveAttractionCategory(category)}
+                    className={`filter-chip ${activeAttractionCategory === category ? 'active' : ''}`}
+                  >
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Attraction Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredAttractions.map((attraction) => (
+                <div key={attraction.id} className="glass-card rounded-xl overflow-hidden hover-lift">
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={attraction.image}
+                      alt={attraction.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-medium text-gray-700 flex items-center">
+                      {getCategoryIcon(attraction.category)}
+                      <span className="ml-1">{attraction.category.charAt(0).toUpperCase() + attraction.category.slice(1)}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">{attraction.title}</h3>
+                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                      <MapPin size={14} className="mr-1" />
+                      <span>{attraction.location}</span>
+                    </div>
+                    <p className="text-gray-600 text-sm line-clamp-2 mb-3">{attraction.description}</p>
+                    <Link to="#" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+                      Learn more
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
           
           {/* Ask a Question Section */}

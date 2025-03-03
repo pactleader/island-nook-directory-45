@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Map, Car, Building, List, Calendar, Landmark, User, LogIn } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn } from 'lucide-react';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,14 +47,12 @@ const Navigation = () => {
           
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
-            <NavLink to="/" icon={<Home size={16} />} label="Home" isActive={isActive('/')} />
-            <NavLink to="/properties" icon={<Map size={16} />} label="Homes & Real Estate" isActive={isActive('/properties')} />
-            <NavLink to="/vehicles" icon={<Car size={16} />} label="Cars & Rentals" isActive={isActive('/vehicles')} />
-            <NavLink to="/hotels" icon={<Building size={16} />} label="Hotels & Stays" isActive={isActive('/hotels')} />
+            <NavLink to="/properties" icon={<Map size={16} />} label="Homes" isActive={isActive('/properties')} />
+            <NavLink to="/vehicles" icon={<Car size={16} />} label="Cars" isActive={isActive('/vehicles')} />
+            <NavLink to="/hotels" icon={<Building size={16} />} label="Hotels" isActive={isActive('/hotels')} />
             <NavLink to="/businesses" icon={<Building size={16} />} label="Shopping & Services" isActive={isActive('/businesses')} />
             <NavLink to="/events" icon={<Calendar size={16} />} label="Events" isActive={isActive('/events')} />
             <NavLink to="/government-services" icon={<Landmark size={16} />} label="Government" isActive={isActive('/government-services')} />
-            <NavLink to="/explore" icon={<List size={16} />} label="Explore" isActive={isActive('/explore')} />
             <NavLink to="/ask-local" icon={<List size={16} />} label="Ask a Local" isActive={isActive('/ask-local')} />
           </nav>
           
@@ -143,14 +140,12 @@ const MobileMenu = () => {
           
           <nav className="flex-1 px-4 py-6 overflow-y-auto">
             <ul className="space-y-4">
-              <MobileNavLink to="/" icon={<Home size={18} />} label="Home" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/properties" icon={<Map size={18} />} label="Homes & Real Estate" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Cars & Rentals" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/hotels" icon={<Building size={18} />} label="Hotels & Stays" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/properties" icon={<Map size={18} />} label="Homes" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Cars" onClick={() => setIsOpen(false)} />
+              <MobileNavLink to="/hotels" icon={<Building size={18} />} label="Hotels" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/businesses" icon={<Building size={18} />} label="Shopping & Services" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/events" icon={<Calendar size={18} />} label="Events" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/government-services" icon={<Landmark size={18} />} label="Government" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/explore" icon={<List size={18} />} label="Explore" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/ask-local" icon={<List size={18} />} label="Ask a Local" onClick={() => setIsOpen(false)} />
               <li className="border-t border-gray-200 my-4 pt-4">
                 <div className="flex flex-col space-y-2">

@@ -58,8 +58,24 @@ const Login = () => {
       localStorage.setItem('userEmail', `demo@${provider.toLowerCase()}.com`);
       localStorage.setItem('authProvider', provider);
       
+      // Create a demo user profile if one doesn't exist
+      if (!localStorage.getItem('userProfile')) {
+        const demoProfile = {
+          fullName: `${provider} User`,
+          mailingAddress: '123 Island Street',
+          village: 'San Vicente',
+          island: 'Saipan',
+          birthDate: '1990-01-01',
+          phoneNumber: '670-123-4567',
+          whatsappNumber: '670-123-4567',
+        };
+        localStorage.setItem('userProfile', JSON.stringify(demoProfile));
+        localStorage.setItem('advertisingCredit', '10'); // Demo credit
+        localStorage.setItem('isVerified', 'true');
+      }
+      
       toast.success(`Successfully logged in with ${provider}!`);
-      navigate('/profile/setup');
+      navigate('/profile');
     }, 1000);
   };
   

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { BadgeCheck, Settings, CreditCard, PlusCircle, MessageSquare, Inbox } from 'lucide-react';
+import { BadgeCheck, Settings, CreditCard, PlusCircle, Inbox } from 'lucide-react';
 import { toast } from 'sonner';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -15,8 +15,16 @@ const Profile = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [advertisingCredit, setAdvertisingCredit] = useState('0');
   const [activeTab, setActiveTab] = useState("profile");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (!isLoggedIn || isLoggedIn !== 'true') {
+      navigate('/login');
+      return;
+    }
+
     // Load profile data from localStorage
     const storedProfile = localStorage.getItem('userProfile');
     const storedVerification = localStorage.getItem('isVerified');
@@ -27,6 +35,7 @@ const Profile = () => {
     } else {
       // Redirect to profile setup if no profile exists
       navigate('/profile/setup');
+      return;
     }
     
     if (storedVerification === 'true') {
@@ -36,6 +45,8 @@ const Profile = () => {
     if (storedCredit) {
       setAdvertisingCredit(storedCredit);
     }
+    
+    setIsLoading(false);
   }, [navigate]);
 
   // Demo handlers for not-yet-implemented pages
@@ -51,8 +62,19 @@ const Profile = () => {
     // navigate('/your-listings');
   };
 
-  if (!profile) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navigation />
+        <div className="flex items-center justify-center flex-grow">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading your profile...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -103,23 +125,23 @@ const Profile = () => {
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-medium">Full Name</h3>
-                      <p>{profile.fullName}</p>
+                      <p>{profile.fullName || 'Not provided'}</p>
                     </div>
                     <div>
                       <h3 className="font-medium">Mailing Address</h3>
-                      <p>{profile.mailingAddress}</p>
+                      <p>{profile.mailingAddress || 'Not provided'}</p>
                     </div>
                     <div>
                       <h3 className="font-medium">Village</h3>
-                      <p>{profile.village}</p>
+                      <p>{profile.village || 'Not provided'}</p>
                     </div>
                     <div>
                       <h3 className="font-medium">Island</h3>
-                      <p>{profile.island}</p>
+                      <p>{profile.island || 'Not provided'}</p>
                     </div>
                     <div>
                       <h3 className="font-medium">Phone Number</h3>
-                      <p>{profile.phoneNumber}</p>
+                      <p>{profile.phoneNumber || 'Not provided'}</p>
                     </div>
                     {profile.whatsappNumber && (
                       <div>

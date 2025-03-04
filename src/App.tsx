@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,7 @@ import AskLocal from "./pages/AskLocal";
 import AskLocalDetails from "./pages/AskLocalDetails";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ProfileSetup from "./pages/ProfileSetup";
 
 const queryClient = new QueryClient();
 
@@ -49,7 +49,7 @@ const App = () => (
           <Route path="/ask-local/:id" element={<AskLocalDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/profile/setup" element={<ProfileSetup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

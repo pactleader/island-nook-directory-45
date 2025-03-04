@@ -168,6 +168,43 @@ const Properties = () => {
     setShowMap(!showMap);
   };
   
+  // Generate map URL with property pins
+  const generateMapUrl = () => {
+    // Base URL for Google Static Maps API
+    const baseUrl = "https://maps.googleapis.com/maps/api/staticmap?";
+    
+    // Map center coordinates (Saipan, Northern Mariana Islands)
+    const center = "15.1914,145.7478";
+    
+    // Map size
+    const size = "800x600";
+    
+    // Map zoom level
+    const zoom = "12";
+    
+    // Map type
+    const mapType = "roadmap";
+    
+    // Marker pins for properties
+    // We'll use the first 5 properties to avoid making the URL too long
+    const markers = properties.slice(0, 5).map((property, index) => {
+      // Using index to create different colored markers
+      const color = ["red", "blue", "green", "purple", "orange"][index % 5];
+      // Use property.id as label
+      const label = String.fromCharCode(65 + index); // A, B, C, D, E, ...
+      
+      // Since we don't have actual coordinates in our mock data,
+      // we'll generate some around Saipan for demonstration
+      const lat = 15.1914 + (Math.random() - 0.5) * 0.05;
+      const lng = 145.7478 + (Math.random() - 0.5) * 0.05;
+      
+      return `markers=color:${color}|label:${label}|${lat},${lng}`;
+    }).join("&");
+    
+    // Combine all parameters
+    return `${baseUrl}center=${center}&zoom=${zoom}&size=${size}&maptype=${mapType}&${markers}`;
+  };
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -339,11 +376,14 @@ const Properties = () => {
             {/* Map Section - Left side on desktop, toggleable on mobile */}
             {(showMap || window.innerWidth >= 768) && (
               <div className="md:w-1/2 h-[400px] md:h-[calc(100vh-13rem)] rounded-lg overflow-hidden bg-gray-100 sticky top-24">
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-600">
-                  <div className="text-center p-4">
-                    <MapPin size={36} className="mx-auto mb-2" />
-                    <p className="text-lg font-medium">Map View</p>
-                    <p className="text-sm text-gray-500">Interactive map will display property locations</p>
+                <div className="w-full h-full relative">
+                  <img 
+                    src={generateMapUrl()} 
+                    alt="Map of property locations" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-4 left-4 bg-white p-2 rounded shadow-md text-xs">
+                    <p className="font-medium">Map data represents approximate property locations</p>
                   </div>
                 </div>
               </div>

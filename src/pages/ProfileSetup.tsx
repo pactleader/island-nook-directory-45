@@ -48,6 +48,7 @@ const ProfileSetup = () => {
     localStorage.setItem('userProfile', JSON.stringify(formData));
     localStorage.setItem('advertisingCredit', '5'); // Initial $5 credit
     toast.success("Profile completed! You've earned $5 in advertising credit!");
+    // Now navigate to the profile page
     navigate('/profile');
   };
 

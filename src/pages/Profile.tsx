@@ -1,215 +1,183 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Plus, MessageSquare, User, Settings, CreditCard, Shield, LogOut, ChevronRight } from 'lucide-react';
-import { toast } from "sonner";
+import { useNavigate, Link } from 'react-router-dom';
+import { BadgeCheck, Settings, CreditCard, PlusCircle, MessageSquare, Inbox } from 'lucide-react';
+import { toast } from 'sonner';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState<any>(null);
-  const [isVerified, setIsVerified] = useState(false);
-  const [credit, setCredit] = useState('0');
   const navigate = useNavigate();
-  
+  const [profile, setProfile] = useState<any>(null);
+  const [isVerified, setIsVerified] = useState(false);
+  const [advertisingCredit, setAdvertisingCredit] = useState('0');
+  const [activeTab, setActiveTab] = useState("profile");
+
   useEffect(() => {
-    // Check if user is logged in
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (!isLoggedIn) {
-      navigate('/login');
-      return;
+    // Load profile data from localStorage
+    const storedProfile = localStorage.getItem('userProfile');
+    const storedVerification = localStorage.getItem('isVerified');
+    const storedCredit = localStorage.getItem('advertisingCredit');
+    
+    if (storedProfile) {
+      setProfile(JSON.parse(storedProfile));
+    } else {
+      // Redirect to profile setup if no profile exists
+      navigate('/profile/setup');
     }
     
-    // Get profile data
-    const storedProfileData = localStorage.getItem('profileData');
-    if (storedProfileData) {
-      setProfileData(JSON.parse(storedProfileData));
+    if (storedVerification === 'true') {
+      setIsVerified(true);
     }
     
-    // Check if user is verified
-    const verified = localStorage.getItem('identityVerified');
-    setIsVerified(verified === 'true');
-    
-    // Get advertising credit
-    const adCredit = localStorage.getItem('advertisingCredit') || '0';
-    setCredit(adCredit);
+    if (storedCredit) {
+      setAdvertisingCredit(storedCredit);
+    }
   }, [navigate]);
-  
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    toast.success("You have been logged out");
-    navigate('/login');
-  };
-  
-  if (!profileData) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <div className="flex-grow flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-        </div>
-        <Footer />
-      </div>
-    );
+
+  if (!profile) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
-              <p className="text-gray-600">Manage your account and listings</p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Sidebar */}
-              <div className="lg:col-span-1">
-                <div className="glass-card p-6 rounded-xl sticky top-24">
-                  <div className="text-center mb-6">
-                    <div className="relative inline-block">
-                      <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-2xl font-semibold mx-auto">
-                        {profileData.fullName ? profileData.fullName.charAt(0).toUpperCase() : "U"}
+      <main className="flex-grow container mx-auto px-4 py-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* Sidebar */}
+          <div className="md:col-span-1">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span>Profile</span>
+                  {isVerified && (
+                    <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                      <BadgeCheck className="w-4 h-4" />
+                      <span className="text-xs font-medium">Verified</span>
+                    </span>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <Tabs value={activeTab} onValueChange={setActiveTab} orientation="vertical" className="w-full">
+                  <TabsList className="flex flex-col items-stretch h-auto bg-transparent">
+                    <TabsTrigger value="profile" className="justify-start px-4 py-2">
+                      <Settings className="w-4 h-4 mr-2" />
+                      Profile Settings
+                    </TabsTrigger>
+                    <TabsTrigger value="credits" className="justify-start px-4 py-2">
+                      <CreditCard className="w-4 h-4 mr-2" />
+                      Advertising Credits
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </div>
+          
+          {/* Main Content */}
+          <div className="md:col-span-3">
+            <TabsContent value="profile" className="m-0">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Profile Information</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-medium">Full Name</h3>
+                      <p>{profile.fullName}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium">Mailing Address</h3>
+                      <p>{profile.mailingAddress}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium">Village</h3>
+                      <p>{profile.village}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium">Island</h3>
+                      <p>{profile.island}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-medium">Phone Number</h3>
+                      <p>{profile.phoneNumber}</p>
+                    </div>
+                    {profile.whatsappNumber && (
+                      <div>
+                        <h3 className="font-medium">WhatsApp Number</h3>
+                        <p>{profile.whatsappNumber}</p>
                       </div>
-                      {isVerified && (
-                        <Badge className="absolute bottom-0 right-0 bg-blue-100 text-blue-800 border-blue-200">
-                          <Shield className="h-3 w-3 mr-1" /> Verified
-                        </Badge>
-                      )}
-                    </div>
-                    <h2 className="text-xl font-semibold mt-4">{profileData.fullName}</h2>
-                    <p className="text-gray-500">{localStorage.getItem('userEmail')}</p>
-                    <div className="mt-2">
-                      <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
-                        ${credit} Credit
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  <Separator className="my-4" />
-                  
-                  <nav className="space-y-1">
-                    <a href="#" className="flex items-center px-3 py-2 text-gray-900 bg-gray-100 rounded-md font-medium">
-                      <User className="h-5 w-5 mr-3 text-gray-500" />
-                      <span>Profile</span>
-                    </a>
-                    <a href="#listings" className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
-                      <MessageSquare className="h-5 w-5 mr-3 text-gray-500" />
-                      <span>My Listings & Messages</span>
-                    </a>
-                    <a href="#" className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
-                      <Settings className="h-5 w-5 mr-3 text-gray-500" />
-                      <span>Account Settings</span>
-                    </a>
-                    <a href="#" className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
-                      <CreditCard className="h-5 w-5 mr-3 text-gray-500" />
-                      <span>Billing</span>
-                    </a>
-                    <button 
-                      onClick={handleLogout}
-                      className="flex items-center w-full px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md"
-                    >
-                      <LogOut className="h-5 w-5 mr-3 text-gray-500" />
-                      <span>Log Out</span>
-                    </button>
-                  </nav>
-                </div>
-              </div>
-              
-              {/* Main content */}
-              <div className="lg:col-span-3 space-y-8">
-                {/* Quick actions */}
-                <div className="glass-card p-6 rounded-xl">
-                  <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Link to="/profile/create-listing" className="w-full">
-                      <Button className="w-full h-auto py-6 flex items-center justify-center flex-col">
-                        <Plus className="h-8 w-8 mb-2" />
-                        <span className="text-lg font-medium">Create a Listing</span>
-                      </Button>
-                    </Link>
-                    <Link to="/profile/listings" className="w-full">
-                      <Button variant="outline" className="w-full h-auto py-6 flex items-center justify-center flex-col">
-                        <MessageSquare className="h-8 w-8 mb-2 text-gray-500" />
-                        <span className="text-lg font-medium text-gray-700">View Listings & Messages</span>
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-                
-                {/* Account Info */}
-                <div className="glass-card p-6 rounded-xl">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-semibold">Account Information</h2>
-                    <Button variant="outline" size="sm">
-                      Edit
+                    )}
+                    
+                    <Button variant="outline" onClick={() => navigate('/profile/setup')}>
+                      Edit Profile
                     </Button>
                   </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Full Name</h3>
-                      <p className="mt-1">{profileData.fullName}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Email</h3>
-                      <p className="mt-1">{localStorage.getItem('userEmail')}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Mailing Address</h3>
-                      <p className="mt-1">{profileData.mailingAddress}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Phone Number</h3>
-                      <p className="mt-1">{profileData.phoneNumber}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Village</h3>
-                      <p className="mt-1">{profileData.village}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Island</h3>
-                      <p className="mt-1">{profileData.island}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Verification Status */}
-                {isVerified ? (
-                  <div className="glass-card p-6 rounded-xl bg-blue-50 border border-blue-100">
-                    <div className="flex items-start">
-                      <Shield className="h-8 w-8 text-blue-500 mr-4" />
-                      <div>
-                        <h2 className="text-xl font-semibold text-blue-800">Verified Account</h2>
-                        <p className="text-blue-700 mt-1">
-                          Your identity has been verified. Your profile now displays a verification badge.
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="credits" className="m-0">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Advertising Credits</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-6">
+                    <h2 className="text-3xl font-bold text-green-600">${advertisingCredit}</h2>
+                    <p className="text-gray-600 mb-4">Available Credits</p>
+                    
+                    {!isVerified && (
+                      <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                        <h3 className="font-medium text-blue-700 mb-2">Get Verified for $5 More</h3>
+                        <p className="text-sm text-blue-600 mb-2">
+                          Upload your ID and a selfie to earn additional advertising credits.
                         </p>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="glass-card p-6 rounded-xl bg-yellow-50 border border-yellow-100">
-                    <div className="flex items-start">
-                      <Shield className="h-8 w-8 text-yellow-500 mr-4" />
-                      <div>
-                        <h2 className="text-xl font-semibold text-yellow-800">Complete Verification</h2>
-                        <p className="text-yellow-700 mt-1">
-                          Verify your identity to receive an additional $5 in advertising credit and get the verified badge on your profile.
-                        </p>
-                        <Button className="mt-3" variant="outline">
+                        <Button onClick={() => navigate('/profile/setup')} size="sm">
                           Verify Now
                         </Button>
                       </div>
-                    </div>
+                    )}
+                    
+                    <Button variant="outline" onClick={() => toast.info("Purchase feature coming soon!")}>
+                      Purchase More Credits
+                    </Button>
                   </div>
-                )}
-              </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Quick Actions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              <Link to="/create-listing">
+                <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
+                  <CardContent className="p-6 flex flex-col items-center text-center">
+                    <PlusCircle className="w-10 h-10 text-blue-600 mb-4" />
+                    <h3 className="font-medium text-xl mb-2">Create a Listing</h3>
+                    <p className="text-gray-600 text-sm">
+                      List your property, business, event or vehicle
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+              
+              <Link to="/your-listings">
+                <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
+                  <CardContent className="p-6 flex flex-col items-center text-center">
+                    <Inbox className="w-10 h-10 text-blue-600 mb-4" />
+                    <h3 className="font-medium text-xl mb-2">Your Listings & Messages</h3>
+                    <p className="text-gray-600 text-sm">
+                      Manage your listings and respond to inquiries
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
             </div>
           </div>
         </div>

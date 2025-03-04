@@ -1,12 +1,52 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Facebook, LogIn } from 'lucide-react';
+import { toast } from "sonner";
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { Button } from '@/components/ui/button';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      
+      // Accept any dummy credentials for demo purposes
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', email);
+      
+      toast.success("Successfully logged in!");
+      navigate('/profile/setup');
+    }, 1000);
+  };
+  
+  const handleSocialLogin = (provider: string) => {
+    setIsLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      
+      // Set dummy login data
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', `demo@${provider.toLowerCase()}.com`);
+      localStorage.setItem('authProvider', provider);
+      
+      toast.success(`Successfully logged in with ${provider}!`);
+      navigate('/profile/setup');
+    }, 1000);
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -21,7 +61,7 @@ const Login = () => {
             </p>
             
             <div className="glass-card p-6 rounded-xl mb-8">
-              <form className="space-y-5">
+              <form className="space-y-5" onSubmit={handleLogin}>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
                   <div className="relative">
@@ -30,6 +70,9 @@ const Login = () => {
                       id="email"
                       placeholder="you@example.com"
                       className="input-field pl-10 w-full"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
                     />
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   </div>
@@ -48,6 +91,9 @@ const Login = () => {
                       id="password"
                       placeholder="Enter your password"
                       className="input-field pl-10 pr-10 w-full"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                     />
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                     <button
@@ -71,12 +117,13 @@ const Login = () => {
                   </label>
                 </div>
                 
-                <button
+                <Button 
                   type="submit"
-                  className="btn-primary w-full"
+                  className="w-full"
+                  disabled={isLoading}
                 >
-                  Sign In
-                </button>
+                  {isLoading ? 'Signing in...' : 'Sign In'}
+                </Button>
               </form>
               
               <div className="mt-6 flex items-center">
@@ -86,9 +133,12 @@ const Login = () => {
               </div>
               
               <div className="mt-6 grid grid-cols-2 gap-3">
-                <button
+                <Button
                   type="button"
-                  className="flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                  variant="outline"
+                  className="flex justify-center items-center"
+                  onClick={() => handleSocialLogin('Google')}
+                  disabled={isLoading}
                 >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.84 16.79 15.62 17.58V20.33H19.22C21.28 18.43 22.56 15.59 22.56 12.25Z" fill="#4285F4"/>
@@ -97,16 +147,17 @@ const Login = () => {
                     <path d="M12 5.55C13.57 5.55 14.97 6.08 16.08 7.13L19.26 3.95C17.46 2.3 14.96 1.3 12 1.3C7.68 1.3 3.95 3.63 2.21 7.23L5.93 10.05C6.88 7.5 9.24 5.55 12 5.55Z" fill="#EA4335"/>
                   </svg>
                   Google
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
-                  className="flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                  variant="outline"
+                  className="flex justify-center items-center"
+                  onClick={() => handleSocialLogin('Facebook')}
+                  disabled={isLoading}
                 >
-                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.0002 0.5C5.64733 0.5 0.5 5.64733 0.5 12.0002C0.5 17.1245 3.83449 21.4303 8.36553 22.9536C8.94008 23.0592 9.15283 22.7057 9.15283 22.392C9.15283 22.1085 9.13404 21.0996 9.13404 20.1509C6 20.6846 5.28109 19.4661 5.06734 18.8112C4.94291 18.4874 4.42498 17.5187 3.96233 17.2347C3.58075 17.0116 2.96577 16.478 3.94333 16.4589C4.87297 16.4396 5.54622 17.267 5.75876 17.6096C6.77043 19.2632 8.42483 18.8516 9.19179 18.538C9.29743 17.8053 9.60388 17.3039 9.92874 17.0209C7.34557 16.7375 4.64793 15.7886 4.64793 11.5371C4.64793 10.3186 5.09199 9.31715 5.77762 8.52259C5.65319 8.22694 5.25282 7.05387 5.89629 5.53075C5.89629 5.53075 6.8517 5.21749 9.15283 6.77777C10.1057 6.51067 11.0581 6.37712 12.0002 6.37712C12.9419 6.37712 13.8943 6.51067 14.8472 6.77777C17.1487 5.19848 18.1037 5.53075 18.1037 5.53075C18.7472 7.05387 18.3468 8.22694 18.2224 8.52259C18.908 9.31715 19.3521 10.2995 19.3521 11.5371C19.3521 15.8081 16.6353 16.7375 14.0521 17.0209C14.4525 17.3741 14.8053 18.0483 14.8053 19.1029C14.8053 20.6242 14.7865 21.9879 14.7865 22.392C14.7865 22.7057 14.9992 23.0782 15.5738 22.9536C17.8288 22.1824 19.7856 20.6842 21.1333 18.6722C22.4809 16.6601 23.15 14.2553 23.15 11.7857C23.15 5.47044 17.9776 0.5 12.0002 0.5Z" fill="black"/>
-                  </svg>
-                  GitHub
-                </button>
+                  <Facebook className="w-5 h-5 mr-2 text-[#1877F2]" />
+                  Facebook
+                </Button>
               </div>
             </div>
             

@@ -13,7 +13,7 @@ const mockEvent = {
   id: 1,
   title: "Island Cultural Festival",
   description: "Experience the rich traditions and heritage of the Northern Mariana Islands with performances, food, and art. This annual festival brings together local communities and visitors to celebrate the unique cultural tapestry of the islands. Enjoy traditional dance performances, taste authentic cuisine, and browse handcrafted items by local artisans. The festival also features workshops where you can learn about traditional practices and crafts.",
-  image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3",
+  image: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb",
   date: "2023-06-15",
   time: "4:00 PM - 10:00 PM",
   location: "Garapan, Saipan",

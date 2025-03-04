@@ -1,277 +1,221 @@
 
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
-import {
-  MapPin,
-  Calendar,
-  Bed,
-  Bath,
-  Home,
-  Square,
-  Users,
-  Wifi,
-  Utensils,
-  Car,
-  Sun,
-  Star,
-} from 'lucide-react';
-import { PropertyListing, mockProperties } from '../utils/mockData';
+import { Separator } from '@/components/ui/separator';
+import { Calendar, MapPin, Users, Square, Star, Wifi, Coffee } from 'lucide-react';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+
+// Mock data for the hotel
+const mockHotel = {
+  id: 'hotel-1',
+  title: 'Fiesta Resort & Spa Saipan',
+  description: 'Beachfront hotel with stunning views, swimming pools, and on-site restaurants. This luxurious resort offers everything you need for a perfect island getaway. Enjoy spacious rooms with ocean views, multiple dining options featuring local and international cuisine, and a range of activities for all ages. The resort is conveniently located near local attractions and shopping areas.',
+  price: 175,
+  priceUnit: 'night',
+  location: 'Garapan, Saipan',
+  roomType: 'Deluxe Ocean View',
+  checkIn: '3:00 PM',
+  checkOut: '12:00 PM',
+  amenities: ['Free WiFi', 'Swimming Pool', 'Restaurant', 'Beach Access', 'Spa', 'Fitness Center', 'Room Service'],
+  images: [
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    'https://images.unsplash.com/photo-1551918120-9739cb430c6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+    'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80',
+    'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+  ],
+  rating: 4.5,
+  reviews: 128,
+  features: ['Ocean View', '2 Queen Beds', 'Balcony', 'Mini Bar', 'Flat-screen TV']
+};
 
 const HotelDetails = () => {
   const { id } = useParams();
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  // Find the hotel using property listings with propertyType "hotel"
-  const hotel = mockProperties.find(property => property.id === id && property.propertyType === "hotel");
-
-  if (!hotel) {
-    return (
-      <div className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-3xl font-bold mb-6">Hotel Not Found</h1>
-        <p className="mb-6">The hotel you're looking for doesn't exist or may have been removed.</p>
-        <Button asChild>
-          <Link to="/hotels">Back to Hotels</Link>
-        </Button>
-      </div>
-    );
-  }
+  const [activeImage, setActiveImage] = useState(mockHotel.images[0]);
+  const [selectedDates, setSelectedDates] = useState({ checkIn: '', checkOut: '' });
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        <Link to="/" className="hover:text-primary">Home</Link>
-        <span>/</span>
-        <Link to="/hotels" className="hover:text-primary">Hotels</Link>
-        <span>/</span>
-        <span className="font-medium text-foreground">{hotel.title}</span>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Left column - Images and details */}
-        <div className="md:col-span-2">
-          {/* Main image carousel */}
-          <Carousel className="w-full mb-4">
-            <CarouselContent>
-              {hotel.images.map((image, index) => (
-                <CarouselItem key={index}>
-                  <div className="relative aspect-video overflow-hidden rounded-lg">
-                    <img 
-                      src={image} 
-                      alt={`${hotel.title} - Image ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2" />
-            <CarouselNext className="right-2" />
-          </Carousel>
-
-          {/* Thumbnail images */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {hotel.images.map((image, index) => (
-              <div 
-                key={index}
-                className={`relative w-20 h-20 overflow-hidden rounded-md cursor-pointer border-2 ${activeImageIndex === index ? 'border-primary' : 'border-transparent'}`}
-                onClick={() => setActiveImageIndex(index)}
-              >
-                <img 
-                  src={image} 
-                  alt={`Thumbnail ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Hotel details */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">{hotel.title}</h1>
-            <div className="flex items-center gap-2 text-muted-foreground mb-4">
-              <MapPin className="h-4 w-4" />
-              <span>{hotel.street}, {hotel.village}, {hotel.island}</span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-              <div className="flex items-center gap-2">
-                <Bed className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-medium">{hotel.bedrooms} Rooms</div>
-                  <div className="text-sm text-muted-foreground">Total</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Bath className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-medium">{hotel.bathrooms} Baths</div>
-                  <div className="text-sm text-muted-foreground">Total</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Square className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-medium">{hotel.sqft.toLocaleString()} sqft</div>
-                  <div className="text-sm text-muted-foreground">Area</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-medium">~{hotel.bedrooms * 2} Guests</div>
-                  <div className="text-sm text-muted-foreground">Capacity</div>
-                </div>
-              </div>
-            </div>
-
-            <Separator className="my-6" />
-
-            {/* Description */}
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-3">About This Hotel</h2>
-              <p className="text-muted-foreground">{hotel.description}</p>
-            </div>
-
-            {/* Amenities */}
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-3">Amenities</h2>
-              <div className="grid grid-cols-2 gap-2">
-                {hotel.features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <Star className="h-4 w-4 text-primary" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Tabs for more information */}
-            <Tabs defaultValue="rooms" className="mt-8">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="rooms">Rooms & Suites</TabsTrigger>
-                <TabsTrigger value="dining">Dining</TabsTrigger>
-                <TabsTrigger value="activities">Activities</TabsTrigger>
-              </TabsList>
-              <TabsContent value="rooms" className="p-4 bg-muted/30 rounded-md mt-2">
-                <h3 className="font-semibold mb-2">Available Room Types</h3>
-                <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                  <li>Standard Room - From $150/night</li>
-                  <li>Deluxe Room - From $220/night</li>
-                  <li>Ocean View Suite - From $350/night</li>
-                  <li>Presidential Suite - From $750/night</li>
-                </ul>
-              </TabsContent>
-              <TabsContent value="dining" className="p-4 bg-muted/30 rounded-md mt-2">
-                <h3 className="font-semibold mb-2">On-site Dining Options</h3>
-                <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                  <li>Main Restaurant - International cuisine</li>
-                  <li>Beachside Grill - Fresh seafood and barbecue</li>
-                  <li>Lobby Bar - Cocktails and light bites</li>
-                  <li>In-room dining available 24/7</li>
-                </ul>
-              </TabsContent>
-              <TabsContent value="activities" className="p-4 bg-muted/30 rounded-md mt-2">
-                <h3 className="font-semibold mb-2">Hotel Activities</h3>
-                <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                  <li>Swimming pool and spa</li>
-                  <li>Water sports rental</li>
-                  <li>Fitness center</li>
-                  <li>Island excursions (booking required)</li>
-                </ul>
-              </TabsContent>
-            </Tabs>
-          </div>
+    <div className="min-h-screen flex flex-col">
+      <Navigation />
+      
+      <main className="flex-grow container mx-auto px-4 py-8 mt-16">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+          <Link to="/" className="hover:text-primary">Home</Link>
+          <span>/</span>
+          <Link to="/hotels" className="hover:text-primary">Hotels</Link>
+          <span>/</span>
+          <span className="font-medium text-foreground">{mockHotel.title}</span>
         </div>
 
-        {/* Right column - Booking and contact */}
-        <div>
-          {/* Pricing card */}
-          <Card className="mb-6 sticky top-4">
-            <CardContent className="p-6">
-              <div className="text-3xl font-bold mb-2">${(hotel.price / 30).toFixed(0)}<span className="text-lg font-normal text-muted-foreground">/night</span></div>
-              <div className="text-sm text-muted-foreground mb-6">Starting price, varies by room type and season</div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main content */}
+          <div className="lg:col-span-2">
+            {/* Main image */}
+            <div className="aspect-video overflow-hidden rounded-xl mb-4">
+              <img 
+                src={activeImage} 
+                alt={mockHotel.title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Thumbnails */}
+            <div className="flex space-x-2 mb-6 overflow-x-auto pb-2">
+              {mockHotel.images.map((img, index) => (
+                <div 
+                  key={index}
+                  className={`w-20 h-20 rounded-md overflow-hidden cursor-pointer border-2 ${activeImage === img ? 'border-primary' : 'border-transparent'}`}
+                  onClick={() => setActiveImage(img)}
+                >
+                  <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+            
+            {/* Hotel details */}
+            <div>
+              <div className="flex items-start justify-between flex-wrap gap-4 mb-4">
+                <h1 className="text-3xl font-bold">{mockHotel.title}</h1>
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`h-5 w-5 ${i < Math.floor(mockHotel.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+                    />
+                  ))}
+                  <span className="text-sm font-medium ml-1">{mockHotel.rating}</span>
+                  <span className="text-sm text-muted-foreground">({mockHotel.reviews} reviews)</span>
+                </div>
+              </div>
               
-              <div className="space-y-4 mb-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium">Check-in</label>
-                    <div className="flex items-center gap-2 p-2 border rounded-md mt-1">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
-                      <span>Select date</span>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium">Check-out</label>
-                    <div className="flex items-center gap-2 p-2 border rounded-md mt-1">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
-                      <span>Select date</span>
-                    </div>
-                  </div>
+              <div className="flex items-center text-muted-foreground mb-6">
+                <MapPin size={18} className="mr-1" />
+                <span>{mockHotel.location}</span>
+              </div>
+              
+              <Separator className="my-6" />
+              
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">About This Hotel</h2>
+                  <p className="text-muted-foreground">{mockHotel.description}</p>
                 </div>
                 
                 <div>
-                  <label className="text-sm font-medium">Guests</label>
-                  <div className="flex items-center gap-2 p-2 border rounded-md mt-1">
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                    <span>2 adults, 0 children</span>
+                  <h2 className="text-xl font-semibold mb-3">Room Features</h2>
+                  <ul className="grid grid-cols-2 gap-2">
+                    {mockHotel.features.map((feature, index) => (
+                      <li key={index} className="flex items-center">
+                        <div className="h-2 w-2 rounded-full bg-primary mr-2"></div>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Amenities</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {mockHotel.amenities.map((amenity, index) => (
+                      <div key={index} className="flex items-center">
+                        {amenity.includes('WiFi') && <Wifi size={18} className="mr-2 text-primary" />}
+                        {amenity.includes('Restaurant') && <Coffee size={18} className="mr-2 text-primary" />}
+                        {!amenity.includes('WiFi') && !amenity.includes('Restaurant') && 
+                          <div className="h-4 w-4 rounded-full bg-primary/10 mr-2 flex items-center justify-center">
+                            <div className="h-2 w-2 rounded-full bg-primary"></div>
+                          </div>
+                        }
+                        <span>{amenity}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-              
-              <Button className="w-full mb-4">Check Availability</Button>
-              <Button variant="outline" className="w-full">Contact Hotel</Button>
-              
-              <div className="mt-6 text-sm text-muted-foreground">
-                <p>Free cancellation up to 48 hours before check-in.</p>
-                <p className="mt-2">You won't be charged until your stay.</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          {/* Hotel facilities highlights */}
-          <div className="bg-muted/30 rounded-lg p-4 mb-6">
-            <h3 className="font-semibold mb-3">Hotel Highlights</h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Wifi className="h-4 w-4 text-primary" />
-                <span>Free high-speed WiFi</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Utensils className="h-4 w-4 text-primary" />
-                <span>Breakfast included</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Car className="h-4 w-4 text-primary" />
-                <span>Free parking</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Sun className="h-4 w-4 text-primary" />
-                <span>Swimming pool</span>
-              </div>
             </div>
           </div>
           
-          {/* Location map placeholder */}
-          <div className="bg-muted rounded-lg p-4 aspect-square flex items-center justify-center mb-6">
-            <div className="text-center">
-              <MapPin className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-              <p className="text-muted-foreground">Interactive map would appear here</p>
-            </div>
+          {/* Sidebar */}
+          <div>
+            <Card className="sticky top-24">
+              <CardContent className="p-6">
+                <div className="mb-4">
+                  <span className="text-2xl font-bold">${mockHotel.price}</span>
+                  <span className="text-muted-foreground">/{mockHotel.priceUnit}</span>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="border rounded p-3">
+                      <label className="text-sm text-muted-foreground">Check-in</label>
+                      <input 
+                        type="date" 
+                        className="w-full mt-1 focus:outline-none"
+                        onChange={(e) => setSelectedDates({...selectedDates, checkIn: e.target.value})}
+                      />
+                    </div>
+                    <div className="border rounded p-3">
+                      <label className="text-sm text-muted-foreground">Check-out</label>
+                      <input 
+                        type="date" 
+                        className="w-full mt-1 focus:outline-none"
+                        onChange={(e) => setSelectedDates({...selectedDates, checkOut: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="border rounded p-3">
+                    <label className="text-sm text-muted-foreground">Guests</label>
+                    <select className="w-full mt-1 focus:outline-none bg-transparent">
+                      <option>1 Adult</option>
+                      <option>2 Adults</option>
+                      <option>2 Adults, 1 Child</option>
+                      <option>2 Adults, 2 Children</option>
+                    </select>
+                  </div>
+                  
+                  <div className="flex justify-between py-2">
+                    <span>Room ({mockHotel.roomType})</span>
+                    <span>${mockHotel.price}/night</span>
+                  </div>
+                  
+                  <Button className="w-full">Book Now</Button>
+                  
+                  <div className="text-center text-sm text-muted-foreground">
+                    You won't be charged yet
+                  </div>
+                </div>
+                
+                <Separator className="my-4" />
+                
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <Calendar className="h-5 w-5 text-primary mt-0.5" />
+                    <div>
+                      <h3 className="font-semibold">Check-in/Check-out</h3>
+                      <p className="text-muted-foreground text-sm">
+                        Check-in: {mockHotel.checkIn} • Check-out: {mockHotel.checkOut}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Square className="h-5 w-5 text-primary mt-0.5" />
+                    <div>
+                      <h3 className="font-semibold">Room Type</h3>
+                      <p className="text-muted-foreground text-sm">{mockHotel.roomType}</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   );
 };

@@ -38,6 +38,19 @@ const Profile = () => {
     }
   }, [navigate]);
 
+  // Demo handlers for not-yet-implemented pages
+  const handleCreateListingClick = () => {
+    toast.info("Create listing page coming soon!");
+    // Uncomment when page is created
+    // navigate('/create-listing');
+  };
+
+  const handleViewListingsClick = () => {
+    toast.info("Your listings page coming soon!");
+    // Uncomment when page is created
+    // navigate('/your-listings');
+  };
+
   if (!profile) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
@@ -155,29 +168,43 @@ const Profile = () => {
             
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <Link to="/create-listing">
-                <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
-                  <CardContent className="p-6 flex flex-col items-center text-center">
-                    <PlusCircle className="w-10 h-10 text-blue-600 mb-4" />
-                    <h3 className="font-medium text-xl mb-2">Create a Listing</h3>
-                    <p className="text-gray-600 text-sm">
-                      List your property, business, event or vehicle
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
+              <Button 
+                asChild
+                variant="ghost"
+                className="p-0 h-auto hover:bg-transparent"
+                onClick={handleCreateListingClick}
+              >
+                <div className="w-full">
+                  <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
+                    <CardContent className="p-6 flex flex-col items-center text-center">
+                      <PlusCircle className="w-10 h-10 text-blue-600 mb-4" />
+                      <h3 className="font-medium text-xl mb-2">Create a Listing</h3>
+                      <p className="text-gray-600 text-sm">
+                        List your property, business, event or vehicle
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </Button>
               
-              <Link to="/your-listings">
-                <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
-                  <CardContent className="p-6 flex flex-col items-center text-center">
-                    <Inbox className="w-10 h-10 text-blue-600 mb-4" />
-                    <h3 className="font-medium text-xl mb-2">Your Listings & Messages</h3>
-                    <p className="text-gray-600 text-sm">
-                      Manage your listings and respond to inquiries
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
+              <Button 
+                asChild
+                variant="ghost"
+                className="p-0 h-auto hover:bg-transparent"
+                onClick={handleViewListingsClick}
+              >
+                <div className="w-full">
+                  <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
+                    <CardContent className="p-6 flex flex-col items-center text-center">
+                      <Inbox className="w-10 h-10 text-blue-600 mb-4" />
+                      <h3 className="font-medium text-xl mb-2">Your Listings & Messages</h3>
+                      <p className="text-gray-600 text-sm">
+                        Manage your listings and respond to inquiries
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </Button>
             </div>
           </div>
         </div>

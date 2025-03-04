@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Facebook, LogIn } from 'lucide-react';
@@ -26,8 +25,24 @@ const Login = () => {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userEmail', email);
       
+      // Create a demo user profile if one doesn't exist
+      if (!localStorage.getItem('userProfile')) {
+        const demoProfile = {
+          fullName: 'Demo User',
+          mailingAddress: '123 Island Street',
+          village: 'San Vicente',
+          island: 'Saipan',
+          birthDate: '1990-01-01',
+          phoneNumber: '670-123-4567',
+          whatsappNumber: '670-123-4567',
+        };
+        localStorage.setItem('userProfile', JSON.stringify(demoProfile));
+        localStorage.setItem('advertisingCredit', '10'); // Demo credit
+        localStorage.setItem('isVerified', 'true');
+      }
+      
       toast.success("Successfully logged in!");
-      navigate('/profile/setup');
+      navigate('/profile'); // Navigate directly to profile page
     }, 1000);
   };
   

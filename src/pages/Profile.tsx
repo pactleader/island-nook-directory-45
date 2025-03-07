@@ -98,7 +98,7 @@ const Profile = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <Tabs value={activeTab} onValueChange={setActiveTab} orientation="vertical" className="w-full">
+                <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
                   <TabsList className="flex flex-col items-stretch h-auto bg-transparent">
                     <TabsTrigger value="profile" className="justify-start px-4 py-2">
                       <Settings className="w-4 h-4 mr-2" />
@@ -109,85 +109,88 @@ const Profile = () => {
                       Advertising Credits
                     </TabsTrigger>
                   </TabsList>
+                
+                  {/* Main Content */}
+                  <div className="md:col-span-3 mt-4">
+                    <TabsContent value="profile" className="m-0">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Profile Information</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div>
+                              <h3 className="font-medium">Full Name</h3>
+                              <p>{profile.fullName || 'Not provided'}</p>
+                            </div>
+                            <div>
+                              <h3 className="font-medium">Mailing Address</h3>
+                              <p>{profile.mailingAddress || 'Not provided'}</p>
+                            </div>
+                            <div>
+                              <h3 className="font-medium">Village</h3>
+                              <p>{profile.village || 'Not provided'}</p>
+                            </div>
+                            <div>
+                              <h3 className="font-medium">Island</h3>
+                              <p>{profile.island || 'Not provided'}</p>
+                            </div>
+                            <div>
+                              <h3 className="font-medium">Phone Number</h3>
+                              <p>{profile.phoneNumber || 'Not provided'}</p>
+                            </div>
+                            {profile.whatsappNumber && (
+                              <div>
+                                <h3 className="font-medium">WhatsApp Number</h3>
+                                <p>{profile.whatsappNumber}</p>
+                              </div>
+                            )}
+                            
+                            <Button variant="outline" onClick={() => navigate('/profile/setup')}>
+                              Edit Profile
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="credits" className="m-0">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Advertising Credits</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-center py-6">
+                            <h2 className="text-3xl font-bold text-green-600">${advertisingCredit}</h2>
+                            <p className="text-gray-600 mb-4">Available Credits</p>
+                            
+                            {!isVerified && (
+                              <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                                <h3 className="font-medium text-blue-700 mb-2">Get Verified for $5 More</h3>
+                                <p className="text-sm text-blue-600 mb-2">
+                                  Upload your ID and a selfie to earn additional advertising credits.
+                                </p>
+                                <Button onClick={() => navigate('/profile/setup')} size="sm">
+                                  Verify Now
+                                </Button>
+                              </div>
+                            )}
+                            
+                            <Button variant="outline" onClick={() => toast.info("Purchase feature coming soon!")}>
+                              Purchase More Credits
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </div>
                 </Tabs>
               </CardContent>
             </Card>
           </div>
           
-          {/* Main Content */}
+          {/* Main Content - This was moved inside the Tabs component above */}
           <div className="md:col-span-3">
-            <TabsContent value="profile" className="m-0">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Profile Information</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-medium">Full Name</h3>
-                      <p>{profile.fullName || 'Not provided'}</p>
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Mailing Address</h3>
-                      <p>{profile.mailingAddress || 'Not provided'}</p>
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Village</h3>
-                      <p>{profile.village || 'Not provided'}</p>
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Island</h3>
-                      <p>{profile.island || 'Not provided'}</p>
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Phone Number</h3>
-                      <p>{profile.phoneNumber || 'Not provided'}</p>
-                    </div>
-                    {profile.whatsappNumber && (
-                      <div>
-                        <h3 className="font-medium">WhatsApp Number</h3>
-                        <p>{profile.whatsappNumber}</p>
-                      </div>
-                    )}
-                    
-                    <Button variant="outline" onClick={() => navigate('/profile/setup')}>
-                      Edit Profile
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="credits" className="m-0">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Advertising Credits</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-6">
-                    <h2 className="text-3xl font-bold text-green-600">${advertisingCredit}</h2>
-                    <p className="text-gray-600 mb-4">Available Credits</p>
-                    
-                    {!isVerified && (
-                      <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                        <h3 className="font-medium text-blue-700 mb-2">Get Verified for $5 More</h3>
-                        <p className="text-sm text-blue-600 mb-2">
-                          Upload your ID and a selfie to earn additional advertising credits.
-                        </p>
-                        <Button onClick={() => navigate('/profile/setup')} size="sm">
-                          Verify Now
-                        </Button>
-                      </div>
-                    )}
-                    
-                    <Button variant="outline" onClick={() => toast.info("Purchase feature coming soon!")}>
-                      Purchase More Credits
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               <Button 

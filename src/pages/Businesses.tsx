@@ -141,11 +141,6 @@ const Businesses = () => {
     'other'
   ];
   
-  // Other categories excluding featured categories
-  const otherCategories = Object.keys(businessCategories).filter(
-    key => !featuredCategories.includes(key)
-  );
-  
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -213,9 +208,9 @@ const Businesses = () => {
               <div className="mt-3">
                 <h3 className="text-lg font-semibold mb-3">Browse by Category</h3>
                 
-                {/* Featured Categories Section */}
+                {/* Featured Categories Section - This is the only category section we're keeping */}
                 <div className="mb-4">
-                  <h4 className="text-sm text-gray-500 mb-2">Featured Categories</h4>
+                  <h4 className="text-sm text-gray-500 mb-2">Categories</h4>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {featuredCategories.map((key) => (
                       <button
@@ -233,24 +228,6 @@ const Businesses = () => {
                     ))}
                   </div>
                 </div>
-                
-                {/* Other Categories Section - Only shown if there are any non-featured categories */}
-                {otherCategories.length > 0 && (
-                  <div>
-                    <h4 className="text-sm text-gray-500 mb-2">Other Categories</h4>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {otherCategories.map((key) => (
-                        <button
-                          key={key}
-                          onClick={() => handleCategorySelect(key)}
-                          className={`filter-chip ${activeCategory === key ? 'active' : ''}`}
-                        >
-                          {(businessCategories[key] ? businessCategories[key].label : formatCategoryName(key))}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
                 
                 {/* Subcategories (only shown when a category is selected) */}
                 {activeCategory && businessCategories[activeCategory] && (

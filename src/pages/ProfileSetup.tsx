@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge, Camera, BadgeCheck } from 'lucide-react';
 import { toast } from 'sonner';
@@ -32,6 +32,20 @@ const ProfileSetup = () => {
     idPhoto: null,
     selfieWithId: null,
   });
+  const [formComplete, setFormComplete] = useState(false);
+
+  // Check if all required fields are filled
+  useEffect(() => {
+    const { fullName, mailingAddress, village, island, birthDate, phoneNumber } = formData;
+    setFormComplete(
+      fullName.trim() !== '' && 
+      mailingAddress.trim() !== '' && 
+      village.trim() !== '' && 
+      island.trim() !== '' && 
+      birthDate.trim() !== '' && 
+      phoneNumber.trim() !== ''
+    );
+  }, [formData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -57,6 +71,7 @@ const ProfileSetup = () => {
     localStorage.setItem('advertisingCredit', '10'); // Additional $5 credit
     localStorage.setItem('isVerified', 'true');
     toast.success("Identity verified! You've earned an additional $5 in advertising credit!");
+    navigate('/profile');
   };
 
   return (
@@ -156,7 +171,14 @@ const ProfileSetup = () => {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full">
+              <Button 
+                type="submit" 
+                className={`w-full transition-colors ${
+                  formComplete 
+                    ? 'bg-blue-100 hover:bg-blue-600 hover:text-white' 
+                    : ''
+                }`}
+              >
                 Complete Profile
               </Button>
             </form>
@@ -192,7 +214,7 @@ const ProfileSetup = () => {
                     Take Selfie with ID
                   </Button>
                   <Button 
-                    className="w-full"
+                    className="w-full bg-blue-100 hover:bg-blue-600 hover:text-white transition-colors"
                     onClick={handleIdVerification}
                   >
                     Submit for Verification

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Map, Car, Building, List, Calendar, Landmark, User, LogIn } from 'lucide-react';
@@ -38,10 +39,10 @@ const Navigation = () => {
             to="/" 
             className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
           >
-            <span className="sr-only">Island Nook Directory</span>
+            <span className="sr-only">CNMI Central Directory</span>
             <span className="inline-block">
-              <span className="text-gray-900">Island</span>
-              <span className="text-gray-600">Nook</span>
+              <span className="text-gray-900">CNMI</span>
+              <span className="text-gray-600">Central</span>
             </span>
           </Link>
           
@@ -124,8 +125,8 @@ const MobileMenu = () => {
         <div className="flex flex-col h-full">
           <div className="p-4 flex justify-between items-center border-b">
             <span className="font-bold text-xl">
-              <span className="text-gray-900">Island</span>
-              <span className="text-gray-600">Nook</span>
+              <span className="text-gray-900">CNMI</span>
+              <span className="text-gray-600">Central</span>
             </span>
             <button
               onClick={() => setIsOpen(false)}

@@ -57,9 +57,7 @@ const Profile = () => {
   };
 
   const handleViewListingsClick = () => {
-    toast.info("Your listings page coming soon!");
-    // Uncomment when page is created
-    // navigate('/your-listings');
+    navigate('/user-listings');
   };
 
   if (isLoading) {

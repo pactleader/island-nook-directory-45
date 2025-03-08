@@ -24,6 +24,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProfileSetup from "./pages/ProfileSetup";
 import Profile from "./pages/Profile";
+import UserListings from "./pages/UserListings";
+import UserMessages from "./pages/UserMessages";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +55,8 @@ const App = () => (
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile/setup" element={<ProfileSetup />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/user-listings" element={<UserListings />} />
+          <Route path="/messages/:type/:id" element={<UserMessages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

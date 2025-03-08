@@ -338,7 +338,7 @@ const Properties = () => {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Map Section - Left side on desktop, toggleable on mobile */}
             {(showMap || window.innerWidth >= 768) && (
-              <div className="md:w-1/2 h-[400px] md:h-[calc(100vh-13rem)] rounded-lg overflow-hidden bg-gray-100 sticky top-24">
+              <div className="md:w-1/2 h-[600px] md:h-[calc(150vh-13rem)] rounded-lg overflow-hidden bg-gray-100 sticky top-24">
                 <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-600">
                   <div className="text-center p-4">
                     <MapPin size={36} className="mx-auto mb-2" />
@@ -434,8 +434,8 @@ const Properties = () => {
                 </div>
               </div>
               
-              {/* Property Listings */}
-              <div className="overflow-y-auto pb-8" style={{maxHeight: 'calc(100vh - 16rem)'}}>
+              {/* Property Listings - Increase height by 50% */}
+              <div className="overflow-y-auto pb-8" style={{maxHeight: 'calc(150vh - 16rem)'}}>
                 {properties.length === 0 ? (
                   <div className="bg-gray-50 rounded-lg p-8 text-center">
                     <Search size={32} className="mx-auto text-gray-400 mb-4" />

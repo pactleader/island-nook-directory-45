@@ -26,6 +26,8 @@ import ProfileSetup from "./pages/ProfileSetup";
 import Profile from "./pages/Profile";
 import UserListings from "./pages/UserListings";
 import UserMessages from "./pages/UserMessages";
+import CreateListing from "./pages/CreateListing";
+import CreatePropertyListing from "./pages/CreatePropertyListing";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +59,8 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/user-listings" element={<UserListings />} />
           <Route path="/messages/:type/:id" element={<UserMessages />} />
+          <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/create-listing/property" element={<CreatePropertyListing />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -28,6 +28,7 @@ import UserListings from "./pages/UserListings";
 import UserMessages from "./pages/UserMessages";
 import CreateListing from "./pages/CreateListing";
 import CreatePropertyListing from "./pages/CreatePropertyListing";
+import SupportButton from "./components/SupportButton";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
           <Route path="/create-listing/property" element={<CreatePropertyListing />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <SupportButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

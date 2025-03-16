@@ -29,6 +29,8 @@ import UserMessages from "./pages/UserMessages";
 import CreateListing from "./pages/CreateListing";
 import CreatePropertyListing from "./pages/CreatePropertyListing";
 import Favorites from "./pages/Favorites";
+import Food from "./pages/Food";
+import FoodDetails from "./pages/FoodDetails";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 
 const queryClient = new QueryClient();
@@ -48,6 +50,8 @@ const App = () => (
             <Route path="/vehicles/:id" element={<VehicleDetails />} />
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/hotels/:id" element={<HotelDetails />} />
+            <Route path="/food" element={<Food />} />
+            <Route path="/food/:id" element={<FoodDetails />} />
             <Route path="/businesses" element={<Businesses />} />
             <Route path="/businesses/:id" element={<BusinessDetails />} />
             <Route path="/events" element={<Events />} />

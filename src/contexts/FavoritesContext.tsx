@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 // Types for different listing categories that can be favorited
 type FavoriteItem = {
   id: string;
-  type: 'property' | 'vehicle' | 'business' | 'event';
+  type: 'property' | 'vehicle' | 'business' | 'event' | 'food';
 };
 
 type FavoritesContextType = {

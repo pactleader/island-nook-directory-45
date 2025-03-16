@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Utensils } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn } from 'lucide-react';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -51,7 +51,6 @@ const Navigation = () => {
             <NavLink to="/properties" icon={<Map size={16} />} label="Homes" isActive={isActive('/properties')} />
             <NavLink to="/vehicles" icon={<Car size={16} />} label="Cars" isActive={isActive('/vehicles')} />
             <NavLink to="/hotels" icon={<Building size={16} />} label="Hotels" isActive={isActive('/hotels')} />
-            <NavLink to="/food" icon={<Utensils size={16} />} label="Food & Dining" isActive={isActive('/food')} />
             <NavLink to="/businesses" icon={<Building size={16} />} label="Shopping & Services" isActive={isActive('/businesses')} />
             <NavLink to="/events" icon={<Calendar size={16} />} label="Events" isActive={isActive('/events')} />
             <NavLink to="/government-services" icon={<Landmark size={16} />} label="Government" isActive={isActive('/government-services')} />
@@ -145,7 +144,6 @@ const MobileMenu = () => {
               <MobileNavLink to="/properties" icon={<Map size={18} />} label="Homes" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Cars" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/hotels" icon={<Building size={18} />} label="Hotels" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/food" icon={<Utensils size={18} />} label="Food & Dining" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/businesses" icon={<Building size={18} />} label="Shopping & Services" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/events" icon={<Calendar size={18} />} label="Events" onClick={() => setIsOpen(false)} />
               <MobileNavLink to="/government-services" icon={<Landmark size={18} />} label="Government" onClick={() => setIsOpen(false)} />

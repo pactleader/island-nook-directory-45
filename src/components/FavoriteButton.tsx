@@ -7,7 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 interface FavoriteButtonProps {
   id: string;
-  type: 'property' | 'vehicle' | 'business' | 'event' | 'food';
+  type: 'property' | 'vehicle' | 'business' | 'event';
   className?: string;
   size?: number;
   showToast?: boolean;

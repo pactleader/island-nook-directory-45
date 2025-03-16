@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropertyListing } from '../utils/mockData';
 import { MapPin } from 'lucide-react';
-import FavoriteButton from './FavoriteButton';
 
 interface PropertyCardProps {
   property: PropertyListing;
@@ -55,16 +54,6 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <span className="chip bg-black/70 text-white backdrop-blur-sm">
               {getPropertyTypeLabel(property.propertyType)}
             </span>
-          </div>
-          
-          {/* Favorite Button */}
-          <div className="absolute top-4 right-4 z-10">
-            <FavoriteButton
-              id={property.id}
-              type="property"
-              title={property.title}
-              image={property.images[0]}
-            />
           </div>
           
           {/* Price Tag */}

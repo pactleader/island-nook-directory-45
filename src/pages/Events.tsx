@@ -262,11 +262,11 @@ const Events = () => {
       
       {/* Hero Section */}
       <Hero 
-        title="Island Events & Happenings"
-        subtitle="Discover exciting activities, festivals, and community gatherings"
-        buttonText="Add Your Event"
-        buttonLink="/contact"
-        backgroundImage="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b"
+        title="Island Events"
+        subtitle="Discover and join the best events happening across the Northern Mariana Islands"
+        buttonText="Submit an Event"
+        buttonLink="/create-listing/event"
+        backgroundImage="https://images.unsplash.com/photo-1523580494863-6f3031224c94"
         size="medium"
       />
       
@@ -488,33 +488,6 @@ const Events = () => {
       
       {/* Footer */}
       <Footer />
-
-      {/* Add styles for category tiles and pills */}
-      <style>{`
-        .category-tile {
-          min-height: 120px;
-          transition: all 0.3s ease;
-        }
-        .category-pill {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          background-color: #f3f4f6;
-          border-radius: 9999px;
-          font-size: 0.875rem;
-          font-weight: 500;
-          white-space: nowrap;
-          transition: all 0.3s ease;
-        }
-        .category-pill.active {
-          background-color: #4f46e5;
-          color: white;
-        }
-        .category-pill:hover:not(.active) {
-          background-color: #e5e7eb;
-        }
-      `}</style>
     </div>
   );
 };

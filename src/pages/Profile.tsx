@@ -1,8 +1,10 @@
 
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { User, Mail, Phone, MapPin, Heart, Star, Bell, Settings, LogOut } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Heart, Star, Bell, Settings, LogOut, Plus } from 'lucide-react';
 import ProfileFavorites from '../components/ProfileFavorites';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Profile = () => {
   // Demo user data
@@ -23,6 +25,22 @@ const Profile = () => {
       
       <main className="flex-grow pt-24">
         <div className="container mx-auto px-4 py-8">
+          {/* Create Listing CTA Section */}
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-6 mb-8 shadow-lg">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="mb-4 md:mb-0">
+                <h2 className="text-2xl font-bold text-white mb-2">Ready to list your property or service?</h2>
+                <p className="text-blue-100">Create a listing and reach thousands of potential customers today.</p>
+              </div>
+              <Link to="/create-listing">
+                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
+                  <Plus className="mr-2 h-5 w-5" />
+                  Create a Listing
+                </Button>
+              </Link>
+            </div>
+          </div>
+        
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - User Profile */}
             <div className="lg:col-span-1">

@@ -1,386 +1,211 @@
-
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, List, MapPin, Calendar, Star } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import Hero from '../components/Hero';
 import SearchFilters from '../components/SearchFilters';
-import { PropertyListing } from '../utils/mockData';
+import FavoriteButton from '../components/FavoriteButton';
 
-// Mock hotel data (based on properties structure)
-const mockHotels: PropertyListing[] = [
+// Mock data for hotels
+const mockHotels = [
   {
-    id: 'hotel-1',
-    title: 'Fiesta Resort & Spa Saipan',
-    description: 'Beachfront hotel with stunning views, swimming pools, and on-site restaurants.',
-    price: 175,
-    village: 'Garapan',
-    island: 'Saipan',
-    bedrooms: 1,
-    bathrooms: 1,
-    sqft: 450,
-    images: [
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1551918120-9739cb430c6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
-    ],
-    propertyType: 'hotel',
-    features: ['Free WiFi', 'Swimming Pool', 'Restaurant', 'Beach Access'],
-    street: '123 Beach Road',
-    createdAt: '2023-10-01T00:00:00.000Z',
-    updatedAt: '2023-11-01T00:00:00.000Z'
+    id: "hotel-1",
+    name: "Oceanview Hotel & Resort",
+    description: "Luxury resort with stunning ocean views, private beach access, and world-class dining.",
+    imageUrl: "https://images.unsplash.com/photo-1566073771259-6a690aa3dc54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    pricePerNight: 250,
+    rating: 4.5,
+    reviews: 120,
+    location: { village: "Garapan", island: "Saipan" },
+    specialOffer: "15% off for stays longer than 5 nights"
   },
   {
-    id: 'hotel-2',
-    title: 'Hyatt Regency Saipan',
-    description: 'Luxury hotel with private beach, multiple restaurants, and spa facilities.',
-    price: 225,
-    village: 'Garapan',
-    island: 'Saipan',
-    bedrooms: 1,
-    bathrooms: 1,
-    sqft: 500,
-    images: [
-      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
-    ],
-    propertyType: 'hotel',
-    features: ['Free WiFi', 'Swimming Pool', 'Spa', 'Private Beach'],
-    street: '456 Beach Road',
-    createdAt: '2023-09-21T00:00:00.000Z',
-    updatedAt: '2023-10-15T00:00:00.000Z'
+    id: "hotel-2",
+    name: "Pacific Island Inn",
+    description: "Cozy inn located in the heart of the city, offering comfortable rooms and a convenient location.",
+    imageUrl: "https://images.unsplash.com/photo-1598228723793-52b585b4a67e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    pricePerNight: 120,
+    rating: 4.2,
+    reviews: 85,
+    location: { village: "Susupe", island: "Saipan" }
   },
   {
-    id: 'hotel-3',
-    title: 'Kensington Hotel Saipan',
-    description: 'Elegant hotel on the cliff with infinity pool and spectacular ocean views.',
-    price: 195,
-    village: 'San Roque',
-    island: 'Saipan',
-    bedrooms: 1,
-    bathrooms: 1,
-    sqft: 475,
-    images: [
-      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80',
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
-    ],
-    propertyType: 'hotel',
-    features: ['Free WiFi', 'Infinity Pool', 'Ocean View', 'Restaurant'],
-    street: '789 Cliff Road',
-    createdAt: '2023-08-15T00:00:00.000Z',
-    updatedAt: '2023-09-20T00:00:00.000Z'
+    id: "hotel-3",
+    name: "Tinian Diamond Hotel",
+    description: "Elegant hotel on Tinian offering luxurious accommodations and breathtaking views.",
+    imageUrl: "https://images.unsplash.com/photo-1568495286054-8905fa401902?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80",
+    pricePerNight: 180,
+    rating: 4.0,
+    reviews: 60,
+    location: { village: "San Jose", island: "Tinian" },
+    specialOffer: "Free breakfast included"
   },
   {
-    id: 'hotel-4',
-    title: 'Grandvrio Resort Saipan',
-    description: 'Family-friendly resort with water park, activities and entertainment.',
-    price: 165,
-    village: 'Susupe',
-    island: 'Saipan',
-    bedrooms: 1,
-    bathrooms: 1,
-    sqft: 425,
-    images: [
-      'https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80',
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
-    ],
-    propertyType: 'hotel',
-    features: ['Free WiFi', 'Water Park', 'Family Activities', 'Entertainment'],
-    street: '101 Resort Drive',
-    createdAt: '2023-07-25T00:00:00.000Z',
-    updatedAt: '2023-08-30T00:00:00.000Z'
+    id: "hotel-4",
+    name: "Rota Resort & Country Club",
+    description: "Secluded resort on Rota with a golf course, spa, and private beach.",
+    imageUrl: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    pricePerNight: 220,
+    rating: 4.3,
+    reviews: 95,
+    location: { village: "Songsong", island: "Rota" }
   },
   {
-    id: 'hotel-5',
-    title: 'Century Hotel',
-    description: 'Affordable hotel in the heart of Garapan with easy access to shopping and dining.',
-    price: 95,
-    village: 'Garapan',
-    island: 'Saipan',
-    bedrooms: 1,
-    bathrooms: 1,
-    sqft: 350,
-    images: [
-      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
-      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
-    ],
-    propertyType: 'hotel',
-    features: ['Free WiFi', 'City Center', 'Budget-Friendly', 'Shopping Nearby'],
-    street: '222 Downtown Street',
-    createdAt: '2023-06-10T00:00:00.000Z',
-    updatedAt: '2023-07-15T00:00:00.000Z'
+    id: "hotel-5",
+    name: "Serenity Sands Inn",
+    description: "Budget-friendly inn offering comfortable rooms and a relaxing atmosphere.",
+    imageUrl: "https://images.unsplash.com/photo-1560414262-5140819a8c4d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    pricePerNight: 90,
+    rating: 3.8,
+    reviews: 50,
+    location: { village: "Garapan", island: "Saipan" }
   },
   {
-    id: 'hotel-6',
-    title: 'Pacific Islands Club Saipan',
-    description: 'All-inclusive resort with extensive water sports and activities for all ages.',
-    price: 210,
-    village: 'San Antonio',
-    island: 'Saipan',
-    bedrooms: 1,
-    bathrooms: 1,
-    sqft: 480,
-    images: [
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
-    ],
-    propertyType: 'hotel',
-    features: ['All-Inclusive', 'Water Sports', 'Multiple Restaurants', 'Activities'],
-    street: '333 Club Drive',
-    createdAt: '2023-09-05T00:00:00.000Z',
-    updatedAt: '2023-10-10T00:00:00.000Z'
+    id: "hotel-6",
+    name: "CNMI Grand Hotel",
+    description: "Modern hotel with spacious rooms, a rooftop pool, and stunning city views.",
+    imageUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    pricePerNight: 150,
+    rating: 4.1,
+    reviews: 70,
+    location: { village: "Susupe", island: "Saipan" },
+    specialOffer: "Complimentary airport shuttle"
   }
 ];
 
-// Hotel Card Component
-const HotelCard = ({ hotel }: { hotel: PropertyListing }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
+// Filter options
+const filterGroups = [
+  {
+    name: "Price Range",
+    options: [
+      { label: "Under $100", value: "under100" },
+      { label: "$100 - $200", value: "100-200" },
+      { label: "Over $200", value: "over200" },
+    ],
+  },
+  {
+    name: "Rating",
+    options: [
+      { label: "4 Stars & Up", value: "4stars" },
+      { label: "3 Stars & Up", value: "3stars" },
+    ],
+  },
+  {
+    name: "Location",
+    options: [
+      { label: "Saipan", value: "saipan" },
+      { label: "Tinian", value: "tinian" },
+      { label: "Rota", value: "rota" },
+    ],
+  },
+];
+
+// Hotel card component
+const HotelCard = ({ hotel }) => {
   return (
-    <div className="glass-card rounded-xl overflow-hidden hover-lift">
+    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 relative">
       <Link to={`/hotels/${hotel.id}`} className="block">
-        {/* Image Container */}
-        <div className="relative h-64 overflow-hidden">
-          {/* Blurred Image Placeholder */}
-          <div
-            className="absolute inset-0 bg-cover bg-center blur-md scale-105"
-            style={{ backgroundImage: `url(${hotel.images[0]})` }}
-          ></div>
-          
-          {/* Actual Image */}
-          <img
-            src={hotel.images[0]}
-            alt={hotel.title}
-            className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={() => setImageLoaded(true)}
+        <div className="relative">
+          <img 
+            src={hotel.imageUrl} 
+            alt={hotel.name} 
+            className="w-full h-48 object-cover"
           />
-          
-          {/* Price Tag */}
-          <div className="absolute bottom-4 right-4 z-10">
-            <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-md">
-              <span className="font-bold text-gray-900">
-                ${hotel.price}
-              </span>
-              <span className="text-gray-600 text-sm">/night</span>
+          <div className="absolute bottom-0 left-0 bg-gradient-to-t from-black/70 to-transparent w-full p-4">
+            <div className="flex items-center text-white">
+              <span className="font-bold text-lg">${hotel.pricePerNight}</span>
+              <span className="text-sm ml-1">/ night</span>
             </div>
           </div>
+          {hotel.specialOffer && (
+            <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded">
+              {hotel.specialOffer}
+            </div>
+          )}
         </div>
-        
-        {/* Content */}
-        <div className="p-5">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
-            {hotel.title}
-          </h3>
-          
-          <div className="flex items-center text-gray-600 mb-3">
-            <MapPin size={16} />
-            <span className="ml-1 text-sm">
-              {hotel.village}, {hotel.island}
-            </span>
+        <div className="p-4">
+          <div className="flex items-center mb-2">
+            <div className="flex text-yellow-400 mr-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg 
+                  key={i} 
+                  className={`w-4 h-4 ${i < Math.floor(hotel.rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
+                  fill="currentColor" 
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+            <span className="text-gray-600 text-sm">({hotel.reviews} reviews)</span>
           </div>
-          
-          <div className="flex items-center mb-3">
-            {Array(5).fill(0).map((_, i) => (
-              <Star key={i} size={16} className={i < 4 ? "text-yellow-400" : "text-gray-300"} />
-            ))}
-            <span className="text-sm text-gray-600 ml-1">4.0 (86 reviews)</span>
+          <h3 className="font-bold text-lg mb-1">{hotel.name}</h3>
+          <p className="text-gray-600 text-sm mb-2 line-clamp-2">{hotel.description}</p>
+          <div className="flex items-center text-gray-500 text-sm">
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>{hotel.location.village}, {hotel.location.island}</span>
           </div>
-          
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-            {hotel.description}
-          </p>
         </div>
       </Link>
+      <div className="absolute top-3 right-3">
+        <FavoriteButton 
+          id={hotel.id}
+          type="property"
+          className="bg-white rounded-full p-1.5 shadow"
+        />
+      </div>
     </div>
   );
 };
 
 const Hotels = () => {
-  const [hotels, setHotels] = useState(mockHotels);
-  const [view, setView] = useState<'grid' | 'list'>('grid');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilters, setActiveFilters] = useState<Record<string, string | string[]>>({});
-  
-  // Filter groups
-  const filterGroups = [
-    {
-      name: 'Price Range',
-      options: [
-        { label: 'Under $100', value: 'under-100' },
-        { label: '$100 - $150', value: '100-150' },
-        { label: '$150 - $200', value: '150-200' },
-        { label: '$200 - $250', value: '200-250' },
-        { label: 'Over $250', value: 'over-250' }
-      ]
-    },
-    {
-      name: 'Location',
-      options: [
-        { label: 'Garapan', value: 'garapan' },
-        { label: 'Susupe', value: 'susupe' },
-        { label: 'San Antonio', value: 'san-antonio' },
-        { label: 'San Roque', value: 'san-roque' },
-        { label: 'Chalan Kanoa', value: 'chalan-kanoa' }
-      ],
-      multiSelect: true
-    },
-    {
-      name: 'Amenities',
-      options: [
-        { label: 'Swimming Pool', value: 'pool' },
-        { label: 'Beach Access', value: 'beach' },
-        { label: 'Free Wifi', value: 'wifi' },
-        { label: 'Restaurant', value: 'restaurant' },
-        { label: 'Spa', value: 'spa' },
-        { label: 'Gym', value: 'gym' },
-        { label: 'Room Service', value: 'room-service' }
-      ],
-      multiSelect: true
-    },
-    {
-      name: 'Rating',
-      options: [
-        { label: '5 Stars', value: '5-stars' },
-        { label: '4+ Stars', value: '4-stars' },
-        { label: '3+ Stars', value: '3-stars' },
-        { label: 'Any Rating', value: 'any' }
-      ]
-    }
-  ];
-  
-  // Handle search
-  const handleSearch = (query: string, filters: Record<string, string | string[]>) => {
-    setSearchQuery(query);
-    setActiveFilters(filters);
-    
-    let filteredHotels = [...mockHotels];
-    
-    // Filter by search query
-    if (query) {
-      const searchLower = query.toLowerCase();
-      filteredHotels = filteredHotels.filter(hotel => 
-        hotel.title.toLowerCase().includes(searchLower) ||
-        hotel.description.toLowerCase().includes(searchLower) ||
-        hotel.village.toLowerCase().includes(searchLower) ||
-        hotel.island.toLowerCase().includes(searchLower)
-      );
-    }
-    
-    // Apply price range filter
-    if (filters['Price Range']) {
-      const priceRange = filters['Price Range'] as string;
-      filteredHotels = filteredHotels.filter(hotel => {
-        switch(priceRange) {
-          case 'under-100':
-            return hotel.price < 100;
-          case '100-150':
-            return hotel.price >= 100 && hotel.price < 150;
-          case '150-200':
-            return hotel.price >= 150 && hotel.price < 200;
-          case '200-250':
-            return hotel.price >= 200 && hotel.price < 250;
-          case 'over-250':
-            return hotel.price >= 250;
-          default:
-            return true;
-        }
-      });
-    }
-    
-    // Apply location filter
-    if (filters['Location'] && Array.isArray(filters['Location']) && filters['Location'].length > 0) {
-      const locations = filters['Location'] as string[];
-      filteredHotels = filteredHotels.filter(hotel => 
-        locations.some(location => 
-          hotel.village.toLowerCase() === location.replace('-', ' ')
-        )
-      );
-    }
-    
-    setHotels(filteredHotels);
+  const handleSearch = (search: string, filters: Record<string, string | string[]>) => {
+    console.log("Search term:", search);
+    console.log("Filters:", filters);
+    // Here you would implement the actual filtering logic
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <main className="flex-grow pt-20">
-        <div className="container mx-auto px-4 py-4">
-          <div className="mb-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Hotels & Stays</h1>
-            <p className="text-gray-600">Find accommodation in the Northern Mariana Islands</p>
-          </div>
-          
-          {/* Search Filters Component */}
-          <SearchFilters
-            title="Find Hotels"
-            placeholder="Search by name, location, or amenities"
-            filterGroups={filterGroups}
-            onSearch={handleSearch}
-          />
-          
-          {/* Results Controls */}
-          <div className="flex justify-between items-center my-6">
-            <div>
-              <p className="text-gray-600">
-                <span className="font-semibold text-gray-900">{hotels.length}</span> properties
-              </p>
+
+      <Hero
+        title="Find the Perfect Hotel"
+        subtitle="Discover the best hotels and resorts in the Northern Mariana Islands"
+        buttonText="Explore Now"
+        buttonLink="/properties"
+        backgroundImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        size="medium"
+      />
+
+      <main className="flex-1 py-10">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Sidebar with Search and Filters */}
+            <div className="lg:col-span-1">
+              <SearchFilters
+                title="Filter Hotels"
+                placeholder="Search for hotels..."
+                filterGroups={filterGroups}
+                onSearch={handleSearch}
+              />
             </div>
-            
-            <div className="flex items-center space-x-4">
-              {/* View Toggle */}
-              <div className="flex items-center space-x-2 border border-gray-200 rounded-md overflow-hidden">
-                <button 
-                  onClick={() => setView('grid')}
-                  className={`p-2 ${view === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-                  aria-label="Grid View"
-                >
-                  <Grid size={18} />
-                </button>
-                <button 
-                  onClick={() => setView('list')}
-                  className={`p-2 ${view === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-                  aria-label="List View"
-                >
-                  <List size={18} />
-                </button>
+
+            {/* Hotels Listing */}
+            <div className="lg:col-span-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {mockHotels.map(hotel => (
+                  <HotelCard key={hotel.id} hotel={hotel} />
+                ))}
               </div>
             </div>
           </div>
-          
-          {/* Hotel Listings */}
-          <div className={view === 'grid' 
-            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            : "space-y-6"
-          }>
-            {hotels.map(hotel => (
-              <HotelCard key={hotel.id} hotel={hotel} />
-            ))}
-          </div>
-          
-          {/* Pagination */}
-          {hotels.length > 0 && (
-            <div className="mt-12 flex justify-center">
-              <nav className="inline-flex rounded-md shadow">
-                <button className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  Previous
-                </button>
-                <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                  1
-                </button>
-                <button className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  2
-                </button>
-                <button className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  Next
-                </button>
-              </nav>
-            </div>
-          )}
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

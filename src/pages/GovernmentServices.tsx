@@ -5,6 +5,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SearchFilters from '../components/SearchFilters';
+import FavoriteButton from '../components/FavoriteButton';
 import { AlertTriangle, Car, Building, FileText, School, Heart, Landmark, Scale, Briefcase, Crown, Home, MoreHorizontal, MapPin, Clock, Phone } from 'lucide-react';
 
 // Mock data for government services
@@ -251,7 +252,7 @@ const GovernmentServices = () => {
         subtitle="Find official government services, departments, and resources"
         buttonText="Submit a Service"
         buttonLink="/contact"
-        backgroundImage="https://images.unsplash.com/photo-1482731088297-5a958afae8c0"
+        backgroundImage="https://images.unsplash.com/photo-1533165858607-313b98855560?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
         size="medium"
       />
       
@@ -337,50 +338,59 @@ const GovernmentServices = () => {
                       .filter(service => service.featured)
                       .slice(0, 2)
                       .map(service => (
-                        <div key={service.id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                          <div className="aspect-w-16 aspect-h-9 relative">
-                            <img src={service.image} alt={service.title} className="object-cover w-full h-48" />
-                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                              {service.category}
+                        <div key={service.id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 relative">
+                          <Link to={`/government-services/${service.id}`} className="block">
+                            <div className="aspect-w-16 aspect-h-9 relative">
+                              <img src={service.image} alt={service.title} className="object-cover w-full h-48" />
+                              <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                {service.category}
+                              </div>
                             </div>
-                          </div>
-                          <div className="p-6">
-                            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                            <p className="text-gray-600 mb-4">{service.description}</p>
-                            
-                            <div className="space-y-3">
-                              <div className="flex items-center text-gray-500">
-                                <MapPin size={16} className="mr-2 flex-shrink-0" />
-                                <span>{service.address}</span>
+                            <div className="p-6">
+                              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                              <p className="text-gray-600 mb-4">{service.description}</p>
+                              
+                              <div className="space-y-3">
+                                <div className="flex items-center text-gray-500">
+                                  <MapPin size={16} className="mr-2 flex-shrink-0" />
+                                  <span>{service.address}</span>
+                                </div>
+                                
+                                <div className="flex items-center text-gray-500">
+                                  <Clock size={16} className="mr-2 flex-shrink-0" />
+                                  <span>{service.hours}</span>
+                                </div>
+                                
+                                <div className="flex items-center text-gray-500">
+                                  <Phone size={16} className="mr-2 flex-shrink-0" />
+                                  <span>{service.phone}</span>
+                                </div>
                               </div>
                               
-                              <div className="flex items-center text-gray-500">
-                                <Clock size={16} className="mr-2 flex-shrink-0" />
-                                <span>{service.hours}</span>
-                              </div>
-                              
-                              <div className="flex items-center text-gray-500">
-                                <Phone size={16} className="mr-2 flex-shrink-0" />
-                                <span>{service.phone}</span>
+                              <div className="mt-5 flex justify-between">
+                                <a 
+                                  href={service.website} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:text-blue-800 font-medium"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  Visit Website
+                                </a>
+                                <span 
+                                  className="inline-block px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
+                                >
+                                  Details
+                                </span>
                               </div>
                             </div>
-                            
-                            <div className="mt-5 flex justify-between">
-                              <a 
-                                href={service.website} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-800 font-medium"
-                              >
-                                Visit Website
-                              </a>
-                              <Link 
-                                to={`/government-services/${service.id}`} 
-                                className="inline-block px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
-                              >
-                                Details
-                              </Link>
-                            </div>
+                          </Link>
+                          <div className="absolute top-4 right-4">
+                            <FavoriteButton 
+                              id={service.id} 
+                              type="government" 
+                              className="bg-white rounded-full p-1.5 shadow"
+                            />
                           </div>
                         </div>
                       ))}
@@ -393,73 +403,90 @@ const GovernmentServices = () => {
                 <div className={activeView === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-6'}>
                   {filteredServices.map(service => (
                     activeView === 'grid' ? (
-                      <div key={service.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all">
-                        <div className="relative">
-                          <img src={service.image} alt={service.title} className="w-full h-40 object-cover" />
-                          <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            {service.category}
+                      <div key={service.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all relative">
+                        <Link to={`/government-services/${service.id}`} className="block">
+                          <div className="relative">
+                            <img src={service.image} alt={service.title} className="w-full h-40 object-cover" />
+                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                              {service.category}
+                            </div>
                           </div>
-                        </div>
-                        <div className="p-5">
-                          <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                          <p className="text-gray-600 text-sm mb-4 line-clamp-2">{service.description}</p>
-                          <div className="flex items-center text-gray-500 text-sm mb-2">
-                            <MapPin size={16} className="mr-2 flex-shrink-0" />
-                            <span className="truncate">{service.address}</span>
-                          </div>
-                          <div className="flex items-center text-gray-500 text-sm mb-4">
-                            <Phone size={16} className="mr-2 flex-shrink-0" />
-                            <span>{service.phone}</span>
-                          </div>
-                          <Link 
-                            to={`/government-services/${service.id}`} 
-                            className="inline-block mt-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
-                          >
-                            View Details
-                          </Link>
-                        </div>
-                      </div>
-                    ) : (
-                      <div key={service.id} className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all">
-                        <div className="md:w-1/3 relative">
-                          <img src={service.image} alt={service.title} className="w-full h-48 md:h-full object-cover" />
-                          <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            {service.category}
-                          </div>
-                        </div>
-                        <div className="md:w-2/3 p-5">
-                          <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                          <p className="text-gray-600 mb-4">{service.description}</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                            <div className="flex items-center text-gray-500">
+                          <div className="p-5">
+                            <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+                            <p className="text-gray-600 text-sm mb-4 line-clamp-2">{service.description}</p>
+                            <div className="flex items-center text-gray-500 text-sm mb-2">
                               <MapPin size={16} className="mr-2 flex-shrink-0" />
-                              <span>{service.address}</span>
+                              <span className="truncate">{service.address}</span>
                             </div>
-                            <div className="flex items-center text-gray-500">
-                              <Clock size={16} className="mr-2 flex-shrink-0" />
-                              <span>{service.hours}</span>
-                            </div>
-                            <div className="flex items-center text-gray-500">
+                            <div className="flex items-center text-gray-500 text-sm mb-4">
                               <Phone size={16} className="mr-2 flex-shrink-0" />
                               <span>{service.phone}</span>
                             </div>
-                          </div>
-                          <div className="flex justify-between">
-                            <a 
-                              href={service.website} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 font-medium"
-                            >
-                              Visit Website
-                            </a>
-                            <Link 
-                              to={`/government-services/${service.id}`} 
-                              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
+                            <span 
+                              className="inline-block mt-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
                             >
                               View Details
-                            </Link>
+                            </span>
                           </div>
+                        </Link>
+                        <div className="absolute top-4 right-4">
+                          <FavoriteButton 
+                            id={service.id} 
+                            type="government" 
+                            className="bg-white rounded-full p-1.5 shadow"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div key={service.id} className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all relative">
+                        <Link to={`/government-services/${service.id}`} className="flex flex-col md:flex-row w-full">
+                          <div className="md:w-1/3 relative">
+                            <img src={service.image} alt={service.title} className="w-full h-48 md:h-full object-cover" />
+                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                              {service.category}
+                            </div>
+                          </div>
+                          <div className="md:w-2/3 p-5">
+                            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                            <p className="text-gray-600 mb-4">{service.description}</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                              <div className="flex items-center text-gray-500">
+                                <MapPin size={16} className="mr-2 flex-shrink-0" />
+                                <span>{service.address}</span>
+                              </div>
+                              <div className="flex items-center text-gray-500">
+                                <Clock size={16} className="mr-2 flex-shrink-0" />
+                                <span>{service.hours}</span>
+                              </div>
+                              <div className="flex items-center text-gray-500">
+                                <Phone size={16} className="mr-2 flex-shrink-0" />
+                                <span>{service.phone}</span>
+                              </div>
+                            </div>
+                            <div className="flex justify-between">
+                              <a 
+                                href={service.website} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 font-medium"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Visit Website
+                              </a>
+                              <span 
+                                className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
+                              >
+                                View Details
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                        <div className="absolute top-4 right-4">
+                          <FavoriteButton 
+                            id={service.id} 
+                            type="government" 
+                            className="bg-white rounded-full p-1.5 shadow"
+                          />
                         </div>
                       </div>
                     )

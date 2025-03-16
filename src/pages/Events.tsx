@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SearchFilters from '../components/SearchFilters';
 import { Calendar, Music, Users, PartyPopper, Briefcase, Heart, MoreHorizontal, MapPin } from 'lucide-react';
-import FavoriteButton from './FavoriteButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 // Mock data for event listings
 const mockEvents = [

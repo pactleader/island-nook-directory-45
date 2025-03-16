@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, MapPin, Calendar, Star } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import SearchFilters from '../components/SearchFilters';
-import { PropertyListing } from '../utils/mockData';
+import { PropertyListing, mockProperties } from '../utils/mockData';
 
 // Mock hotel data (based on properties structure)
 const mockHotels: PropertyListing[] = [

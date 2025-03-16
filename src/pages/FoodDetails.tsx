@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { 
   MapPin, 
@@ -14,7 +13,7 @@ import {
   Coffee,
   Pizza
 } from 'lucide-react';
-import { mockFoodListings } from '../utils/mockData';
+import { mockFoodListings, FoodListing } from '../utils/mockData';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import FavoriteButton from '../components/FavoriteButton';
@@ -43,7 +42,6 @@ const FoodDetails = () => {
     );
   }
   
-  // Get icon for category
   const getCategoryIcon = () => {
     switch (food.category) {
       case 'grocery':
@@ -57,7 +55,6 @@ const FoodDetails = () => {
     }
   };
   
-  // Format category name
   const formatCategory = () => {
     switch (food.category) {
       case 'grocery':
@@ -125,28 +122,28 @@ const FoodDetails = () => {
                   <div className="flex items-center mb-6">
                     <div className="flex items-center bg-gray-100 px-3 py-1 rounded-full mr-4">
                       <Star className="h-4 w-4 text-yellow-500 mr-1" />
-                      <span className="font-semibold">{food.rating.toFixed(1)}</span>
+                      <span className="font-semibold">{food?.rating.toFixed(1)}</span>
                     </div>
                     
                     <div className="text-gray-600">
-                      <span className="font-medium">{food.priceRange}</span>
+                      <span className="font-medium">{food?.priceRange}</span>
                       <span className="mx-2">•</span>
-                      {food.diningStyle && (
+                      {food?.diningStyle && (
                         <>
                           <span>{food.diningStyle}</span>
                           <span className="mx-2">•</span>
                         </>
                       )}
-                      <span>{food.subcategory}</span>
+                      <span>{food?.subcategory}</span>
                     </div>
                   </div>
                   
                   <div className="mb-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-3">About</h2>
-                    <p className="text-gray-700">{food.description}</p>
+                    <p className="text-gray-700">{food?.description}</p>
                   </div>
                   
-                  {food.cuisineTypes && food.cuisineTypes.length > 0 && (
+                  {food?.cuisineTypes && food.cuisineTypes.length > 0 && (
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Cuisine Types</h3>
                       <div className="flex flex-wrap gap-2">
@@ -162,7 +159,7 @@ const FoodDetails = () => {
                     </div>
                   )}
                   
-                  {food.dietaryPreferences && food.dietaryPreferences.length > 0 && (
+                  {food?.dietaryPreferences && food.dietaryPreferences.length > 0 && (
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Dietary Options</h3>
                       <div className="flex flex-wrap gap-2">
@@ -178,7 +175,7 @@ const FoodDetails = () => {
                     </div>
                   )}
                   
-                  {food.featuredDish && (
+                  {food?.featuredDish && (
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Featured Dish</h3>
                       <p className="text-gray-700">{food.featuredDish}</p>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, Search, ChevronDown, ChevronUp, X, Utensils, Coffee, Tag, Filter } from 'lucide-react';
@@ -558,13 +557,19 @@ const Food = () => {
               ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               : "space-y-6"
             }>
-              {foodListings.map(food => (
-                <FoodCard
-                  key={food.id}
-                  food={food}
-                  horizontal={view === 'list'}
-                />
-              ))}
+              {foodListings.map(food => {
+                const typedFood: FoodListing = {
+                  ...food,
+                  category: (food.category as "grocery" | "cafe" | "restaurant"),
+                  cuisineTypes: food.cuisineTypes || [],
+                  diningStyle: food.diningStyle || undefined,
+                  featuredDish: food.featuredDish || undefined
+                };
+                
+                return (
+                  <FoodCard key={food.id} food={typedFood} />
+                );
+              })}
             </div>
           )}
           

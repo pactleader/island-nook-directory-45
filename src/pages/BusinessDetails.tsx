@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
@@ -29,10 +28,8 @@ const BusinessDetails = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('about');
   
-  // Find the business data
   const business = mockBusinesses.find(b => b.id === id);
   
-  // If business not found
   if (!business) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -52,7 +49,6 @@ const BusinessDetails = () => {
     );
   }
   
-  // Sample reviews
   const reviews = [
     {
       id: 1,
@@ -80,7 +76,6 @@ const BusinessDetails = () => {
     }
   ];
   
-  // Handle image navigation
   const nextImage = () => {
     setActiveImageIndex(prev => 
       prev === business.images.length - 1 ? 0 : prev + 1
@@ -93,13 +88,11 @@ const BusinessDetails = () => {
     );
   };
   
-  // Format date
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
   
-  // Format category name
   const formatCategory = (name: string) => {
     return name
       .split('-')
@@ -107,7 +100,6 @@ const BusinessDetails = () => {
       .join(' ');
   };
   
-  // Sample business hours
   const businessHours = [
     { day: 'Monday', hours: '9:00 AM - 6:00 PM' },
     { day: 'Tuesday', hours: '9:00 AM - 6:00 PM' },
@@ -124,7 +116,6 @@ const BusinessDetails = () => {
       
       <main className="flex-grow pt-20">
         <div className="container mx-auto px-4 py-4">
-          {/* Breadcrumb Navigation */}
           <div className="mb-4">
             <Link to="/businesses" className="text-gray-600 hover:text-gray-900 inline-flex items-center">
               <ArrowLeft size={16} className="mr-1" />
@@ -132,7 +123,6 @@ const BusinessDetails = () => {
             </Link>
           </div>
           
-          {/* Business Title and Rating */}
           <div className="mb-6">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center">
               <div>
@@ -170,7 +160,6 @@ const BusinessDetails = () => {
             </div>
           </div>
           
-          {/* Category and Subcategory */}
           <div className="mb-6 flex flex-wrap gap-2">
             <span className="chip bg-gray-900 text-white">
               {formatCategory(business.category)}
@@ -180,17 +169,14 @@ const BusinessDetails = () => {
             </span>
           </div>
           
-          {/* Image Gallery */}
           <div className="mb-8">
             <div className="relative rounded-xl overflow-hidden h-[300px] md:h-[400px] lg:h-[500px]">
-              {/* Main Image */}
               <img 
                 src={business.images[activeImageIndex]} 
                 alt={`${business.name} - Image ${activeImageIndex + 1}`}
                 className="w-full h-full object-cover"
               />
               
-              {/* Navigation Arrows */}
               <button 
                 onClick={prevImage}
                 className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full"
@@ -206,13 +192,11 @@ const BusinessDetails = () => {
                 <ChevronRight size={20} />
               </button>
               
-              {/* Image Counter */}
               <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
                 {activeImageIndex + 1} / {business.images.length}
               </div>
             </div>
             
-            {/* Thumbnail Navigation */}
             <div className="flex overflow-x-auto space-x-2 mt-4 pb-2">
               {business.images.map((img, index) => (
                 <button
@@ -228,7 +212,6 @@ const BusinessDetails = () => {
             </div>
           </div>
           
-          {/* Tabs Navigation */}
           <div className="border-b border-gray-200 mb-6">
             <nav className="flex space-x-8">
               <button 
@@ -264,21 +247,16 @@ const BusinessDetails = () => {
             </nav>
           </div>
           
-          {/* Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
             <div className="lg:col-span-2">
-              {/* About Tab */}
               {activeTab === 'about' && (
                 <div>
-                  {/* Description */}
                   <div className="glass-card rounded-xl p-6 mb-6">
                     <h2 className="text-xl font-semibold mb-4">About {business.name}</h2>
                     <p className="text-gray-700 whitespace-pre-line mb-6">
                       {business.description}
                     </p>
                     
-                    {/* Services */}
                     <h3 className="text-lg font-medium mb-3">Services Offered</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
                       {['Custom orders', 'Delivery', 'In-store pickup', 'Online ordering', 'Repairs', 'Consultations'].map((service, index) => (
@@ -289,7 +267,6 @@ const BusinessDetails = () => {
                       ))}
                     </div>
                     
-                    {/* Payment Methods */}
                     <h3 className="text-lg font-medium mb-3">Payment Methods</h3>
                     <div className="flex flex-wrap gap-2">
                       <span className="chip bg-gray-100 text-gray-700">Credit Cards</span>
@@ -299,7 +276,6 @@ const BusinessDetails = () => {
                     </div>
                   </div>
                   
-                  {/* Gallery Highlights */}
                   <div className="glass-card rounded-xl p-6 mb-6">
                     <h2 className="text-xl font-semibold mb-4">Gallery</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -317,10 +293,8 @@ const BusinessDetails = () => {
                 </div>
               )}
               
-              {/* Reviews Tab */}
               {activeTab === 'reviews' && (
                 <div>
-                  {/* Reviews Summary */}
                   <div className="glass-card rounded-xl p-6 mb-6">
                     <h2 className="text-xl font-semibold mb-4">Customer Reviews</h2>
                     <div className="flex items-center mb-6">
@@ -358,14 +332,12 @@ const BusinessDetails = () => {
                       </div>
                     </div>
                     
-                    {/* Write Review Button */}
                     <button className="btn-primary">
                       <MessageCircle size={16} className="mr-2" />
                       <span>Write a Review</span>
                     </button>
                   </div>
                   
-                  {/* Review List */}
                   <div className="space-y-6">
                     {reviews.map(review => (
                       <div key={review.id} className="glass-card rounded-xl p-6">
@@ -396,7 +368,6 @@ const BusinessDetails = () => {
                       </div>
                     ))}
                     
-                    {/* See More Reviews Button */}
                     <div className="text-center">
                       <button className="btn-outline">
                         See More Reviews
@@ -406,14 +377,11 @@ const BusinessDetails = () => {
                 </div>
               )}
               
-              {/* Location Tab */}
               {activeTab === 'location' && (
                 <div>
-                  {/* Map */}
                   <div className="glass-card rounded-xl p-6 mb-6">
                     <h2 className="text-xl font-semibold mb-4">Location</h2>
                     <div className="rounded-lg overflow-hidden h-[400px] mb-4">
-                      {/* Placeholder for a map */}
                       <div className="bg-gray-200 w-full h-full flex items-center justify-center">
                         <span className="text-gray-500">Map View</span>
                       </div>
@@ -433,7 +401,6 @@ const BusinessDetails = () => {
                     </div>
                   </div>
                   
-                  {/* Nearby Businesses */}
                   <div className="glass-card rounded-xl p-6">
                     <h2 className="text-xl font-semibold mb-4">Nearby Businesses</h2>
                     <div className="space-y-4">
@@ -468,13 +435,10 @@ const BusinessDetails = () => {
               )}
             </div>
             
-            {/* Sidebar */}
             <div>
-              {/* Business Info */}
               <div className="glass-card rounded-xl p-6 mb-6">
                 <h2 className="text-xl font-semibold mb-4">Business Info</h2>
                 
-                {/* Contact */}
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center text-gray-700">
                     <Phone size={16} className="mr-2" />
@@ -496,7 +460,6 @@ const BusinessDetails = () => {
                   )}
                 </div>
                 
-                {/* Business Hours */}
                 <h3 className="font-medium text-gray-900 mb-3">Business Hours</h3>
                 <div className="space-y-2 mb-6">
                   {businessHours.map((day, index) => (
@@ -509,7 +472,6 @@ const BusinessDetails = () => {
                   ))}
                 </div>
                 
-                {/* Social Links */}
                 <h3 className="font-medium text-gray-900 mb-3">Follow On</h3>
                 <div className="flex space-x-2">
                   <a href="#" className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-gray-700">
@@ -521,7 +483,6 @@ const BusinessDetails = () => {
                 </div>
               </div>
               
-              {/* Calendar - Special Events */}
               <div className="glass-card rounded-xl p-6">
                 <div className="flex items-center mb-4">
                   <Calendar size={18} className="text-gray-700 mr-2" />
@@ -545,7 +506,6 @@ const BusinessDetails = () => {
             </div>
           </div>
           
-          {/* Similar Businesses */}
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-6">Similar Businesses</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

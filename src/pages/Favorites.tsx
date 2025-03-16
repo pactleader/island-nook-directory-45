@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navigation from '../components/Navigation';
@@ -7,7 +6,7 @@ import { useFavorites } from '../contexts/FavoritesContext';
 import PropertyCard from '../components/PropertyCard';
 import VehicleCard from '../components/VehicleCard';
 import BusinessCard from '../components/BusinessCard';
-import { mockProperties, mockVehicles, mockBusinesses } from '../utils/mockData';
+import { mockProperties, mockVehicles, mockBusinesses, mockFoodListings } from '../utils/mockData';
 import { Heart, Building, Car, Store, Calendar } from 'lucide-react';
 
 const Favorites = () => {

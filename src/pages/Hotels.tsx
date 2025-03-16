@@ -153,7 +153,7 @@ const HotelCard = ({ hotel }) => {
       <div className="absolute top-3 right-3">
         <FavoriteButton 
           id={hotel.id}
-          type="property"
+          type="hotel"
           className="bg-white rounded-full p-1.5 shadow"
         />
       </div>
@@ -183,25 +183,20 @@ const Hotels = () => {
 
       <main className="flex-1 py-10">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Sidebar with Search and Filters */}
-            <div className="lg:col-span-1">
-              <SearchFilters
-                title="Filter Hotels"
-                placeholder="Search for hotels..."
-                filterGroups={filterGroups}
-                onSearch={handleSearch}
-              />
-            </div>
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Hotels</h1>
+            <SearchFilters
+              title="Filter Hotels"
+              placeholder="Search for hotels..."
+              filterGroups={filterGroups}
+              onSearch={handleSearch}
+            />
+          </div>
 
-            {/* Hotels Listing */}
-            <div className="lg:col-span-3">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {mockHotels.map(hotel => (
-                  <HotelCard key={hotel.id} hotel={hotel} />
-                ))}
-              </div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {mockHotels.map(hotel => (
+              <HotelCard key={hotel.id} hotel={hotel} />
+            ))}
           </div>
         </div>
       </main>

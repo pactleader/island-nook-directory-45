@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { VehicleListing } from '../utils/mockData';
 import { Car } from 'lucide-react';
+import FavoriteButton from './FavoriteButton';
 
 interface VehicleCardProps {
   vehicle: VehicleListing;
@@ -46,6 +47,15 @@ const VehicleCard = ({ vehicle }: VehicleCardProps) => {
             } backdrop-blur-sm`}>
               {vehicle.condition === 'new' ? 'New' : 'Used'}
             </span>
+          </div>
+          
+          {/* Favorite Button */}
+          <div className="absolute top-4 right-4 z-10">
+            <FavoriteButton 
+              id={vehicle.id} 
+              type="vehicle"
+              className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm shadow-md" 
+            />
           </div>
           
           {/* Price Tag */}

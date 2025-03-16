@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BusinessListing } from '../utils/mockData';
 import { Building, Phone, Star } from 'lucide-react';
+import FavoriteButton from './FavoriteButton';
 
 interface BusinessCardProps {
   business: BusinessListing;
@@ -45,6 +46,15 @@ const BusinessCard = ({ business }: BusinessCardProps) => {
             <span className="chip bg-gray-900/80 text-white backdrop-blur-sm">
               {formatCategory(business.category)}
             </span>
+          </div>
+          
+          {/* Favorite Button */}
+          <div className="absolute top-4 right-4 z-10">
+            <FavoriteButton 
+              id={business.id} 
+              type="business"
+              className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm shadow-md" 
+            />
           </div>
           
           {/* Rating */}

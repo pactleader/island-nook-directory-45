@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SearchFilters from '../components/SearchFilters';
 import { Calendar, Music, Users, PartyPopper, Briefcase, Heart, MoreHorizontal, MapPin } from 'lucide-react';
+import FavoriteButton from './FavoriteButton';
 
 // Mock data for event listings
 const mockEvents = [
@@ -248,7 +249,7 @@ const Events = () => {
     setFilteredEvents(results);
   };
 
-  // Check for URL parameters for initial filtering
+  // Format date for display
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
@@ -351,11 +352,18 @@ const Events = () => {
                       .filter(event => event.featured)
                       .slice(0, 2)
                       .map(event => (
-                        <div key={event.id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                        <Link key={event.id} to={`/events/${event.id}`} className="block bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                           <div className="aspect-w-16 aspect-h-9 relative">
                             <img src={event.image} alt={event.title} className="object-cover w-full h-48" />
                             <div className="absolute top-4 left-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
                               {event.category}
+                            </div>
+                            <div className="absolute top-4 right-4 z-10">
+                              <FavoriteButton 
+                                id={event.id.toString()} 
+                                type="event"
+                                className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm shadow-md" 
+                              />
                             </div>
                           </div>
                           <div className="p-6">
@@ -369,14 +377,8 @@ const Events = () => {
                               <MapPin size={16} className="mr-2" />
                               <span>{event.location}</span>
                             </div>
-                            <Link 
-                              to={`/events/${event.id}`} 
-                              className="inline-block mt-2 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
-                            >
-                              View Details
-                            </Link>
                           </div>
-                        </div>
+                        </Link>
                       ))}
                   </div>
                 </div>
@@ -387,11 +389,18 @@ const Events = () => {
                 <div className={activeView === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-6'}>
                   {filteredEvents.map(event => (
                     activeView === 'grid' ? (
-                      <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
+                      <Link key={event.id} to={`/events/${event.id}`} className="block bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
                         <div className="relative">
                           <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
                           <div className="absolute top-4 left-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
                             {event.category}
+                          </div>
+                          <div className="absolute top-4 right-4 z-10">
+                            <FavoriteButton 
+                              id={event.id.toString()} 
+                              type="event"
+                              className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm shadow-md" 
+                            />
                           </div>
                         </div>
                         <div className="p-5">
@@ -405,20 +414,21 @@ const Events = () => {
                             <MapPin size={16} className="mr-2" />
                             <span>{event.location}</span>
                           </div>
-                          <Link 
-                            to={`/events/${event.id}`} 
-                            className="inline-block mt-1 px-3 py-1.5 text-sm bg-gray-900 text-white rounded hover:bg-gray-800 transition-all-300"
-                          >
-                            View Details
-                          </Link>
                         </div>
-                      </div>
+                      </Link>
                     ) : (
-                      <div key={event.id} className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
+                      <Link key={event.id} to={`/events/${event.id}`} className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
                         <div className="md:w-1/3 relative">
                           <img src={event.image} alt={event.title} className="w-full h-48 md:h-full object-cover" />
                           <div className="absolute top-4 left-4 bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
                             {event.category}
+                          </div>
+                          <div className="absolute top-4 right-4 z-10">
+                            <FavoriteButton 
+                              id={event.id.toString()} 
+                              type="event"
+                              className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm shadow-md" 
+                            />
                           </div>
                         </div>
                         <div className="md:w-2/3 p-5">
@@ -434,14 +444,8 @@ const Events = () => {
                               <span>{event.location}</span>
                             </div>
                           </div>
-                          <Link 
-                            to={`/events/${event.id}`} 
-                            className="inline-block mt-4 px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-all-300"
-                          >
-                            View Details
-                          </Link>
                         </div>
-                      </div>
+                      </Link>
                     )
                   ))}
                 </div>

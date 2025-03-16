@@ -28,42 +28,47 @@ import UserListings from "./pages/UserListings";
 import UserMessages from "./pages/UserMessages";
 import CreateListing from "./pages/CreateListing";
 import CreatePropertyListing from "./pages/CreatePropertyListing";
+import Favorites from "./pages/Favorites";
+import { FavoritesProvider } from "./contexts/FavoritesContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/properties" element={<Properties />} />
-          <Route path="/properties/:id" element={<PropertyDetails />} />
-          <Route path="/vehicles" element={<Vehicles />} />
-          <Route path="/vehicles/:id" element={<VehicleDetails />} />
-          <Route path="/hotels" element={<Hotels />} />
-          <Route path="/hotels/:id" element={<HotelDetails />} />
-          <Route path="/businesses" element={<Businesses />} />
-          <Route path="/businesses/:id" element={<BusinessDetails />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/events/:id" element={<EventDetails />} />
-          <Route path="/government-services" element={<GovernmentServices />} />
-          <Route path="/government-services/:id" element={<GovernmentServiceDetails />} />
-          <Route path="/ask-local" element={<AskLocal />} />
-          <Route path="/ask-local/:id" element={<AskLocalDetails />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/setup" element={<ProfileSetup />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/user-listings" element={<UserListings />} />
-          <Route path="/messages/:type/:id" element={<UserMessages />} />
-          <Route path="/create-listing" element={<CreateListing />} />
-          <Route path="/create-listing/property" element={<CreatePropertyListing />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <FavoritesProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/properties" element={<Properties />} />
+            <Route path="/properties/:id" element={<PropertyDetails />} />
+            <Route path="/vehicles" element={<Vehicles />} />
+            <Route path="/vehicles/:id" element={<VehicleDetails />} />
+            <Route path="/hotels" element={<Hotels />} />
+            <Route path="/hotels/:id" element={<HotelDetails />} />
+            <Route path="/businesses" element={<Businesses />} />
+            <Route path="/businesses/:id" element={<BusinessDetails />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/government-services" element={<GovernmentServices />} />
+            <Route path="/government-services/:id" element={<GovernmentServiceDetails />} />
+            <Route path="/ask-local" element={<AskLocal />} />
+            <Route path="/ask-local/:id" element={<AskLocalDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profile/setup" element={<ProfileSetup />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/user-listings" element={<UserListings />} />
+            <Route path="/messages/:type/:id" element={<UserMessages />} />
+            <Route path="/create-listing" element={<CreateListing />} />
+            <Route path="/create-listing/property" element={<CreatePropertyListing />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </FavoritesProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

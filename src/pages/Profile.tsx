@@ -1,214 +1,157 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { BadgeCheck, Settings, CreditCard, PlusCircle, Inbox } from 'lucide-react';
-import { toast } from 'sonner';
+
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { User, Mail, Phone, MapPin, Heart, Star, Bell, Settings, LogOut } from 'lucide-react';
+import ProfileFavorites from '../components/ProfileFavorites';
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const [profile, setProfile] = useState<any>(null);
-  const [isVerified, setIsVerified] = useState(false);
-  const [advertisingCredit, setAdvertisingCredit] = useState('0');
-  const [activeTab, setActiveTab] = useState("profile");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (!isLoggedIn || isLoggedIn !== 'true') {
-      navigate('/login');
-      return;
-    }
-
-    const storedProfile = localStorage.getItem('userProfile');
-    const storedVerification = localStorage.getItem('isVerified');
-    const storedCredit = localStorage.getItem('advertisingCredit');
-    
-    if (storedProfile) {
-      setProfile(JSON.parse(storedProfile));
-    } else {
-      navigate('/profile/setup');
-      return;
-    }
-    
-    if (storedVerification === 'true') {
-      setIsVerified(true);
-    }
-    
-    if (storedCredit) {
-      setAdvertisingCredit(storedCredit);
-    }
-    
-    setIsLoading(false);
-  }, [navigate]);
-
-  const handleCreateListingClick = () => {
-    navigate('/create-listing');
+  // Demo user data
+  const user = {
+    name: "Alex Johnson",
+    email: "alex.johnson@example.com",
+    phone: "+1 (555) 123-4567",
+    location: "Saipan, Northern Mariana Islands",
+    profilePicture: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    listingsCount: 3,
+    favoriteCount: 12,
+    memberSince: "June 2022"
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <div className="flex items-center justify-center flex-grow">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading your profile...</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow container mx-auto px-4 py-8 mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="md:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>Profile</span>
-                  {isVerified && (
-                    <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
-                      <BadgeCheck className="w-4 h-4" />
-                      <span className="text-xs font-medium">Verified</span>
-                    </span>
-                  )}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="flex flex-col items-stretch h-auto bg-transparent">
-                    <TabsTrigger value="profile" className="justify-start px-4 py-2">
-                      <Settings className="w-4 h-4 mr-2" />
-                      Profile Settings
-                    </TabsTrigger>
-                    <TabsTrigger value="credits" className="justify-start px-4 py-2">
-                      <CreditCard className="w-4 h-4 mr-2" />
-                      Advertising Credits
-                    </TabsTrigger>
-                  </TabsList>
-                
-                  <TabsContent value="profile" className="m-0">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Profile Information</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div>
-                            <h3 className="font-medium">Full Name</h3>
-                            <p>{profile?.fullName || 'Not provided'}</p>
-                          </div>
-                          <div>
-                            <h3 className="font-medium">Mailing Address</h3>
-                            <p>{profile?.mailingAddress || 'Not provided'}</p>
-                          </div>
-                          <div>
-                            <h3 className="font-medium">Village</h3>
-                            <p>{profile?.village || 'Not provided'}</p>
-                          </div>
-                          <div>
-                            <h3 className="font-medium">Island</h3>
-                            <p>{profile?.island || 'Not provided'}</p>
-                          </div>
-                          <div>
-                            <h3 className="font-medium">Phone Number</h3>
-                            <p>{profile?.phoneNumber || 'Not provided'}</p>
-                          </div>
-                          {profile?.whatsappNumber && (
-                            <div>
-                              <h3 className="font-medium">WhatsApp Number</h3>
-                              <p>{profile.whatsappNumber}</p>
-                            </div>
-                          )}
-                          
-                          <Button variant="outline" onClick={() => navigate('/profile/setup')}>
-                            Edit Profile
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
+      <main className="flex-grow pt-24">
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column - User Profile */}
+            <div className="lg:col-span-1">
+              {/* User Card */}
+              <div className="glass-card rounded-xl p-6 mb-6">
+                <div className="flex flex-col items-center">
+                  <div className="w-24 h-24 rounded-full overflow-hidden mb-4 border-2 border-white shadow-md">
+                    <img src={user.profilePicture} alt={user.name} className="w-full h-full object-cover" />
+                  </div>
                   
-                  <TabsContent value="credits" className="m-0">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Advertising Credits</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-center py-6">
-                          <h2 className="text-3xl font-bold text-green-600">${advertisingCredit}</h2>
-                          <p className="text-gray-600 mb-4">Available Credits</p>
-                          
-                          {!isVerified && (
-                            <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                              <h3 className="font-medium text-blue-700 mb-2">Get Verified for $5 More</h3>
-                              <p className="text-sm text-blue-600 mb-2">
-                                Upload your ID and a selfie to earn additional advertising credits.
-                              </p>
-                              <Button onClick={() => navigate('/profile/setup')} size="sm">
-                                Verify Now
-                              </Button>
-                            </div>
-                          )}
-                          
-                          <Button variant="outline" onClick={() => toast.info("Purchase feature coming soon!")}>
-                            Purchase More Credits
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="md:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <Button 
-                onClick={handleCreateListingClick}
-                variant="ghost"
-                className="p-0 h-auto hover:bg-transparent"
-              >
-                <div className="w-full">
-                  <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <PlusCircle className="w-10 h-10 text-blue-600 mb-4" />
-                      <h3 className="font-medium text-xl mb-2">Create a Listing</h3>
-                      <p className="text-gray-600 text-sm">
-                        List your property, business, event or vehicle
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">{user.name}</h1>
+                  <p className="text-gray-500 text-sm mb-4">Member since {user.memberSince}</p>
+                  
+                  <div className="w-full border-t border-gray-200 pt-4 mt-2">
+                    <div className="flex items-center py-2">
+                      <Mail size={18} className="text-gray-500 mr-3" />
+                      <span className="text-gray-700">{user.email}</span>
+                    </div>
+                    <div className="flex items-center py-2">
+                      <Phone size={18} className="text-gray-500 mr-3" />
+                      <span className="text-gray-700">{user.phone}</span>
+                    </div>
+                    <div className="flex items-center py-2">
+                      <MapPin size={18} className="text-gray-500 mr-3" />
+                      <span className="text-gray-700">{user.location}</span>
+                    </div>
+                  </div>
+                  
+                  <button className="w-full mt-6 btn-secondary">
+                    Edit Profile
+                  </button>
                 </div>
-              </Button>
+              </div>
               
-              <Button 
-                onClick={() => navigate('/user-listings')}
-                variant="ghost"
-                className="p-0 h-auto hover:bg-transparent"
-              >
-                <div className="w-full">
-                  <Card className="hover:bg-gray-50 transition cursor-pointer h-full">
-                    <CardContent className="p-6 flex flex-col items-center text-center">
-                      <Inbox className="w-10 h-10 text-blue-600 mb-4" />
-                      <h3 className="font-medium text-xl mb-2">Your Listings & Messages</h3>
-                      <p className="text-gray-600 text-sm">
-                        Manage your listings and respond to inquiries
-                      </p>
-                    </CardContent>
-                  </Card>
+              {/* Menu Card */}
+              <div className="glass-card rounded-xl overflow-hidden">
+                <nav className="flex flex-col">
+                  <a href="/profile" className="flex items-center px-6 py-4 text-gray-900 bg-gray-100 border-l-4 border-gray-900">
+                    <User size={20} className="mr-3" />
+                    <span>Profile Overview</span>
+                  </a>
+                  <a href="/user-listings" className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 transition-colors">
+                    <Star size={20} className="mr-3" />
+                    <span>My Listings</span>
+                  </a>
+                  <a href="/favorites" className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 transition-colors">
+                    <Heart size={20} className="mr-3" />
+                    <span>Favorites</span>
+                  </a>
+                  <a href="#" className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 transition-colors">
+                    <Bell size={20} className="mr-3" />
+                    <span>Notifications</span>
+                  </a>
+                  <a href="#" className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 transition-colors">
+                    <Settings size={20} className="mr-3" />
+                    <span>Account Settings</span>
+                  </a>
+                  <a href="/login" className="flex items-center px-6 py-4 text-red-600 hover:bg-red-50 transition-colors">
+                    <LogOut size={20} className="mr-3" />
+                    <span>Log Out</span>
+                  </a>
+                </nav>
+              </div>
+            </div>
+            
+            {/* Right Column - Content */}
+            <div className="lg:col-span-2">
+              {/* Activity Summary */}
+              <div className="glass-card rounded-xl p-6 mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Activity Summary</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="text-3xl font-bold text-gray-900 mb-1">{user.listingsCount}</div>
+                    <div className="text-gray-500">Active Listings</div>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="text-3xl font-bold text-gray-900 mb-1">{user.favoriteCount}</div>
+                    <div className="text-gray-500">Favorite Items</div>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="text-3xl font-bold text-gray-900 mb-1">8</div>
+                    <div className="text-gray-500">Messages</div>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="text-3xl font-bold text-gray-900 mb-1">2</div>
+                    <div className="text-gray-500">Reviews</div>
+                  </div>
                 </div>
-              </Button>
+              </div>
+              
+              {/* Favorites Section */}
+              <ProfileFavorites />
+              
+              {/* Recent Activity */}
+              <div className="glass-card rounded-xl p-6 mt-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 rounded-lg flex items-start">
+                    <div className="bg-blue-100 p-2 rounded-md mr-3">
+                      <Star size={18} className="text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-gray-900 font-medium">You added a new listing</p>
+                      <p className="text-gray-500 text-sm">Ocean View Apartment - Saipan</p>
+                      <p className="text-gray-400 text-xs mt-1">2 days ago</p>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg flex items-start">
+                    <div className="bg-pink-100 p-2 rounded-md mr-3">
+                      <Heart size={18} className="text-pink-600" />
+                    </div>
+                    <div>
+                      <p className="text-gray-900 font-medium">You favorited a property</p>
+                      <p className="text-gray-500 text-sm">Beachfront Villa - Tinian</p>
+                      <p className="text-gray-400 text-xs mt-1">5 days ago</p>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg flex items-start">
+                    <div className="bg-green-100 p-2 rounded-md mr-3">
+                      <Mail size={18} className="text-green-600" />
+                    </div>
+                    <div>
+                      <p className="text-gray-900 font-medium">You received a new message</p>
+                      <p className="text-gray-500 text-sm">From: Sarah Smith regarding "Toyota Camry"</p>
+                      <p className="text-gray-400 text-xs mt-1">1 week ago</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

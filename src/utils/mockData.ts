@@ -1,3 +1,4 @@
+
 export const mockProperties = [
   {
     id: "property1",
@@ -675,3 +676,85 @@ export const mockFoodListings = [
       phone: "(670) 287-3456",
       email: "contact@bubbletea-island.com"
     },
+    createdAt: "2023-08-15T11:25:00Z"
+  },
+  {
+    id: "food8",
+    name: "Island Coffee Roasters",
+    description: "Local coffee roastery and cafe serving freshly roasted beans, specialty coffee drinks, and homemade pastries.",
+    category: "cafe",
+    subcategory: "Specialty Coffee Shops",
+    priceRange: "$$",
+    rating: 4.6,
+    imageUrl: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1000",
+    location: {
+      address: "123 Coffee Lane",
+      village: "San Jose"
+    },
+    openingHours: {
+      open: "6:30 AM",
+      close: "5:00 PM",
+      days: "Monday - Saturday"
+    },
+    contact: {
+      phone: "(670) 235-8901",
+      email: "info@islandcoffeeroasters.com",
+      website: "https://www.islandcoffeeroasters.com"
+    },
+    createdAt: "2023-09-05T08:10:00Z",
+    dietaryPreferences: ["Organic & Health-Conscious", "Gluten-Free"]
+  },
+  {
+    id: "food9",
+    name: "Fresh Juice Bar",
+    description: "Offering a variety of freshly squeezed juices, smoothies, and healthy snacks made with local fruits and vegetables.",
+    category: "cafe",
+    subcategory: "Juice Bars & Smoothie Shops",
+    priceRange: "$$",
+    rating: 4.4,
+    imageUrl: "https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?q=80&w=1000",
+    location: {
+      address: "456 Healthy Way",
+      village: "Chalan Kanoa"
+    },
+    openingHours: {
+      open: "8:00 AM",
+      close: "6:00 PM",
+      days: "Monday - Sunday"
+    },
+    contact: {
+      phone: "(670) 234-5678",
+      email: "hello@freshjuicebar.com",
+      website: "https://www.freshjuicebar.com"
+    },
+    createdAt: "2023-10-12T09:30:00Z",
+    dietaryPreferences: ["Vegetarian & Vegan", "Organic & Health-Conscious"]
+  },
+  {
+    id: "food10",
+    name: "Local Seafood Market",
+    description: "Fresh seafood market offering the catch of the day, local fish, shellfish, and prepared seafood dishes.",
+    category: "grocery",
+    subcategory: "Farmers and Local Producers",
+    priceRange: "$$",
+    rating: 4.7,
+    imageUrl: "https://images.unsplash.com/photo-1579179017429-ac5900fa3567?q=80&w=1000",
+    location: {
+      address: "789 Harbor Road",
+      village: "Garapan"
+    },
+    openingHours: {
+      open: "6:00 AM",
+      close: "2:00 PM",
+      days: "Tuesday - Sunday"
+    },
+    contact: {
+      phone: "(670) 287-6543",
+      email: "info@localseafoodmarket.com"
+    },
+    createdAt: "2023-11-01T07:45:00Z",
+    dietaryPreferences: ["Farm-to-Table"]
+  }
+];
+
+// Add more mock data for additional collections as needed

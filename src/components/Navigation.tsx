@@ -1,6 +1,13 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 // Define the types of navigation modes
 type NavMode = 'visitor' | 'local';
@@ -9,6 +16,7 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [navMode, setNavMode] = useState<NavMode>('visitor');
+  const [selectedIsland, setSelectedIsland] = useState('All Islands');
   const location = useLocation();
   
   // Handle scroll effect for navigation
@@ -60,6 +68,9 @@ const Navigation = () => {
     }
   };
 
+  // List of islands for the dropdown
+  const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
+
   const navLinks = getNavLinks();
 
   return (
@@ -82,8 +93,8 @@ const Navigation = () => {
             </span>
           </Link>
           
-          {/* Mode Toggle */}
-          <div className="hidden md:flex items-center mr-4">
+          {/* Mode Toggle and Island Dropdown */}
+          <div className="hidden md:flex items-center space-x-4">
             <button 
               onClick={toggleNavMode} 
               className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
@@ -100,6 +111,25 @@ const Navigation = () => {
                 </>
               )}
             </button>
+            
+            {/* Island Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
+                {selectedIsland}
+                <ChevronDown size={16} className="ml-2" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
+                {islands.map((island) => (
+                  <DropdownMenuItem
+                    key={island}
+                    className="text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => setSelectedIsland(island)}
+                  >
+                    {island}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Main Navigation */}
@@ -129,7 +159,7 @@ const Navigation = () => {
           
           {/* Mobile Navigation */}
           <div className="md:hidden">
-            <MobileMenu navMode={navMode} toggleNavMode={toggleNavMode} />
+            <MobileMenu navMode={navMode} toggleNavMode={toggleNavMode} islands={islands} selectedIsland={selectedIsland} setSelectedIsland={setSelectedIsland} />
           </div>
         </div>
       </div>
@@ -155,7 +185,8 @@ const NavLink = ({ to, icon, label, isActive }: { to: string, icon: React.ReactN
 };
 
 // Mobile Menu Component
-const MobileMenu = ({ navMode, toggleNavMode }: { navMode: NavMode, toggleNavMode: () => void }) => {
+const MobileMenu = ({ navMode, toggleNavMode, islands, selectedIsland, setSelectedIsland }: 
+  { navMode: NavMode, toggleNavMode: () => void, islands: string[], selectedIsland: string, setSelectedIsland: (island: string) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   
   // Define navigation links based on mode
@@ -224,8 +255,8 @@ const MobileMenu = ({ navMode, toggleNavMode }: { navMode: NavMode, toggleNavMod
             </button>
           </div>
           
-          {/* Mode Toggle in Mobile Menu */}
-          <div className="p-4 border-b">
+          {/* Mode Toggle and Island Selector in Mobile Menu */}
+          <div className="p-4 border-b space-y-4">
             <button 
               onClick={() => {
                 toggleNavMode();
@@ -242,6 +273,26 @@ const MobileMenu = ({ navMode, toggleNavMode }: { navMode: NavMode, toggleNavMod
                 <ToggleRight size={24} className="text-gray-900" />
               )}
             </button>
+            
+            {/* Island Selection in Mobile Menu */}
+            <div className="p-3 rounded-lg">
+              <div className="font-medium mb-2">Select Island</div>
+              <div className="space-y-2">
+                {islands.map((island) => (
+                  <button
+                    key={island}
+                    onClick={() => {
+                      setSelectedIsland(island);
+                    }}
+                    className={`w-full text-left p-2 rounded-md ${
+                      selectedIsland === island ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    {island}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
           
           <nav className="flex-1 px-4 py-6 overflow-y-auto">

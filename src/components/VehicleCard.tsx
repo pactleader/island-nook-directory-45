@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { VehicleListing } from '../utils/mockData';
 import { Car } from 'lucide-react';
-import FavoriteButton from './FavoriteButton';
+import { FavoriteButton } from './FavoriteButton';
 
 interface VehicleCardProps {
   vehicle: VehicleListing;

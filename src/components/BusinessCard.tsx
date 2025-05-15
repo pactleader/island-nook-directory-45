@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BusinessListing } from '../utils/mockData';
 import { Building, Phone, Star } from 'lucide-react';
-import FavoriteButton from './FavoriteButton';
+import { FavoriteButton } from './FavoriteButton';
 
 interface BusinessCardProps {
   business: BusinessListing;

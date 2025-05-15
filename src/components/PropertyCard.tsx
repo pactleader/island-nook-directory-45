@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropertyListing } from '../utils/mockData';
 import { MapPin } from 'lucide-react';
-import FavoriteButton from './FavoriteButton';
+import { FavoriteButton } from './FavoriteButton';
 
 interface PropertyCardProps {
   property: PropertyListing;

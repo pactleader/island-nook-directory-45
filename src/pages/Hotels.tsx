@@ -4,7 +4,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SearchFilters from '../components/SearchFilters';
-import FavoriteButton from '../components/FavoriteButton';
+import { FavoriteButton } from '../components/FavoriteButton';
 
 // Mock data for hotels
 const mockHotels = [

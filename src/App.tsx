@@ -35,6 +35,7 @@ import { FavoritesProvider } from "./contexts/FavoritesContext";
 import Food from "./pages/Food";
 import Shopping from "./pages/Shopping";
 import LocalProducts from "./pages/LocalProducts";
+import Adventures from "./pages/Adventures";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
             <Route path="/food" element={<Food />} />
             <Route path="/shopping" element={<Shopping />} />
             <Route path="/local-products" element={<LocalProducts />} />
+            <Route path="/adventures" element={<Adventures />} />
             
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

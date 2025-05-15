@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight } from 'lucide-react';
@@ -42,6 +41,7 @@ const Navigation = () => {
       return [
         { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
+        { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
         { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
@@ -164,6 +164,7 @@ const MobileMenu = ({ navMode, toggleNavMode }: { navMode: NavMode, toggleNavMod
       return [
         { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
         { to: "/food", icon: <Utensils size={18} />, label: "Food" },
+        { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
         { to: "/events", icon: <Calendar size={18} />, label: "Events" },
         { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
         { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },

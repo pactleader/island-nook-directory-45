@@ -31,6 +31,11 @@ import CreatePropertyListing from "./pages/CreatePropertyListing";
 import Favorites from "./pages/Favorites";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 
+// Import new pages
+import Food from "./pages/Food";
+import Shopping from "./pages/Shopping";
+import LocalProducts from "./pages/LocalProducts";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -56,6 +61,12 @@ const App = () => (
             <Route path="/government-services/:id" element={<GovernmentServiceDetails />} />
             <Route path="/ask-local" element={<AskLocal />} />
             <Route path="/ask-local/:id" element={<AskLocalDetails />} />
+            
+            {/* New routes */}
+            <Route path="/food" element={<Food />} />
+            <Route path="/shopping" element={<Shopping />} />
+            <Route path="/local-products" element={<LocalProducts />} />
+            
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile/setup" element={<ProfileSetup />} />

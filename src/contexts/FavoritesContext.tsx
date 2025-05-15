@@ -1,62 +1,70 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
-// Types for different listing categories that can be favorited
-type FavoriteItem = {
+export type FavoriteType = 'property' | 'vehicle' | 'business' | 'event' | 'hotel' | 'food' | 'shopping' | 'product' | 'government';
+
+export type FavoriteItem = {
   id: string;
-  type: 'property' | 'vehicle' | 'business' | 'event';
+  type: FavoriteType;
+  dateAdded: string;
 };
 
 type FavoritesContextType = {
   favorites: FavoriteItem[];
-  toggleFavorite: (id: string, type: FavoriteItem['type']) => void;
-  isFavorite: (id: string) => boolean;
+  addFavorite: (id: string, type: FavoriteType) => void;
+  removeFavorite: (id: string, type: FavoriteType) => void;
+  isFavorite: (id: string, type: FavoriteType) => boolean;
 };
 
-const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
+export const FavoritesContext = createContext<FavoritesContextType>({
+  favorites: [],
+  addFavorite: () => {},
+  removeFavorite: () => {},
+  isFavorite: () => false
+});
 
-export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
-  // Initialize favorites from localStorage if available
-  const [favorites, setFavorites] = useState<FavoriteItem[]>(() => {
+export const useFavorites = () => useContext(FavoritesContext);
+
+interface FavoritesProviderProps {
+  children: React.ReactNode;
+}
+
+export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }) => {
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+  
+  // Load favorites from localStorage on component mount
+  useEffect(() => {
     const savedFavorites = localStorage.getItem('favorites');
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
-
-  // Update localStorage when favorites change
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
+  
+  // Save favorites to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
-
-  // Toggle an item in favorites
-  const toggleFavorite = (id: string, type: FavoriteItem['type']) => {
-    setFavorites(prevFavorites => {
-      const isAlreadyFavorite = prevFavorites.some(item => item.id === id);
-      
-      if (isAlreadyFavorite) {
-        return prevFavorites.filter(item => item.id !== id);
-      } else {
-        return [...prevFavorites, { id, type }];
+  
+  const addFavorite = (id: string, type: FavoriteType) => {
+    setFavorites(prev => {
+      if (!prev.some(fav => fav.id === id && fav.type === type)) {
+        return [...prev, { id, type, dateAdded: new Date().toISOString() }];
       }
+      return prev;
     });
   };
-
-  // Check if an item is favorited
-  const isFavorite = (id: string) => {
-    return favorites.some(item => item.id === id);
+  
+  const removeFavorite = (id: string, type: FavoriteType) => {
+    setFavorites(prev => prev.filter(fav => !(fav.id === id && fav.type === type)));
   };
-
+  
+  const isFavorite = (id: string, type: FavoriteType) => {
+    return favorites.some(fav => fav.id === id && fav.type === type);
+  };
+  
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite, isFavorite }}>
+    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );
-};
-
-// Hook to use the favorites context
-export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
-  if (context === undefined) {
-    throw new Error('useFavorites must be used within a FavoritesProvider');
-  }
-  return context;
 };

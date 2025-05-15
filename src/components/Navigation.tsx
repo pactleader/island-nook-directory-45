@@ -1,10 +1,15 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight } from 'lucide-react';
+
+// Define the types of navigation modes
+type NavMode = 'visitor' | 'local';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [navMode, setNavMode] = useState<NavMode>('visitor');
   const location = useLocation();
   
   // Handle scroll effect for navigation
@@ -26,6 +31,37 @@ const Navigation = () => {
     return location.pathname === path;
   };
 
+  // Toggle between visitor and local modes
+  const toggleNavMode = () => {
+    setNavMode(navMode === 'visitor' ? 'local' : 'visitor');
+  };
+
+  // Define navigation links based on mode
+  const getNavLinks = () => {
+    if (navMode === 'visitor') {
+      return [
+        { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
+        { to: "/food", icon: <Utensils size={16} />, label: "Food" },
+        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+        { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
+        { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
+        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+      ];
+    } else {
+      return [
+        { to: "/properties", icon: <Map size={16} />, label: "Homes" },
+        { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
+        { to: "/businesses", icon: <Building size={16} />, label: "Services" },
+        { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+        { to: "/food", icon: <Utensils size={16} />, label: "Food" },
+        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+      ];
+    }
+  };
+
+  const navLinks = getNavLinks();
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -46,15 +82,37 @@ const Navigation = () => {
             </span>
           </Link>
           
+          {/* Mode Toggle */}
+          <div className="hidden md:flex items-center mr-4">
+            <button 
+              onClick={toggleNavMode} 
+              className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
+            >
+              {navMode === 'visitor' ? (
+                <>
+                  <span>Visitor</span>
+                  <ToggleLeft size={20} className="ml-2" />
+                </>
+              ) : (
+                <>
+                  <span>Local</span>
+                  <ToggleRight size={20} className="ml-2" />
+                </>
+              )}
+            </button>
+          </div>
+
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
-            <NavLink to="/properties" icon={<Map size={16} />} label="Homes" isActive={isActive('/properties')} />
-            <NavLink to="/vehicles" icon={<Car size={16} />} label="Cars" isActive={isActive('/vehicles')} />
-            <NavLink to="/hotels" icon={<Building size={16} />} label="Hotels" isActive={isActive('/hotels')} />
-            <NavLink to="/businesses" icon={<Building size={16} />} label="Shopping & Services" isActive={isActive('/businesses')} />
-            <NavLink to="/events" icon={<Calendar size={16} />} label="Events" isActive={isActive('/events')} />
-            <NavLink to="/government-services" icon={<Landmark size={16} />} label="Government" isActive={isActive('/government-services')} />
-            <NavLink to="/ask-local" icon={<List size={16} />} label="Ask a Local" isActive={isActive('/ask-local')} />
+            {navLinks.map((link) => (
+              <NavLink 
+                key={link.to}
+                to={link.to} 
+                icon={link.icon} 
+                label={link.label} 
+                isActive={isActive(link.to)} 
+              />
+            ))}
           </nav>
           
           {/* Auth links */}
@@ -71,7 +129,7 @@ const Navigation = () => {
           
           {/* Mobile Navigation */}
           <div className="md:hidden">
-            <MobileMenu />
+            <MobileMenu navMode={navMode} toggleNavMode={toggleNavMode} />
           </div>
         </div>
       </div>
@@ -97,9 +155,35 @@ const NavLink = ({ to, icon, label, isActive }: { to: string, icon: React.ReactN
 };
 
 // Mobile Menu Component
-const MobileMenu = () => {
+const MobileMenu = ({ navMode, toggleNavMode }: { navMode: NavMode, toggleNavMode: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   
+  // Define navigation links based on mode
+  const getMobileLinks = () => {
+    if (navMode === 'visitor') {
+      return [
+        { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
+        { to: "/food", icon: <Utensils size={18} />, label: "Food" },
+        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+        { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
+        { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
+        { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+      ];
+    } else {
+      return [
+        { to: "/properties", icon: <Map size={18} />, label: "Homes" },
+        { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
+        { to: "/businesses", icon: <Building size={18} />, label: "Services" },
+        { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
+        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+        { to: "/food", icon: <Utensils size={18} />, label: "Food" },
+        { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+      ];
+    }
+  };
+
+  const mobileLinks = getMobileLinks();
+
   return (
     <div>
       {/* Mobile Menu Button */}
@@ -139,15 +223,37 @@ const MobileMenu = () => {
             </button>
           </div>
           
+          {/* Mode Toggle in Mobile Menu */}
+          <div className="p-4 border-b">
+            <button 
+              onClick={() => {
+                toggleNavMode();
+                // Don't close the menu when toggling modes
+              }}
+              className="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-100"
+            >
+              <span className="font-medium">
+                {navMode === 'visitor' ? 'Visitor Mode' : 'Local Mode'}
+              </span>
+              {navMode === 'visitor' ? (
+                <ToggleLeft size={24} className="text-gray-500" />
+              ) : (
+                <ToggleRight size={24} className="text-gray-900" />
+              )}
+            </button>
+          </div>
+          
           <nav className="flex-1 px-4 py-6 overflow-y-auto">
             <ul className="space-y-4">
-              <MobileNavLink to="/properties" icon={<Map size={18} />} label="Homes" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/vehicles" icon={<Car size={18} />} label="Cars" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/hotels" icon={<Building size={18} />} label="Hotels" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/businesses" icon={<Building size={18} />} label="Shopping & Services" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/events" icon={<Calendar size={18} />} label="Events" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/government-services" icon={<Landmark size={18} />} label="Government" onClick={() => setIsOpen(false)} />
-              <MobileNavLink to="/ask-local" icon={<List size={18} />} label="Ask a Local" onClick={() => setIsOpen(false)} />
+              {mobileLinks.map((link) => (
+                <MobileNavLink 
+                  key={link.to}
+                  to={link.to} 
+                  icon={link.icon} 
+                  label={link.label} 
+                  onClick={() => setIsOpen(false)} 
+                />
+              ))}
               <li className="border-t border-gray-200 my-4 pt-4">
                 <div className="flex flex-col space-y-2">
                   <Link to="/login" className="flex items-center p-3 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(false)}>

@@ -9,14 +9,6 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/ui/toggle-group";
@@ -50,51 +42,38 @@ const Navigation = () => {
     return location.pathname === path;
   };
 
-  // Main navigation links and secondary links for "Other" dropdown
-  const getMainAndOtherLinks = () => {
+  // Main navigation links configuration based on selected mode
+  const getMainLinks = () => {
     if (navMode === 'visitor') {
-      const mainLinks = [
+      return [
         { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
         { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
         { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-      ];
-      
-      const otherLinks = [
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
         { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
       ];
-      
-      return { mainLinks, otherLinks };
     } else if (navMode === 'local') {
-      const mainLinks = [
+      return [
         { to: "/properties", icon: <Map size={16} />, label: "Homes" },
         { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
         { to: "/businesses", icon: <Building size={16} />, label: "Services" },
         { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
         { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
-      ];
-      
-      const otherLinks = [
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
       ];
-      
-      return { mainLinks, otherLinks };
     } else { // 'all' mode
-      const mainLinks = [
+      return [
         { to: "/properties", icon: <Map size={16} />, label: "Homes" },
         { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
         { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/businesses", icon: <Building size={16} />, label: "Services" },
-      ];
-      
-      const otherLinks = [
         { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
         { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
         { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
@@ -103,15 +82,13 @@ const Navigation = () => {
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
         { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
       ];
-      
-      return { mainLinks, otherLinks };
     }
   };
 
   // List of islands for the dropdown
   const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
 
-  const { mainLinks, otherLinks } = getMainAndOtherLinks();
+  const mainLinks = getMainLinks();
 
   return (
     <header 
@@ -189,8 +166,8 @@ const Navigation = () => {
           </div>
           
           {/* Bottom Row: Main Navigation */}
-          <div className="hidden md:flex justify-center border-t border-gray-100 pt-2 pb-1">
-            <nav className="flex items-center space-x-1">
+          <div className="hidden md:flex justify-center border-t border-gray-100 pt-2 pb-1 overflow-x-auto">
+            <nav className="flex items-center space-x-1 flex-wrap">
               {/* Main Navigation Links */}
               {mainLinks.map((link) => (
                 <NavLink 
@@ -201,35 +178,6 @@ const Navigation = () => {
                   isActive={isActive(link.to)} 
                 />
               ))}
-              
-              {/* Other Dropdown */}
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 text-gray-700`}>
-                      <span>Other</span>
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <div className="p-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200">
-                        {otherLinks.map((link) => (
-                          <Link 
-                            key={link.to} 
-                            to={link.to}
-                            className={`flex items-center w-full p-2 rounded-md ${
-                              isActive(link.to) 
-                                ? 'bg-gray-100 text-gray-900' 
-                                : 'text-gray-700 hover:bg-gray-50'
-                            }`}
-                          >
-                            <span className="mr-2">{link.icon}</span>
-                            <span>{link.label}</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
             </nav>
           </div>
         </div>
@@ -260,7 +208,7 @@ const MobileMenu = ({ navMode, setNavMode, islands, selectedIsland, setSelectedI
   { navMode: NavMode, setNavMode: (mode: NavMode) => void, islands: string[], selectedIsland: string, setSelectedIsland: (island: string) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Define navigation links based on mode
+  // Define mobile navigation links based on mode
   const getMobileLinks = () => {
     if (navMode === 'visitor') {
       return [
@@ -272,6 +220,7 @@ const MobileMenu = ({ navMode, setNavMode, islands, selectedIsland, setSelectedI
         { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
         { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
+        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
       ];
     } else if (navMode === 'local') {
       return [

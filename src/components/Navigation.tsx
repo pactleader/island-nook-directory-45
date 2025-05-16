@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown, Package, Search } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown, Package, Search, Languages } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -28,6 +29,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [navMode, setNavMode] = useState<NavMode>('visitor');
   const [selectedIsland, setSelectedIsland] = useState('All Islands');
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
   const location = useLocation();
   
   // Handle scroll effect for navigation
@@ -96,6 +98,9 @@ const Navigation = () => {
 
   // List of islands for the dropdown
   const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
+  
+  // List of languages for the dropdown
+  const languages = ["English", "Chamorro", "Carolinian", "Korean", "Filipino", "Japanese", "Chinese"];
 
   const mainLinks = getMainLinks();
   
@@ -162,6 +167,26 @@ const Navigation = () => {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* Language Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
+                  <Languages size={16} className="mr-2" />
+                  {selectedLanguage}
+                  <ChevronDown size={16} className="ml-2" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
+                  {languages.map((language) => (
+                    <DropdownMenuItem
+                      key={language}
+                      className="text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => setSelectedLanguage(language)}
+                    >
+                      {language}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             
             {/* Auth links - Right */}
@@ -178,7 +203,16 @@ const Navigation = () => {
             
             {/* Mobile Navigation */}
             <div className="md:hidden">
-              <MobileMenu navMode={navMode} setNavMode={setNavMode} islands={islands} selectedIsland={selectedIsland} setSelectedIsland={setSelectedIsland} />
+              <MobileMenu 
+                navMode={navMode} 
+                setNavMode={setNavMode} 
+                islands={islands} 
+                languages={languages}
+                selectedIsland={selectedIsland} 
+                setSelectedIsland={setSelectedIsland} 
+                selectedLanguage={selectedLanguage}
+                setSelectedLanguage={setSelectedLanguage}
+              />
             </div>
           </div>
           
@@ -256,8 +290,25 @@ const NavLink = ({ to, icon, label, isActive }: { to: string, icon: React.ReactN
 };
 
 // Mobile Menu Component
-const MobileMenu = ({ navMode, setNavMode, islands, selectedIsland, setSelectedIsland }: 
-  { navMode: NavMode, setNavMode: (mode: NavMode) => void, islands: string[], selectedIsland: string, setSelectedIsland: (island: string) => void }) => {
+const MobileMenu = ({ 
+  navMode, 
+  setNavMode, 
+  islands, 
+  languages, 
+  selectedIsland, 
+  setSelectedIsland,
+  selectedLanguage,
+  setSelectedLanguage 
+}: { 
+  navMode: NavMode, 
+  setNavMode: (mode: NavMode) => void, 
+  islands: string[], 
+  languages: string[],
+  selectedIsland: string, 
+  setSelectedIsland: (island: string) => void,
+  selectedLanguage: string,
+  setSelectedLanguage: (language: string) => void
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   
   // Define mobile navigation links based on mode
@@ -391,6 +442,26 @@ const MobileMenu = ({ navMode, setNavMode, islands, selectedIsland, setSelectedI
                     }`}
                   >
                     {island}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Language Selection in Mobile Menu */}
+            <div className="p-3 rounded-lg">
+              <div className="font-medium mb-2">Select Language</div>
+              <div className="space-y-2">
+                {languages.map((language) => (
+                  <button
+                    key={language}
+                    onClick={() => {
+                      setSelectedLanguage(language);
+                    }}
+                    className={`w-full text-left p-2 rounded-md ${
+                      selectedLanguage === language ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    {language}
                   </button>
                 ))}
               </div>

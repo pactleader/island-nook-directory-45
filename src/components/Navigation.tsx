@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown } from 'lucide-react';
@@ -8,6 +7,21 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Define the types of navigation modes
 type NavMode = 'visitor' | 'local';
@@ -43,123 +57,169 @@ const Navigation = () => {
     setNavMode(navMode === 'visitor' ? 'local' : 'visitor');
   };
 
-  // Define navigation links based on mode
-  const getNavLinks = () => {
+  // Main navigation links and secondary links for "Other" dropdown
+  const getMainAndOtherLinks = () => {
     if (navMode === 'visitor') {
-      return [
+      const mainLinks = [
         { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
-        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+        { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
         { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
+      ];
+      
+      const otherLinks = [
+        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
       ];
+      
+      return { mainLinks, otherLinks };
     } else {
-      return [
+      const mainLinks = [
         { to: "/properties", icon: <Map size={16} />, label: "Homes" },
         { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
         { to: "/businesses", icon: <Building size={16} />, label: "Services" },
         { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+      ];
+      
+      const otherLinks = [
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
       ];
+      
+      return { mainLinks, otherLinks };
     }
   };
 
   // List of islands for the dropdown
   const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
 
-  const navLinks = getNavLinks();
+  const { mainLinks, otherLinks } = getMainAndOtherLinks();
 
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass-nav py-3' : 'bg-transparent py-5'
+        scrolled ? 'glass-nav py-2' : 'bg-transparent py-3'
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link 
-            to="/" 
-            className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
-          >
-            <span className="sr-only">CNMI Central Directory</span>
-            <span className="inline-block">
-              <span className="text-gray-900">CNMI</span>
-              <span className="text-gray-600">Central</span>
-            </span>
-          </Link>
-          
-          {/* Mode Toggle and Island Dropdown */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button 
-              onClick={toggleNavMode} 
-              className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
+        <div className="flex flex-col">
+          {/* Top Row: Logo, Toggles, Auth */}
+          <div className="flex items-center justify-between py-2">
+            {/* Logo */}
+            <Link 
+              to="/" 
+              className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
             >
-              {navMode === 'visitor' ? (
-                <>
-                  <span>Visitor</span>
-                  <ToggleLeft size={20} className="ml-2" />
-                </>
-              ) : (
-                <>
-                  <span>Local</span>
-                  <ToggleRight size={20} className="ml-2" />
-                </>
-              )}
-            </button>
+              <span className="sr-only">CNMI Central Directory</span>
+              <span className="inline-block">
+                <span className="text-gray-900">CNMI</span>
+                <span className="text-gray-600">Central</span>
+              </span>
+            </Link>
             
-            {/* Island Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
-                {selectedIsland}
-                <ChevronDown size={16} className="ml-2" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
-                {islands.map((island) => (
-                  <DropdownMenuItem
-                    key={island}
-                    className="text-gray-700 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => setSelectedIsland(island)}
-                  >
-                    {island}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Mode Toggle and Island Dropdown - Center */}
+            <div className="hidden md:flex items-center space-x-4">
+              <button 
+                onClick={toggleNavMode} 
+                className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
+              >
+                {navMode === 'visitor' ? (
+                  <>
+                    <span>Visitor</span>
+                    <ToggleLeft size={20} className="ml-2" />
+                  </>
+                ) : (
+                  <>
+                    <span>Local</span>
+                    <ToggleRight size={20} className="ml-2" />
+                  </>
+                )}
+              </button>
+              
+              {/* Island Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
+                  {selectedIsland}
+                  <ChevronDown size={16} className="ml-2" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
+                  {islands.map((island) => (
+                    <DropdownMenuItem
+                      key={island}
+                      className="text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => setSelectedIsland(island)}
+                    >
+                      {island}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            
+            {/* Auth links - Right */}
+            <div className="hidden md:flex items-center space-x-2">
+              <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
+                <LogIn size={16} className="mr-1" />
+                <span>Login</span>
+              </Link>
+              <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
+                <User size={16} className="mr-1" />
+                <span>Sign Up</span>
+              </Link>
+            </div>
+            
+            {/* Mobile Navigation */}
+            <div className="md:hidden">
+              <MobileMenu navMode={navMode} toggleNavMode={toggleNavMode} islands={islands} selectedIsland={selectedIsland} setSelectedIsland={setSelectedIsland} />
+            </div>
           </div>
-
-          {/* Main Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <NavLink 
-                key={link.to}
-                to={link.to} 
-                icon={link.icon} 
-                label={link.label} 
-                isActive={isActive(link.to)} 
-              />
-            ))}
-          </nav>
           
-          {/* Auth links */}
-          <div className="hidden md:flex items-center space-x-2">
-            <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
-              <LogIn size={16} className="mr-1" />
-              <span>Login</span>
-            </Link>
-            <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
-              <User size={16} className="mr-1" />
-              <span>Sign Up</span>
-            </Link>
-          </div>
-          
-          {/* Mobile Navigation */}
-          <div className="md:hidden">
-            <MobileMenu navMode={navMode} toggleNavMode={toggleNavMode} islands={islands} selectedIsland={selectedIsland} setSelectedIsland={setSelectedIsland} />
+          {/* Bottom Row: Main Navigation */}
+          <div className="hidden md:flex justify-center border-t border-gray-100 pt-2 pb-1">
+            <nav className="flex items-center space-x-1">
+              {/* Main Navigation Links */}
+              {mainLinks.map((link) => (
+                <NavLink 
+                  key={link.to}
+                  to={link.to} 
+                  icon={link.icon} 
+                  label={link.label} 
+                  isActive={isActive(link.to)} 
+                />
+              ))}
+              
+              {/* Other Dropdown */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 text-gray-700`}>
+                      <span>Other</span>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="p-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200">
+                        {otherLinks.map((link) => (
+                          <Link 
+                            key={link.to} 
+                            to={link.to}
+                            className={`flex items-center w-full p-2 rounded-md ${
+                              isActive(link.to) 
+                                ? 'bg-gray-100 text-gray-900' 
+                                : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            <span className="mr-2">{link.icon}</span>
+                            <span>{link.label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </nav>
           </div>
         </div>
       </div>
@@ -196,7 +256,7 @@ const MobileMenu = ({ navMode, toggleNavMode, islands, selectedIsland, setSelect
         { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
         { to: "/food", icon: <Utensils size={18} />, label: "Food" },
         { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
-        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+        { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
         { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
         { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },

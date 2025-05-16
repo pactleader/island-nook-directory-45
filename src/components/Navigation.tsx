@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown, Package } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown, Package, Search } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -54,7 +53,6 @@ const Navigation = () => {
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
-        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
       ];
     } else if (navMode === 'local') {
       return [
@@ -67,20 +65,23 @@ const Navigation = () => {
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
       ];
-    } else { // 'all' mode
+    } else { // 'all' mode - split into rows
       return [
-        { to: "/properties", icon: <Map size={16} />, label: "Homes" },
-        { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
-        { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
-        { to: "/food", icon: <Utensils size={16} />, label: "Food" },
-        { to: "/businesses", icon: <Building size={16} />, label: "Services" },
-        { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
-        { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-        { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
-        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-        { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
-        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
-        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
+        // First 8 items for row 2
+        { to: "/properties", icon: <Map size={16} />, label: "Homes", row: 2 },
+        { to: "/vehicles", icon: <Car size={16} />, label: "Cars", row: 2 },
+        { to: "/hotels", icon: <Building size={16} />, label: "Hotels", row: 2 },
+        { to: "/food", icon: <Utensils size={16} />, label: "Food", row: 2 },
+        { to: "/businesses", icon: <Building size={16} />, label: "Services", row: 2 },
+        { to: "/adventures", icon: <Map size={16} />, label: "Adventures", row: 2 },
+        { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping", row: 2 },
+        { to: "/government-services", icon: <Landmark size={16} />, label: "Government", row: 2 },
+        
+        // Last 4 items for row 3
+        { to: "/events", icon: <Calendar size={16} />, label: "Events", row: 3 },
+        { to: "/local-products", icon: <Store size={16} />, label: "Local Products", row: 3 },
+        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local", row: 3 },
+        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell", row: 3 },
       ];
     }
   };
@@ -89,6 +90,14 @@ const Navigation = () => {
   const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
 
   const mainLinks = getMainLinks();
+  
+  // Group links by row when in 'all' mode
+  const linksByRow = navMode === 'all' 
+    ? { 
+        2: mainLinks.filter(link => link.row === 2),
+        3: mainLinks.filter(link => link.row === 3)
+      } 
+    : { 1: mainLinks };
 
   return (
     <header 
@@ -165,20 +174,55 @@ const Navigation = () => {
             </div>
           </div>
           
-          {/* Bottom Row: Main Navigation */}
-          <div className="hidden md:flex justify-center border-t border-gray-100 pt-2 pb-1 overflow-x-auto">
-            <nav className="flex items-center space-x-1 flex-wrap">
-              {/* Main Navigation Links */}
-              {mainLinks.map((link) => (
-                <NavLink 
-                  key={link.to}
-                  to={link.to} 
-                  icon={link.icon} 
-                  label={link.label} 
-                  isActive={isActive(link.to)} 
-                />
-              ))}
-            </nav>
+          {/* Bottom Rows: Main Navigation */}
+          <div className="hidden md:block border-t border-gray-100 pt-2 pb-1">
+            {navMode === 'all' ? (
+              <div className="flex flex-col">
+                {/* Row 2 */}
+                <div className="flex justify-center overflow-x-auto py-1">
+                  <nav className="flex items-center space-x-1">
+                    {linksByRow[2].map((link) => (
+                      <NavLink 
+                        key={link.to}
+                        to={link.to} 
+                        icon={link.icon} 
+                        label={link.label} 
+                        isActive={isActive(link.to)} 
+                      />
+                    ))}
+                  </nav>
+                </div>
+                
+                {/* Row 3 */}
+                <div className="flex justify-center overflow-x-auto py-1">
+                  <nav className="flex items-center space-x-1">
+                    {linksByRow[3].map((link) => (
+                      <NavLink 
+                        key={link.to}
+                        to={link.to} 
+                        icon={link.icon} 
+                        label={link.label} 
+                        isActive={isActive(link.to)} 
+                      />
+                    ))}
+                  </nav>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-center overflow-x-auto">
+                <nav className="flex items-center space-x-1 flex-wrap">
+                  {mainLinks.map((link) => (
+                    <NavLink 
+                      key={link.to}
+                      to={link.to} 
+                      icon={link.icon} 
+                      label={link.label} 
+                      isActive={isActive(link.to)} 
+                    />
+                  ))}
+                </nav>
+              </div>
+            )}
           </div>
         </div>
       </div>

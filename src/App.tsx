@@ -31,11 +31,12 @@ import CreatePropertyListing from "./pages/CreatePropertyListing";
 import Favorites from "./pages/Favorites";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 
-// Import new pages
+// Import pages
 import Food from "./pages/Food";
 import Shopping from "./pages/Shopping";
 import LocalProducts from "./pages/LocalProducts";
 import Adventures from "./pages/Adventures";
+import BuyAndSell from "./pages/BuyAndSell";
 
 const queryClient = new QueryClient();
 
@@ -63,11 +64,12 @@ const App = () => (
             <Route path="/ask-local" element={<AskLocal />} />
             <Route path="/ask-local/:id" element={<AskLocalDetails />} />
             
-            {/* New routes */}
+            {/* Routes */}
             <Route path="/food" element={<Food />} />
             <Route path="/shopping" element={<Shopping />} />
             <Route path="/local-products" element={<LocalProducts />} />
             <Route path="/adventures" element={<Adventures />} />
+            <Route path="/buy-and-sell" element={<BuyAndSell />} />
             
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown, Package } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -16,15 +17,12 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group";
 
 // Define the types of navigation modes
-type NavMode = 'visitor' | 'local';
+type NavMode = 'visitor' | 'local' | 'all';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -52,11 +50,6 @@ const Navigation = () => {
     return location.pathname === path;
   };
 
-  // Toggle between visitor and local modes
-  const toggleNavMode = () => {
-    setNavMode(navMode === 'visitor' ? 'local' : 'visitor');
-  };
-
   // Main navigation links and secondary links for "Other" dropdown
   const getMainAndOtherLinks = () => {
     if (navMode === 'visitor') {
@@ -72,21 +65,43 @@ const Navigation = () => {
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
       ];
       
       return { mainLinks, otherLinks };
-    } else {
+    } else if (navMode === 'local') {
       const mainLinks = [
         { to: "/properties", icon: <Map size={16} />, label: "Homes" },
         { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
         { to: "/businesses", icon: <Building size={16} />, label: "Services" },
         { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
       ];
       
       const otherLinks = [
         { to: "/events", icon: <Calendar size={16} />, label: "Events" },
         { to: "/food", icon: <Utensils size={16} />, label: "Food" },
         { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+      ];
+      
+      return { mainLinks, otherLinks };
+    } else { // 'all' mode
+      const mainLinks = [
+        { to: "/properties", icon: <Map size={16} />, label: "Homes" },
+        { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
+        { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
+        { to: "/food", icon: <Utensils size={16} />, label: "Food" },
+        { to: "/businesses", icon: <Building size={16} />, label: "Services" },
+      ];
+      
+      const otherLinks = [
+        { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
+        { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
+        { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+        { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
+        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
       ];
       
       return { mainLinks, otherLinks };
@@ -122,22 +137,18 @@ const Navigation = () => {
             
             {/* Mode Toggle and Island Dropdown - Center */}
             <div className="hidden md:flex items-center space-x-4">
-              <button 
-                onClick={toggleNavMode} 
-                className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-              >
-                {navMode === 'visitor' ? (
-                  <>
-                    <span>Visitor</span>
-                    <ToggleLeft size={20} className="ml-2" />
-                  </>
-                ) : (
-                  <>
-                    <span>Local</span>
-                    <ToggleRight size={20} className="ml-2" />
-                  </>
-                )}
-              </button>
+              {/* New Toggle Group for three options */}
+              <ToggleGroup type="single" value={navMode} onValueChange={(value) => value && setNavMode(value as NavMode)}>
+                <ToggleGroupItem value="visitor" className="text-xs px-3 py-1 data-[state=on]:bg-gray-900 data-[state=on]:text-white border-gray-200">
+                  Visitor
+                </ToggleGroupItem>
+                <ToggleGroupItem value="local" className="text-xs px-3 py-1 data-[state=on]:bg-gray-900 data-[state=on]:text-white border-gray-200">
+                  Local
+                </ToggleGroupItem>
+                <ToggleGroupItem value="all" className="text-xs px-3 py-1 data-[state=on]:bg-gray-900 data-[state=on]:text-white border-gray-200">
+                  All
+                </ToggleGroupItem>
+              </ToggleGroup>
               
               {/* Island Dropdown */}
               <DropdownMenu>
@@ -173,7 +184,7 @@ const Navigation = () => {
             
             {/* Mobile Navigation */}
             <div className="md:hidden">
-              <MobileMenu navMode={navMode} toggleNavMode={toggleNavMode} islands={islands} selectedIsland={selectedIsland} setSelectedIsland={setSelectedIsland} />
+              <MobileMenu navMode={navMode} setNavMode={setNavMode} islands={islands} selectedIsland={selectedIsland} setSelectedIsland={setSelectedIsland} />
             </div>
           </div>
           
@@ -245,8 +256,8 @@ const NavLink = ({ to, icon, label, isActive }: { to: string, icon: React.ReactN
 };
 
 // Mobile Menu Component
-const MobileMenu = ({ navMode, toggleNavMode, islands, selectedIsland, setSelectedIsland }: 
-  { navMode: NavMode, toggleNavMode: () => void, islands: string[], selectedIsland: string, setSelectedIsland: (island: string) => void }) => {
+const MobileMenu = ({ navMode, setNavMode, islands, selectedIsland, setSelectedIsland }: 
+  { navMode: NavMode, setNavMode: (mode: NavMode) => void, islands: string[], selectedIsland: string, setSelectedIsland: (island: string) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   
   // Define navigation links based on mode
@@ -260,8 +271,9 @@ const MobileMenu = ({ navMode, toggleNavMode, islands, selectedIsland, setSelect
         { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
         { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+        { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
       ];
-    } else {
+    } else if (navMode === 'local') {
       return [
         { to: "/properties", icon: <Map size={18} />, label: "Homes" },
         { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
@@ -270,6 +282,22 @@ const MobileMenu = ({ navMode, toggleNavMode, islands, selectedIsland, setSelect
         { to: "/events", icon: <Calendar size={18} />, label: "Events" },
         { to: "/food", icon: <Utensils size={18} />, label: "Food" },
         { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+        { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
+      ];
+    } else { // 'all' mode
+      return [
+        { to: "/properties", icon: <Map size={18} />, label: "Homes" },
+        { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
+        { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
+        { to: "/food", icon: <Utensils size={18} />, label: "Food" },
+        { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
+        { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
+        { to: "/businesses", icon: <Building size={18} />, label: "Services" },
+        { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
+        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+        { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
+        { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+        { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
       ];
     }
   };
@@ -317,22 +345,36 @@ const MobileMenu = ({ navMode, toggleNavMode, islands, selectedIsland, setSelect
           
           {/* Mode Toggle and Island Selector in Mobile Menu */}
           <div className="p-4 border-b space-y-4">
-            <button 
-              onClick={() => {
-                toggleNavMode();
-                // Don't close the menu when toggling modes
-              }}
-              className="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-100"
-            >
-              <span className="font-medium">
-                {navMode === 'visitor' ? 'Visitor Mode' : 'Local Mode'}
-              </span>
-              {navMode === 'visitor' ? (
-                <ToggleLeft size={24} className="text-gray-500" />
-              ) : (
-                <ToggleRight size={24} className="text-gray-900" />
-              )}
-            </button>
+            {/* Three option toggle */}
+            <div className="p-3 rounded-lg">
+              <div className="font-medium mb-2">View Mode</div>
+              <div className="flex border border-gray-200 rounded-md overflow-hidden">
+                <button
+                  onClick={() => setNavMode('visitor')}
+                  className={`flex-1 py-2 text-center text-sm ${
+                    navMode === 'visitor' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700'
+                  }`}
+                >
+                  Visitor
+                </button>
+                <button
+                  onClick={() => setNavMode('local')}
+                  className={`flex-1 py-2 text-center text-sm border-x border-gray-200 ${
+                    navMode === 'local' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700'
+                  }`}
+                >
+                  Local
+                </button>
+                <button
+                  onClick={() => setNavMode('all')}
+                  className={`flex-1 py-2 text-center text-sm ${
+                    navMode === 'all' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700'
+                  }`}
+                >
+                  All
+                </button>
+              </div>
+            </div>
             
             {/* Island Selection in Mobile Menu */}
             <div className="p-3 rounded-lg">

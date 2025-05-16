@@ -15,6 +15,14 @@ import {
 // Define the types of navigation modes
 type NavMode = 'visitor' | 'local' | 'all';
 
+// Define the link type with optional row property
+interface NavLink {
+  to: string;
+  icon: React.ReactNode;
+  label: string;
+  row?: number;
+}
+
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +50,7 @@ const Navigation = () => {
   };
 
   // Main navigation links configuration based on selected mode
-  const getMainLinks = () => {
+  const getMainLinks = (): NavLink[] => {
     if (navMode === 'visitor') {
       return [
         { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
@@ -263,7 +271,6 @@ const MobileMenu = ({ navMode, setNavMode, islands, selectedIsland, setSelectedI
         { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
         { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
         { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
-        { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
         { to: "/events", icon: <Calendar size={18} />, label: "Events" },
       ];
     } else if (navMode === 'local') {

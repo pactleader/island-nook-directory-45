@@ -50,42 +50,40 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route element={<PageLayout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/properties" element={<Properties />} />
-              <Route path="/properties/:id" element={<PropertyDetails />} />
-              <Route path="/vehicles" element={<Vehicles />} />
-              <Route path="/vehicles/:id" element={<VehicleDetails />} />
-              <Route path="/hotels" element={<Hotels />} />
-              <Route path="/hotels/:id" element={<HotelDetails />} />
-              <Route path="/businesses" element={<Businesses />} />
-              <Route path="/businesses/:id" element={<BusinessDetails />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/events/:id" element={<EventDetails />} />
-              <Route path="/government-services" element={<GovernmentServices />} />
-              <Route path="/government-services/:id" element={<GovernmentServiceDetails />} />
-              <Route path="/ask-local" element={<AskLocal />} />
-              <Route path="/ask-local/:id" element={<AskLocalDetails />} />
-              
-              {/* Routes */}
-              <Route path="/food" element={<Food />} />
-              <Route path="/shopping" element={<Shopping />} />
-              <Route path="/local-products" element={<LocalProducts />} />
-              <Route path="/adventures" element={<Adventures />} />
-              <Route path="/buy-and-sell" element={<BuyAndSell />} />
-              <Route path="/advertise" element={<Advertise />} />
-              
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/profile/setup" element={<ProfileSetup />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/user-listings" element={<UserListings />} />
-              <Route path="/messages/:type/:id" element={<UserMessages />} />
-              <Route path="/create-listing" element={<CreateListing />} />
-              <Route path="/create-listing/property" element={<CreatePropertyListing />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
+            <Route path="/" element={<PageLayout><Index /></PageLayout>} />
+            <Route path="/properties" element={<PageLayout><Properties /></PageLayout>} />
+            <Route path="/properties/:id" element={<PageLayout><PropertyDetails /></PageLayout>} />
+            <Route path="/vehicles" element={<PageLayout><Vehicles /></PageLayout>} />
+            <Route path="/vehicles/:id" element={<PageLayout><VehicleDetails /></PageLayout>} />
+            <Route path="/hotels" element={<PageLayout><Hotels /></PageLayout>} />
+            <Route path="/hotels/:id" element={<PageLayout><HotelDetails /></PageLayout>} />
+            <Route path="/businesses" element={<PageLayout><Businesses /></PageLayout>} />
+            <Route path="/businesses/:id" element={<PageLayout><BusinessDetails /></PageLayout>} />
+            <Route path="/events" element={<PageLayout><Events /></PageLayout>} />
+            <Route path="/events/:id" element={<PageLayout><EventDetails /></PageLayout>} />
+            <Route path="/government-services" element={<PageLayout><GovernmentServices /></PageLayout>} />
+            <Route path="/government-services/:id" element={<PageLayout><GovernmentServiceDetails /></PageLayout>} />
+            <Route path="/ask-local" element={<PageLayout><AskLocal /></PageLayout>} />
+            <Route path="/ask-local/:id" element={<PageLayout><AskLocalDetails /></PageLayout>} />
+            
+            {/* Routes */}
+            <Route path="/food" element={<PageLayout><Food /></PageLayout>} />
+            <Route path="/shopping" element={<PageLayout><Shopping /></PageLayout>} />
+            <Route path="/local-products" element={<PageLayout><LocalProducts /></PageLayout>} />
+            <Route path="/adventures" element={<PageLayout><Adventures /></PageLayout>} />
+            <Route path="/buy-and-sell" element={<PageLayout><BuyAndSell /></PageLayout>} />
+            <Route path="/advertise" element={<PageLayout><Advertise /></PageLayout>} />
+            
+            <Route path="/login" element={<PageLayout><Login /></PageLayout>} />
+            <Route path="/signup" element={<PageLayout><Signup /></PageLayout>} />
+            <Route path="/profile/setup" element={<PageLayout><ProfileSetup /></PageLayout>} />
+            <Route path="/profile" element={<PageLayout><Profile /></PageLayout>} />
+            <Route path="/favorites" element={<PageLayout><Favorites /></PageLayout>} />
+            <Route path="/user-listings" element={<PageLayout><UserListings /></PageLayout>} />
+            <Route path="/messages/:type/:id" element={<PageLayout><UserMessages /></PageLayout>} />
+            <Route path="/create-listing" element={<PageLayout><CreateListing /></PageLayout>} />
+            <Route path="/create-listing/property" element={<PageLayout><CreatePropertyListing /></PageLayout>} />
+            <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
           </Routes>
         </BrowserRouter>
       </FavoritesProvider>

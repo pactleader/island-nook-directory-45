@@ -49,7 +49,6 @@ const Navigation = () => {
     { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
     { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
     { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
     { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
   ];
@@ -62,8 +61,6 @@ const Navigation = () => {
     { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
     { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
     { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-    { to: "/food", icon: <Utensils size={16} />, label: "Food" },
-    { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
   ];
 
   // List of islands for the dropdown
@@ -74,8 +71,8 @@ const Navigation = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass-nav py-2' : 'bg-transparent py-3'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm ${
+        scrolled ? 'glass-nav py-2' : 'py-3'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -162,11 +159,14 @@ const Navigation = () => {
           </div>
           
           {/* Bottom Rows: Main Navigation */}
-          <div className="hidden md:block border-t border-gray-100 pt-2 pb-1">
+          <div className="hidden md:block pt-2 pb-1">
             <div className="flex flex-col">
               {/* Row 2: Visitor Links */}
-              <div className="flex justify-center overflow-x-auto py-1">
-                <nav className="flex items-center space-x-1">
+              <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
+                <div className="mr-4 font-medium text-gray-500 text-sm whitespace-nowrap">
+                  Visitor's Favorites
+                </div>
+                <nav className="flex items-center space-x-1 overflow-x-auto">
                   {visitorLinks.map((link) => (
                     <NavLink 
                       key={link.to}
@@ -180,8 +180,11 @@ const Navigation = () => {
               </div>
               
               {/* Row 3: Local Links */}
-              <div className="flex justify-center overflow-x-auto py-1">
-                <nav className="flex items-center space-x-1">
+              <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
+                <div className="mr-4 font-medium text-gray-500 text-sm whitespace-nowrap">
+                  Local's Favorites
+                </div>
+                <nav className="flex items-center space-x-1 overflow-x-auto">
                   {localLinks.map((link) => (
                     <NavLink 
                       key={link.to}
@@ -245,7 +248,6 @@ const MobileMenu = ({
     { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
     { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
     { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
-    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
   ];
 
   // Local menu links
@@ -256,8 +258,6 @@ const MobileMenu = ({
     { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
     { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
     { to: "/events", icon: <Calendar size={18} />, label: "Events" },
-    { to: "/food", icon: <Utensils size={18} />, label: "Food" },
-    { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
   ];
 
   // All mobile links
@@ -352,7 +352,7 @@ const MobileMenu = ({
           <nav className="flex-1 px-4 py-6 overflow-y-auto">
             {/* Visitor Section */}
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">For Visitors</h3>
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Visitor's Favorites</h3>
               <ul className="space-y-2">
                 {visitorLinks.map((link) => (
                   <MobileNavLink 
@@ -368,7 +368,7 @@ const MobileMenu = ({
             
             {/* Local Section */}
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">For Locals</h3>
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Local's Favorites</h3>
               <ul className="space-y-2">
                 {localLinks.filter(link => 
                   // Filter out duplicate links that already exist in visitorLinks

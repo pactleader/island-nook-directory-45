@@ -49,7 +49,6 @@ const Navigation = () => {
     { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
     { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
     { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
     { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
   ];
@@ -61,9 +60,6 @@ const Navigation = () => {
     { to: "/businesses", icon: <Building size={16} />, label: "Services" },
     { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
     { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-    { to: "/food", icon: <Utensils size={16} />, label: "Food" },
-    { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
   ];
 
   // List of islands for the dropdown
@@ -166,7 +162,8 @@ const Navigation = () => {
             <div className="flex flex-col">
               {/* Row 2: Visitor Links */}
               <div className="flex justify-center overflow-x-auto py-1">
-                <nav className="flex items-center space-x-1">
+                <nav className="flex items-center">
+                  <span className="text-sm font-semibold text-gray-600 mr-4">Visitor's Favorites:</span>
                   {visitorLinks.map((link) => (
                     <NavLink 
                       key={link.to}
@@ -179,9 +176,10 @@ const Navigation = () => {
                 </nav>
               </div>
               
-              {/* Row 3: Local Links */}
-              <div className="flex justify-center overflow-x-auto py-1">
-                <nav className="flex items-center space-x-1">
+              {/* Row 3: Local Links with white background */}
+              <div className="flex justify-center overflow-x-auto py-1 bg-white">
+                <nav className="flex items-center">
+                  <span className="text-sm font-semibold text-gray-600 mr-4">Local's Favorites:</span>
                   {localLinks.map((link) => (
                     <NavLink 
                       key={link.to}
@@ -245,7 +243,6 @@ const MobileMenu = ({
     { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
     { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
     { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
-    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
   ];
 
   // Local menu links
@@ -255,9 +252,6 @@ const MobileMenu = ({
     { to: "/businesses", icon: <Building size={18} />, label: "Services" },
     { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
     { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
-    { to: "/food", icon: <Utensils size={18} />, label: "Food" },
-    { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
   ];
 
   // All mobile links

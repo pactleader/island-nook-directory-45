@@ -8,26 +8,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group";
-
-// Define the types of navigation modes
-type NavMode = 'visitor' | 'local' | 'all';
 
 // Define the link type with optional row property
 interface NavLink {
   to: string;
   icon: React.ReactNode;
   label: string;
-  row?: number;
 }
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [navMode, setNavMode] = useState<NavMode>('visitor');
   const [selectedIsland, setSelectedIsland] = useState('All Islands');
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const location = useLocation();
@@ -51,66 +42,35 @@ const Navigation = () => {
     return location.pathname === path;
   };
 
-  // Main navigation links configuration based on selected mode
-  const getMainLinks = (): NavLink[] => {
-    if (navMode === 'visitor') {
-      return [
-        { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
-        { to: "/food", icon: <Utensils size={16} />, label: "Food" },
-        { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
-        { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
-        { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-        { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
-        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
-      ];
-    } else if (navMode === 'local') {
-      return [
-        { to: "/properties", icon: <Map size={16} />, label: "Homes" },
-        { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
-        { to: "/businesses", icon: <Building size={16} />, label: "Services" },
-        { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
-        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
-        { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-        { to: "/food", icon: <Utensils size={16} />, label: "Food" },
-        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
-      ];
-    } else { // 'all' mode - split into rows
-      return [
-        // First 8 items for row 2
-        { to: "/properties", icon: <Map size={16} />, label: "Homes", row: 2 },
-        { to: "/vehicles", icon: <Car size={16} />, label: "Cars", row: 2 },
-        { to: "/hotels", icon: <Building size={16} />, label: "Hotels", row: 2 },
-        { to: "/food", icon: <Utensils size={16} />, label: "Food", row: 2 },
-        { to: "/businesses", icon: <Building size={16} />, label: "Services", row: 2 },
-        { to: "/adventures", icon: <Map size={16} />, label: "Adventures", row: 2 },
-        { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping", row: 2 },
-        { to: "/government-services", icon: <Landmark size={16} />, label: "Government", row: 2 },
-        
-        // Last 4 items for row 3
-        { to: "/events", icon: <Calendar size={16} />, label: "Events", row: 3 },
-        { to: "/local-products", icon: <Store size={16} />, label: "Local Products", row: 3 },
-        { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local", row: 3 },
-        { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell", row: 3 },
-      ];
-    }
-  };
+  // Visitor menu links (row 2)
+  const visitorLinks: NavLink[] = [
+    { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
+    { to: "/food", icon: <Utensils size={16} />, label: "Food" },
+    { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
+    { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
+    { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
+    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+    { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
+    { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+  ];
+
+  // Local menu links (row 3)
+  const localLinks: NavLink[] = [
+    { to: "/properties", icon: <Map size={16} />, label: "Homes" },
+    { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
+    { to: "/businesses", icon: <Building size={16} />, label: "Services" },
+    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+    { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
+    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+    { to: "/food", icon: <Utensils size={16} />, label: "Food" },
+    { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
+  ];
 
   // List of islands for the dropdown
   const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
   
   // List of languages for the dropdown
   const languages = ["English", "Chamorro", "Carolinian", "Korean", "Filipino", "Japanese", "Chinese"];
-
-  const mainLinks = getMainLinks();
-  
-  // Group links by row when in 'all' mode
-  const linksByRow = navMode === 'all' 
-    ? { 
-        2: mainLinks.filter(link => link.row === 2),
-        3: mainLinks.filter(link => link.row === 3)
-      } 
-    : { 1: mainLinks };
 
   return (
     <header 
@@ -120,7 +80,7 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col">
-          {/* Top Row: Logo, Toggles, Auth */}
+          {/* Top Row: Logo, Island & Language Dropdowns, Auth */}
           <div className="flex items-center justify-between py-2">
             {/* Logo */}
             <Link 
@@ -134,21 +94,8 @@ const Navigation = () => {
               </span>
             </Link>
             
-            {/* Mode Toggle and Island Dropdown - Center */}
+            {/* Island and Language Dropdowns - Center */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* New Toggle Group for three options */}
-              <ToggleGroup type="single" value={navMode} onValueChange={(value) => value && setNavMode(value as NavMode)}>
-                <ToggleGroupItem value="visitor" className="text-xs px-3 py-1 data-[state=on]:bg-gray-900 data-[state=on]:text-white border-gray-200">
-                  Visitor
-                </ToggleGroupItem>
-                <ToggleGroupItem value="local" className="text-xs px-3 py-1 data-[state=on]:bg-gray-900 data-[state=on]:text-white border-gray-200">
-                  Local
-                </ToggleGroupItem>
-                <ToggleGroupItem value="all" className="text-xs px-3 py-1 data-[state=on]:bg-gray-900 data-[state=on]:text-white border-gray-200">
-                  All
-                </ToggleGroupItem>
-              </ToggleGroup>
-              
               {/* Island Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
@@ -204,56 +151,23 @@ const Navigation = () => {
             {/* Mobile Navigation */}
             <div className="md:hidden">
               <MobileMenu 
-                navMode={navMode} 
-                setNavMode={setNavMode} 
                 islands={islands} 
                 languages={languages}
                 selectedIsland={selectedIsland} 
                 setSelectedIsland={setSelectedIsland} 
                 selectedLanguage={selectedLanguage}
-                setSelectedLanguage={setSelectedLanguage}
+                setSelectedLanguage={setSelectedLanguage} 
               />
             </div>
           </div>
           
           {/* Bottom Rows: Main Navigation */}
           <div className="hidden md:block border-t border-gray-100 pt-2 pb-1">
-            {navMode === 'all' ? (
-              <div className="flex flex-col">
-                {/* Row 2 */}
-                <div className="flex justify-center overflow-x-auto py-1">
-                  <nav className="flex items-center space-x-1">
-                    {linksByRow[2].map((link) => (
-                      <NavLink 
-                        key={link.to}
-                        to={link.to} 
-                        icon={link.icon} 
-                        label={link.label} 
-                        isActive={isActive(link.to)} 
-                      />
-                    ))}
-                  </nav>
-                </div>
-                
-                {/* Row 3 */}
-                <div className="flex justify-center overflow-x-auto py-1">
-                  <nav className="flex items-center space-x-1">
-                    {linksByRow[3].map((link) => (
-                      <NavLink 
-                        key={link.to}
-                        to={link.to} 
-                        icon={link.icon} 
-                        label={link.label} 
-                        isActive={isActive(link.to)} 
-                      />
-                    ))}
-                  </nav>
-                </div>
-              </div>
-            ) : (
-              <div className="flex justify-center overflow-x-auto">
-                <nav className="flex items-center space-x-1 flex-wrap">
-                  {mainLinks.map((link) => (
+            <div className="flex flex-col">
+              {/* Row 2: Visitor Links */}
+              <div className="flex justify-center overflow-x-auto py-1">
+                <nav className="flex items-center space-x-1">
+                  {visitorLinks.map((link) => (
                     <NavLink 
                       key={link.to}
                       to={link.to} 
@@ -264,7 +178,22 @@ const Navigation = () => {
                   ))}
                 </nav>
               </div>
-            )}
+              
+              {/* Row 3: Local Links */}
+              <div className="flex justify-center overflow-x-auto py-1">
+                <nav className="flex items-center space-x-1">
+                  {localLinks.map((link) => (
+                    <NavLink 
+                      key={link.to}
+                      to={link.to} 
+                      icon={link.icon} 
+                      label={link.label} 
+                      isActive={isActive(link.to)} 
+                    />
+                  ))}
+                </nav>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -291,8 +220,6 @@ const NavLink = ({ to, icon, label, isActive }: { to: string, icon: React.ReactN
 
 // Mobile Menu Component
 const MobileMenu = ({ 
-  navMode, 
-  setNavMode, 
   islands, 
   languages, 
   selectedIsland, 
@@ -300,8 +227,6 @@ const MobileMenu = ({
   selectedLanguage,
   setSelectedLanguage 
 }: { 
-  navMode: NavMode, 
-  setNavMode: (mode: NavMode) => void, 
   islands: string[], 
   languages: string[],
   selectedIsland: string, 
@@ -311,49 +236,35 @@ const MobileMenu = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Define mobile navigation links based on mode
-  const getMobileLinks = () => {
-    if (navMode === 'visitor') {
-      return [
-        { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
-        { to: "/food", icon: <Utensils size={18} />, label: "Food" },
-        { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
-        { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
-        { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
-        { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
-        { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
-        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
-      ];
-    } else if (navMode === 'local') {
-      return [
-        { to: "/properties", icon: <Map size={18} />, label: "Homes" },
-        { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
-        { to: "/businesses", icon: <Building size={18} />, label: "Services" },
-        { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
-        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
-        { to: "/food", icon: <Utensils size={18} />, label: "Food" },
-        { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
-        { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
-      ];
-    } else { // 'all' mode
-      return [
-        { to: "/properties", icon: <Map size={18} />, label: "Homes" },
-        { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
-        { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
-        { to: "/food", icon: <Utensils size={18} />, label: "Food" },
-        { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
-        { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
-        { to: "/businesses", icon: <Building size={18} />, label: "Services" },
-        { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
-        { to: "/events", icon: <Calendar size={18} />, label: "Events" },
-        { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
-        { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
-        { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
-      ];
-    }
-  };
+  // Visitor menu links
+  const visitorLinks: NavLink[] = [
+    { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
+    { to: "/food", icon: <Utensils size={18} />, label: "Food" },
+    { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
+    { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
+    { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
+    { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
+    { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+  ];
 
-  const mobileLinks = getMobileLinks();
+  // Local menu links
+  const localLinks: NavLink[] = [
+    { to: "/properties", icon: <Map size={18} />, label: "Homes" },
+    { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
+    { to: "/businesses", icon: <Building size={18} />, label: "Services" },
+    { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
+    { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
+    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+    { to: "/food", icon: <Utensils size={18} />, label: "Food" },
+    { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
+  ];
+
+  // All mobile links
+  const allMobileLinks = [...visitorLinks, ...localLinks.filter(link => 
+    // Filter out duplicate links that already exist in visitorLinks
+    !visitorLinks.some(vLink => vLink.to === link.to)
+  )];
 
   return (
     <div>
@@ -394,39 +305,8 @@ const MobileMenu = ({
             </button>
           </div>
           
-          {/* Mode Toggle and Island Selector in Mobile Menu */}
+          {/* Island and Language Selection in Mobile Menu */}
           <div className="p-4 border-b space-y-4">
-            {/* Three option toggle */}
-            <div className="p-3 rounded-lg">
-              <div className="font-medium mb-2">View Mode</div>
-              <div className="flex border border-gray-200 rounded-md overflow-hidden">
-                <button
-                  onClick={() => setNavMode('visitor')}
-                  className={`flex-1 py-2 text-center text-sm ${
-                    navMode === 'visitor' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700'
-                  }`}
-                >
-                  Visitor
-                </button>
-                <button
-                  onClick={() => setNavMode('local')}
-                  className={`flex-1 py-2 text-center text-sm border-x border-gray-200 ${
-                    navMode === 'local' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700'
-                  }`}
-                >
-                  Local
-                </button>
-                <button
-                  onClick={() => setNavMode('all')}
-                  className={`flex-1 py-2 text-center text-sm ${
-                    navMode === 'all' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700'
-                  }`}
-                >
-                  All
-                </button>
-              </div>
-            </div>
-            
             {/* Island Selection in Mobile Menu */}
             <div className="p-3 rounded-lg">
               <div className="font-medium mb-2">Select Island</div>
@@ -468,30 +348,56 @@ const MobileMenu = ({
             </div>
           </div>
           
+          {/* Mobile Navigation Links */}
           <nav className="flex-1 px-4 py-6 overflow-y-auto">
-            <ul className="space-y-4">
-              {mobileLinks.map((link) => (
-                <MobileNavLink 
-                  key={link.to}
-                  to={link.to} 
-                  icon={link.icon} 
-                  label={link.label} 
-                  onClick={() => setIsOpen(false)} 
-                />
-              ))}
-              <li className="border-t border-gray-200 my-4 pt-4">
-                <div className="flex flex-col space-y-2">
-                  <Link to="/login" className="flex items-center p-3 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(false)}>
-                    <LogIn size={18} className="text-gray-500 mr-3" />
-                    <span className="font-medium">Login</span>
-                  </Link>
-                  <Link to="/signup" className="flex items-center p-3 rounded-lg bg-gray-900 text-white" onClick={() => setIsOpen(false)}>
-                    <User size={18} className="mr-3" />
-                    <span className="font-medium">Sign Up</span>
-                  </Link>
-                </div>
-              </li>
-            </ul>
+            {/* Visitor Section */}
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">For Visitors</h3>
+              <ul className="space-y-2">
+                {visitorLinks.map((link) => (
+                  <MobileNavLink 
+                    key={link.to}
+                    to={link.to} 
+                    icon={link.icon} 
+                    label={link.label} 
+                    onClick={() => setIsOpen(false)} 
+                  />
+                ))}
+              </ul>
+            </div>
+            
+            {/* Local Section */}
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">For Locals</h3>
+              <ul className="space-y-2">
+                {localLinks.filter(link => 
+                  // Filter out duplicate links that already exist in visitorLinks
+                  !visitorLinks.some(vLink => vLink.to === link.to)
+                ).map((link) => (
+                  <MobileNavLink 
+                    key={link.to}
+                    to={link.to} 
+                    icon={link.icon} 
+                    label={link.label} 
+                    onClick={() => setIsOpen(false)} 
+                  />
+                ))}
+              </ul>
+            </div>
+            
+            {/* Auth Links */}
+            <div className="border-t border-gray-200 my-4 pt-4">
+              <div className="flex flex-col space-y-2">
+                <Link to="/login" className="flex items-center p-3 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(false)}>
+                  <LogIn size={18} className="text-gray-500 mr-3" />
+                  <span className="font-medium">Login</span>
+                </Link>
+                <Link to="/signup" className="flex items-center p-3 rounded-lg bg-gray-900 text-white" onClick={() => setIsOpen(false)}>
+                  <User size={18} className="mr-3" />
+                  <span className="font-medium">Sign Up</span>
+                </Link>
+              </div>
+            </div>
           </nav>
         </div>
       </div>

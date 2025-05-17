@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ToggleLeft, ToggleRight, ChevronDown, Package, Search, Languages } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,

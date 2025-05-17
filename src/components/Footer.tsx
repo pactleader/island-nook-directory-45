@@ -19,6 +19,14 @@ const Footer = () => {
             <p className="mt-4 text-gray-600 max-w-md">
               Your comprehensive directory for properties, vehicles, and businesses in the Northern Mariana Islands.
             </p>
+            <div className="mt-6">
+              <Link 
+                to="/advertise" 
+                className="px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors inline-flex items-center font-medium"
+              >
+                Click Here to Advertise Your Business
+              </Link>
+            </div>
           </div>
           
           {/* Directory Links */}
@@ -28,9 +36,24 @@ const Footer = () => {
               <FooterLink to="/properties" label="Properties" />
               <FooterLink to="/vehicles" label="Vehicles" />
               <FooterLink to="/businesses" label="Businesses" />
+              <FooterLink to="/hotels" label="Hotels" />
+              <FooterLink to="/food" label="Food" />
+              <FooterLink to="/shopping" label="Shopping" />
+              <FooterLink to="/adventures" label="Adventures" />
               <FooterLink to="/events" label="Events" />
+            </ul>
+          </div>
+          
+          {/* More Links */}
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-4">More</h4>
+            <ul className="space-y-2">
               <FooterLink to="/government-services" label="Government Services" />
+              <FooterLink to="/local-products" label="Local Products" />
+              <FooterLink to="/ask-local" label="Ask a Local" />
+              <FooterLink to="/buy-and-sell" label="Buy & Sell" />
               <FooterLink to="/blog" label="Blog" />
+              <FooterLink to="/advertise" label="Advertise" />
             </ul>
           </div>
           
@@ -42,13 +65,6 @@ const Footer = () => {
               <FooterLink to="/contact" label="Contact" />
               <FooterLink to="/careers" label="Careers" />
               <FooterLink to="/press" label="Press" />
-            </ul>
-          </div>
-          
-          {/* Legal Links */}
-          <div>
-            <h4 className="font-semibold text-gray-900 mb-4">Legal</h4>
-            <ul className="space-y-2">
               <FooterLink to="/privacy" label="Privacy Policy" />
               <FooterLink to="/terms" label="Terms of Service" />
               <FooterLink to="/cookies" label="Cookie Policy" />

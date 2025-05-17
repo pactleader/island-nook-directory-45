@@ -44,7 +44,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
     <div className="flex flex-col min-h-screen">
       {showLoading && <AdLoadingScreen onComplete={handleContinue} />}
       <Navigation />
-      <div className="flex-grow">
+      <div className="flex-grow pt-28">
         {children}
       </div>
       <Footer />

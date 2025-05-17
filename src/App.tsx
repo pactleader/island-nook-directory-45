@@ -32,6 +32,7 @@ import CreatePropertyListing from "./pages/CreatePropertyListing";
 import Favorites from "./pages/Favorites";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import Advertise from "./pages/Advertise";
+import Admin from "./pages/Admin";
 
 // Import pages
 import Food from "./pages/Food";
@@ -73,6 +74,7 @@ const App = () => (
             <Route path="/adventures" element={<PageLayout><Adventures /></PageLayout>} />
             <Route path="/buy-and-sell" element={<PageLayout><BuyAndSell /></PageLayout>} />
             <Route path="/advertise" element={<PageLayout><Advertise /></PageLayout>} />
+            <Route path="/admin" element={<PageLayout><Admin /></PageLayout>} />
             
             <Route path="/login" element={<PageLayout><Login /></PageLayout>} />
             <Route path="/signup" element={<PageLayout><Signup /></PageLayout>} />

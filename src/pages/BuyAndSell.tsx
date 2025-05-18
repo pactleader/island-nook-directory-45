@@ -82,7 +82,7 @@ export default function BuyAndSell() {
               </p>
             </div>
             <div className="mt-6 md:mt-0">
-              <Button className="bg-gray-900 hover:bg-gray-800">
+              <Button className="bg-gray-900 hover:bg-gray-800 text-white">
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Post a Listing
               </Button>
@@ -183,4 +183,4 @@ export default function BuyAndSell() {
       <Footer />
     </div>
   );
-}
+};

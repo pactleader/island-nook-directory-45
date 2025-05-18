@@ -149,7 +149,24 @@ const filterGroups = [
     options: [
       { label: "Grocery", value: "grocery" },
       { label: "Restaurant", value: "restaurant" },
-      { label: "Cafe", value: "cafe" }
+      { label: "Cafe", value: "cafe" },
+      { label: "Bakery", value: "bakery" },
+      { label: "Snacks", value: "snacks" },
+      { label: "Bar & Grill", value: "bar-grill" }
+    ]
+  },
+  {
+    name: "Cuisine",
+    options: [
+      { label: "Korean", value: "korean" },
+      { label: "Japanese", value: "japanese" },
+      { label: "Filipino", value: "filipino" },
+      { label: "American", value: "american" },
+      { label: "Thai", value: "thai" },
+      { label: "Vietnamese", value: "vietnamese" },
+      { label: "Asian", value: "asian" },
+      { label: "Middle Eastern", value: "middle-eastern" },
+      { label: "BBQ", value: "bbq" }
     ]
   },
   {

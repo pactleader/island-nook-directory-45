@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useNavigationClick } from '@/hooks/useNavigationClick';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 // Define the link type with optional row property
 interface NavLink {
@@ -61,9 +62,7 @@ const Navigation = () => {
     { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
     { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-    { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
-    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" }
+    { to: "/local-products", icon: <Store size={16} />, label: "Local Products" }
   ];
 
   // Local menu links (row 3)
@@ -71,7 +70,9 @@ const Navigation = () => {
     { to: "/properties", icon: <Map size={16} />, label: "Homes" },
     { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
     { to: "/businesses", icon: <Building size={16} />, label: "Services" },
-    { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" }
+    { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
+    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" }
   ];
 
   // List of islands for the dropdown
@@ -275,7 +276,7 @@ const MobileMenu = ({
     { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
     { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
-    { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
+    { to: "/local-products", icon: <Store size={18} />, label: "Local Products" }
   ];
 
   // Local menu links
@@ -285,7 +286,7 @@ const MobileMenu = ({
     { to: "/businesses", icon: <Building size={18} />, label: "Services" },
     { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
     { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+    { to: "/events", icon: <Calendar size={18} />, label: "Events" }
   ];
 
   // Handle island selection

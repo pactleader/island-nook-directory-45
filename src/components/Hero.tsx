@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from 'lucide-react';
@@ -72,8 +71,20 @@ const Hero = ({
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle search functionality
-    console.log(`Search submitted: ${searchTerm}`);
+    if (searchTerm.trim()) {
+      // If the search term matches a category/subcategory, navigate to that page
+      const matchedSuggestion = suggestions.find(
+        s => s.toLowerCase() === searchTerm.toLowerCase()
+      );
+      
+      if (matchedSuggestion) {
+        // Handle navigation to the appropriate page
+        console.log(`Navigating to: ${matchedSuggestion}`);
+      } else {
+        // Show "Ask a local" or "Talk to AI assistant" options
+        console.log('Showing assistance options');
+      }
+    }
     setShowSuggestions(false);
   };
   
@@ -101,89 +112,87 @@ const Hero = ({
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-down opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-            {title}
-          </h1>
-          
-          {subtitle && (
-            <p className="text-white text-xl md:text-2xl opacity-90 mb-8 max-w-xl mx-auto animate-slide-down opacity-0" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-              {subtitle}
-            </p>
-          )}
-          
-          {/* New Search Bar */}
-          <div className="animate-slide-up opacity-0" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
-            <form onSubmit={handleSearchSubmit} className="relative mx-auto max-w-2xl">
-              <div className="flex">
-                <div className="relative flex-grow">
-                  <Input
-                    type="search"
-                    placeholder="Search for anything across the Northern Mariana Islands..."
-                    className="py-6 pr-12 pl-5 w-full rounded-l-full text-base bg-white shadow-xl border-0"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                    onFocus={() => setShowSuggestions(true)}
-                  />
-                  {showSuggestions && searchTerm && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-xl z-10 text-left max-h-60 overflow-y-auto">
-                      {filteredSuggestions.length > 0 ? (
-                        filteredSuggestions.map((suggestion, index) => (
-                          <div 
-                            key={index} 
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
-                            onClick={() => {
-                              setSearchTerm(suggestion);
-                              setShowSuggestions(false);
-                            }}
-                          >
-                            {suggestion}
-                          </div>
-                        ))
-                      ) : (
-                        <div className="px-4 py-3 text-gray-600">
-                          <div className="font-medium mb-1">No direct matches found.</div>
-                          <div className="flex flex-col gap-2">
-                            <button 
-                              type="button" 
-                              onClick={() => {
-                                setSearchTerm('');
-                                setShowSuggestions(false);
-                                window.location.href = '/ask-local';
-                              }}
-                              className="text-left hover:bg-gray-100 p-2 rounded"
-                            >
-                              Ask a local about "{searchTerm}"
-                            </button>
-                            <button 
-                              type="button" 
-                              onClick={() => {
-                                setSearchTerm('');
-                                setShowSuggestions(false);
-                                console.log('Talk to AI assistant');
-                              }}
-                              className="text-left hover:bg-gray-100 p-2 rounded"
-                            >
-                              Talk to our AI assistant
-                            </button>
-                          </div>
-                        </div>
-                      )}
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">{title}</h1>
+        {subtitle && (
+          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+            {subtitle}
+          </p>
+        )}
+        
+        {/* Search Bar */}
+        <div className="max-w-2xl mx-auto">
+          <form onSubmit={handleSearchSubmit} className="relative">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                onFocus={() => setShowSuggestions(true)}
+                placeholder="Search categories, services, or ask a question..."
+                className="w-full px-6 py-4 rounded-full text-lg bg-white/95 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="submit"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors"
+              >
+                <Search size={20} />
+              </button>
+            </div>
+            
+            {/* Search Suggestions */}
+            {showSuggestions && searchTerm && (
+              <div className="absolute w-full mt-2 bg-white rounded-lg shadow-lg overflow-hidden z-20">
+                {filteredSuggestions.length > 0 ? (
+                  <ul>
+                    {filteredSuggestions.map((suggestion, index) => (
+                      <li
+                        key={index}
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => {
+                          setSearchTerm(suggestion);
+                          setShowSuggestions(false);
+                        }}
+                      >
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="px-4 py-3 text-gray-500">
+                    <p className="mb-2">Need help finding what you're looking for?</p>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        className="px-4 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200"
+                        onClick={() => console.log('Ask a local')}
+                      >
+                        Ask a Local
+                      </button>
+                      <button
+                        type="button"
+                        className="px-4 py-2 bg-green-100 text-green-700 rounded-md hover:bg-green-200"
+                        onClick={() => console.log('Talk to AI')}
+                      >
+                        Talk to AI Assistant
+                      </button>
                     </div>
-                  )}
-                </div>
-                <Button 
-                  type="submit" 
-                  className="py-6 px-6 rounded-r-full bg-gray-900 hover:bg-gray-800 text-white"
-                >
-                  <Search size={20} />
-                  <span className="ml-2">Search</span>
-                </Button>
+                  </div>
+                )}
               </div>
-            </form>
-          </div>
+            )}
+          </form>
         </div>
+        
+        {buttonText && (
+          <div className="mt-8">
+            <Link
+              to={buttonLink}
+              className="inline-block bg-white text-gray-900 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors"
+            >
+              {buttonText}
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ const SupportChat = () => {
 
   const isMobile = useMediaQuery("(max-width: 640px)");
   const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 1024px)");
+  const isMobileOrTablet = useMediaQuery("(max-width: 1024px)");
 
   const handleSendMessage = () => {
     if (inputMessage.trim() === '') return;
@@ -103,7 +104,7 @@ const SupportChat = () => {
       <>
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50"
+          className={`fixed bottom-16 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50 ${isMobileOrTablet ? 'mb-[60px]' : ''}`}
           size="icon"
         >
           <MessageCircle className="h-6 w-6" />
@@ -133,7 +134,7 @@ const SupportChat = () => {
       <>
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50"
+          className={`fixed bottom-16 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50 ${isMobileOrTablet ? 'mb-[60px]' : ''}`}
           size="icon"
         >
           <MessageCircle className="h-6 w-6" />

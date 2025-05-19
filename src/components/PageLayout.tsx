@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import Navigation from './Navigation';
 import Footer from './Footer';
 import SupportChat from './SupportChat';
+import AdBanner from './AdBanner';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -17,6 +18,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
       </div>
       <Footer />
       <SupportChat />
+      <AdBanner />
     </div>
   );
 };

@@ -336,7 +336,6 @@ const UserListings = () => {
         </Card>
       </main>
       
-      <Footer />
     </div>
   );
 };

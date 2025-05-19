@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,26 +8,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
 
 export default function Admin() {
-  const [urlParams, setUrlParams] = useState<string>("");
-  const [isLightboxEnabled, setIsLightboxEnabled] = useState<boolean>(true);
-  const [showOnDirectoryClickOnly, setShowOnDirectoryClickOnly] = useState<boolean>(true);
-  
-  // Load settings from localStorage on initial render
+  const [disableLightbox, setDisableLightbox] = useState(false);
+  const [disableParameter, setDisableParameter] = useState('');
+  const [showOnPageTransition, setShowOnPageTransition] = useState(true);
+  const [showOnListingClick, setShowOnListingClick] = useState(true);
+
   useEffect(() => {
-    const savedUrlParams = localStorage.getItem("lightbox_disable_params");
-    const savedLightboxEnabled = localStorage.getItem("lightbox_enabled");
-    const savedShowOnDirectoryOnly = localStorage.getItem("lightbox_directory_only");
-    
-    if (savedUrlParams) setUrlParams(savedUrlParams);
-    if (savedLightboxEnabled !== null) setIsLightboxEnabled(savedLightboxEnabled === "true");
-    if (savedShowOnDirectoryOnly !== null) setShowOnDirectoryClickOnly(savedShowOnDirectoryOnly === "true");
+    // Load saved settings from localStorage
+    const savedSettings = localStorage.getItem('lightboxSettings');
+    if (savedSettings) {
+      const settings = JSON.parse(savedSettings);
+      setDisableLightbox(settings.disableLightbox);
+      setDisableParameter(settings.disableParameter);
+      setShowOnPageTransition(settings.showOnPageTransition);
+      setShowOnListingClick(settings.showOnListingClick);
+    }
   }, []);
 
-  // Save settings to localStorage
   const saveSettings = () => {
-    localStorage.setItem("lightbox_disable_params", urlParams);
-    localStorage.setItem("lightbox_enabled", String(isLightboxEnabled));
-    localStorage.setItem("lightbox_directory_only", String(showOnDirectoryClickOnly));
+    const settings = {
+      disableLightbox,
+      disableParameter,
+      showOnPageTransition,
+      showOnListingClick
+    };
+    localStorage.setItem('lightboxSettings', JSON.stringify(settings));
     
     toast({
       title: "Settings Saved",
@@ -59,38 +63,44 @@ export default function Admin() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="lightbox-enabled">Enable Ad Lightbox</Label>
-                    <p className="text-sm text-gray-500">Turn the ad lightbox on or off globally</p>
+                    <Label htmlFor="disable-lightbox">Disable Loading Screen</Label>
+                    <p className="text-sm text-gray-500">Turn the loading screen on or off globally</p>
                   </div>
                   <Switch 
-                    id="lightbox-enabled"
-                    checked={isLightboxEnabled}
-                    onCheckedChange={setIsLightboxEnabled}
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label htmlFor="directory-only">Show On Directory Clicks Only</Label>
-                    <p className="text-sm text-gray-500">Only show ads when users click on directory listings</p>
-                  </div>
-                  <Switch 
-                    id="directory-only"
-                    checked={showOnDirectoryClickOnly}
-                    onCheckedChange={setShowOnDirectoryClickOnly}
+                    id="disable-lightbox"
+                    checked={disableLightbox}
+                    onCheckedChange={setDisableLightbox}
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="url-params">Disable Lightbox for These URL Parameters</Label>
-                  <p className="text-sm text-gray-500">
-                    Enter comma-separated parameters that will disable the ad lightbox when present in URL
-                  </p>
+                  <Label htmlFor="disable-parameter">Disable Parameter (URL keyword)</Label>
                   <Input 
-                    id="url-params"
-                    placeholder="e.g., noad, admin, preview"
-                    value={urlParams}
-                    onChange={(e) => setUrlParams(e.target.value)}
+                    id="disable-parameter"
+                    placeholder="e.g., noloading"
+                    value={disableParameter}
+                    onChange={(e) => setDisableParameter(e.target.value)}
+                  />
+                  <p className="text-sm text-gray-500">
+                    Loading screen will be disabled when URL contains this parameter
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="show-on-transition">Show on Page Transitions</Label>
+                  <Switch 
+                    id="show-on-transition"
+                    checked={showOnPageTransition}
+                    onCheckedChange={setShowOnPageTransition}
+                  />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="show-on-listing">Show on Listing Clicks</Label>
+                  <Switch 
+                    id="show-on-listing"
+                    checked={showOnListingClick}
+                    onCheckedChange={setShowOnListingClick}
                   />
                 </div>
                 

@@ -1,20 +1,15 @@
 import { Link } from 'react-router-dom';
-import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
 import VehicleCard from '../components/VehicleCard';
 import BusinessCard from '../components/BusinessCard';
 import BlogPost from '../components/BlogPost';
-import Footer from '../components/Footer';
 import { mockProperties, mockVehicles, mockBusinesses, mockBlogPosts } from '../utils/mockData';
 import { Map, Car, Building, BookOpen, ChevronRight } from 'lucide-react';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Navigation */}
-      <Navigation />
-      
+    <>
       {/* Hero Section */}
       <Hero 
         title="Discover the Northern Mariana Islands"
@@ -165,10 +160,7 @@ const Index = () => {
           </div>
         </section>
       </main>
-      
-      {/* Footer */}
-      <Footer />
-    </div>
+    </>
   );
 };
 

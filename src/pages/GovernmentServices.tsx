@@ -312,9 +312,7 @@ const GovernmentServices = () => {
           </Link>
         </div>
       </section>
-      
-      {/* Footer */}
-      <Footer />
+
 
       {/* Add styles for category tiles */}
       <style>{`

@@ -60,7 +60,7 @@ const Hero = ({
     switch(size) {
       case 'small': return 'h-[30vh] min-h-[300px]';
       case 'medium': return 'h-[50vh] min-h-[400px]';
-      case 'large': return 'h-[80vh] min-h-[600px]'; // Increased min-height for better spacing
+      case 'large': return 'h-[80vh] min-h-[600px]';
       default: return 'h-[80vh] min-h-[600px]';
     }
   };
@@ -79,7 +79,7 @@ const Hero = ({
   
   return (
     <div 
-      className={`relative w-full overflow-hidden ${getHeight()} flex items-center justify-center mt-24`} // Added margin top
+      className={`relative w-full overflow-hidden ${getHeight()} flex items-center justify-center`}
     >
       {/* Background Image with Lazy Loading */}
       <div 

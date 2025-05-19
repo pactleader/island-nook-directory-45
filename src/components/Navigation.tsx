@@ -16,11 +16,20 @@ interface NavLink {
   label: string;
 }
 
+// Define language interface with translated name
+interface Language {
+  name: string;
+  translation: string;
+  code: string;
+}
+
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIsland, setSelectedIsland] = useState('All Islands');
   const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [showMobileIslandSelector, setShowMobileIslandSelector] = useState(true);
+  const [showMobileLanguageSelector, setShowMobileLanguageSelector] = useState(true);
   const location = useLocation();
   
   // Handle scroll effect for navigation
@@ -50,7 +59,6 @@ const Navigation = () => {
     { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
     { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
-    { to: "/ask-local", icon: <List size={16} />, label: "Ask a Local" },
   ];
 
   // Local menu links (row 3)
@@ -66,8 +74,16 @@ const Navigation = () => {
   // List of islands for the dropdown
   const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
   
-  // List of languages for the dropdown
-  const languages = ["English", "Chamorro", "Carolinian", "Korean", "Filipino", "Japanese", "Chinese"];
+  // List of languages for the dropdown with translations
+  const languages: Language[] = [
+    { name: "English", translation: "", code: "en" },
+    { name: "Chamorro", translation: "Chamoru", code: "ch" },
+    { name: "Carolinian", translation: "Refaluwasch", code: "cr" },
+    { name: "Korean", translation: "한국어", code: "ko" },
+    { name: "Filipino", translation: "Tagalog", code: "fil" },
+    { name: "Japanese", translation: "日本語", code: "ja" },
+    { name: "Chinese", translation: "中文", code: "zh" },
+  ];
 
   return (
     <header 
@@ -119,14 +135,14 @@ const Navigation = () => {
                   {selectedLanguage}
                   <ChevronDown size={16} className="ml-2" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
+                <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[180px]">
                   {languages.map((language) => (
                     <DropdownMenuItem
-                      key={language}
+                      key={language.name}
                       className="text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => setSelectedLanguage(language)}
+                      onClick={() => setSelectedLanguage(language.name)}
                     >
-                      {language}
+                      {language.name}{language.translation ? ` (${language.translation})` : ''}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -154,6 +170,10 @@ const Navigation = () => {
                 setSelectedIsland={setSelectedIsland} 
                 selectedLanguage={selectedLanguage}
                 setSelectedLanguage={setSelectedLanguage} 
+                showIslandSelector={showMobileIslandSelector}
+                setShowIslandSelector={setShowMobileIslandSelector}
+                showLanguageSelector={showMobileLanguageSelector}
+                setShowLanguageSelector={setShowMobileLanguageSelector}
               />
             </div>
           </div>
@@ -228,14 +248,22 @@ const MobileMenu = ({
   selectedIsland, 
   setSelectedIsland,
   selectedLanguage,
-  setSelectedLanguage 
+  setSelectedLanguage,
+  showIslandSelector,
+  setShowIslandSelector,
+  showLanguageSelector,
+  setShowLanguageSelector
 }: { 
   islands: string[], 
-  languages: string[],
+  languages: Language[],
   selectedIsland: string, 
   setSelectedIsland: (island: string) => void,
   selectedLanguage: string,
-  setSelectedLanguage: (language: string) => void
+  setSelectedLanguage: (language: string) => void,
+  showIslandSelector: boolean,
+  setShowIslandSelector: (show: boolean) => void,
+  showLanguageSelector: boolean,
+  setShowLanguageSelector: (show: boolean) => void
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   
@@ -247,7 +275,6 @@ const MobileMenu = ({
     { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
     { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
-    { to: "/ask-local", icon: <List size={18} />, label: "Ask a Local" },
   ];
 
   // Local menu links
@@ -260,11 +287,17 @@ const MobileMenu = ({
     { to: "/events", icon: <Calendar size={18} />, label: "Events" },
   ];
 
-  // All mobile links
-  const allMobileLinks = [...visitorLinks, ...localLinks.filter(link => 
-    // Filter out duplicate links that already exist in visitorLinks
-    !visitorLinks.some(vLink => vLink.to === link.to)
-  )];
+  // Handle island selection
+  const handleIslandSelect = (island: string) => {
+    setSelectedIsland(island);
+    setShowIslandSelector(false);
+  };
+
+  // Handle language selection
+  const handleLanguageSelect = (language: string) => {
+    setSelectedLanguage(language);
+    setShowLanguageSelector(false);
+  };
 
   return (
     <div>
@@ -309,42 +342,62 @@ const MobileMenu = ({
           <div className="p-4 border-b space-y-4">
             {/* Island Selection in Mobile Menu */}
             <div className="p-3 rounded-lg">
-              <div className="font-medium mb-2">Select Island</div>
-              <div className="space-y-2">
-                {islands.map((island) => (
-                  <button
-                    key={island}
-                    onClick={() => {
-                      setSelectedIsland(island);
-                    }}
-                    className={`w-full text-left p-2 rounded-md ${
-                      selectedIsland === island ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
-                    }`}
-                  >
-                    {island}
-                  </button>
-                ))}
+              <div 
+                className="font-medium mb-2 flex justify-between items-center cursor-pointer"
+                onClick={() => setShowIslandSelector(!showIslandSelector)}
+              >
+                <span>Selected Island: {selectedIsland}</span>
+                <ChevronDown 
+                  size={16}
+                  className={`transition-transform ${showIslandSelector ? 'rotate-180' : ''}`} 
+                />
               </div>
+              
+              {showIslandSelector && (
+                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100">
+                  {islands.map((island) => (
+                    <button
+                      key={island}
+                      onClick={() => handleIslandSelect(island)}
+                      className={`w-full text-left p-2 rounded-md ${
+                        selectedIsland === island ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
+                      }`}
+                    >
+                      {island}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Language Selection in Mobile Menu */}
             <div className="p-3 rounded-lg">
-              <div className="font-medium mb-2">Select Language</div>
-              <div className="space-y-2">
-                {languages.map((language) => (
-                  <button
-                    key={language}
-                    onClick={() => {
-                      setSelectedLanguage(language);
-                    }}
-                    className={`w-full text-left p-2 rounded-md ${
-                      selectedLanguage === language ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
-                    }`}
-                  >
-                    {language}
-                  </button>
-                ))}
+              <div 
+                className="font-medium mb-2 flex justify-between items-center cursor-pointer"
+                onClick={() => setShowLanguageSelector(!showLanguageSelector)}
+              >
+                <span>Selected Language: {selectedLanguage}</span>
+                <ChevronDown 
+                  size={16}
+                  className={`transition-transform ${showLanguageSelector ? 'rotate-180' : ''}`} 
+                />
               </div>
+              
+              {showLanguageSelector && (
+                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100">
+                  {languages.map((language) => (
+                    <button
+                      key={language.name}
+                      onClick={() => handleLanguageSelect(language.name)}
+                      className={`w-full text-left p-2 rounded-md ${
+                        selectedLanguage === language.name ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
+                      }`}
+                    >
+                      {language.name}{language.translation ? ` (${language.translation})` : ''}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           

@@ -12,7 +12,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navigation />
-      <div className="flex-grow pt-28">
+      <div className="flex-grow">
         {children}
       </div>
       <Footer />

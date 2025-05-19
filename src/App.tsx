@@ -45,6 +45,7 @@ import BuyAndSell from "./pages/BuyAndSell";
 import BuyAndSellDetails from "./pages/BuyAndSellDetails";
 import PageTransition from './components/PageTransition';
 import FoodDetails from "./pages/FoodDetails";
+import BlogDetails from './pages/BlogDetails';
 
 const queryClient = new QueryClient();
 
@@ -96,6 +97,7 @@ const App = () => (
               <Route path="/messages/:type/:id" element={<PageLayout><UserMessages /></PageLayout>} />
               <Route path="/create-listing" element={<PageLayout><CreateListing /></PageLayout>} />
               <Route path="/create-listing/property" element={<PageLayout><CreatePropertyListing /></PageLayout>} />
+              <Route path="/blog/:slug" element={<BlogDetails />} />
               <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
             </Routes>
           </PageTransition>

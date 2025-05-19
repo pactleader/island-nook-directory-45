@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
-export type FavoriteType = 'property' | 'vehicle' | 'business' | 'event' | 'hotel' | 'food' | 'shopping' | 'product' | 'government' | 'adventure' | 'buy-and-sell';
+export type FavoriteType = 'property' | 'vehicle' | 'business' | 'event' | 'hotel' | 'food' | 'shopping' | 'product' | 'government' | 'adventure' | 'buy-and-sell' | 'blog';
 
 export type FavoriteItem = {
   id: string;

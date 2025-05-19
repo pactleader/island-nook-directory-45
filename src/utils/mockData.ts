@@ -977,7 +977,7 @@ export const mockBlogPosts: BlogPost[] = [
     },
     category: "safety",
     tags: ["typhoon", "preparedness", "safety", "emergency"],
-    image: "https://images.unsplash.com/photo-1612356300593-99d81f8817a4?w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=800&auto=format&fit=crop",
     featured: false,
     publishedAt: "2023-05-22T10:30:00Z"
   },

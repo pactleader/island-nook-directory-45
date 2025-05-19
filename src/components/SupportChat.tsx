@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -107,7 +106,7 @@ const SupportChat = () => {
           className={`fixed bottom-16 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50 ${isMobileOrTablet ? 'mb-[60px]' : ''}`}
           size="icon"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-6 w-6 text-white" />
         </Button>
 
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -137,7 +136,7 @@ const SupportChat = () => {
           className={`fixed bottom-16 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50 ${isMobileOrTablet ? 'mb-[60px]' : ''}`}
           size="icon"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-6 w-6 text-white" />
         </Button>
 
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -166,7 +165,7 @@ const SupportChat = () => {
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-50"
         size="icon"
       >
-        <MessageCircle className="h-6 w-6" />
+        <MessageCircle className="h-6 w-6 text-white" />
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

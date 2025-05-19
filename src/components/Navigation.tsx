@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages } from 'lucide-react';
@@ -8,6 +7,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useNavigationClick } from '@/hooks/useNavigationClick';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Define the link type with optional row property
 interface NavLink {
@@ -30,7 +31,9 @@ const Navigation = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [showMobileIslandSelector, setShowMobileIslandSelector] = useState(true);
   const [showMobileLanguageSelector, setShowMobileLanguageSelector] = useState(true);
+  const [activeTab, setActiveTab] = useState('visitor');
   const location = useLocation();
+  const { handleNavigationClick } = useNavigationClick();
   
   // Handle scroll effect for navigation
   useEffect(() => {
@@ -59,6 +62,8 @@ const Navigation = () => {
     { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
     { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
+    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" }
   ];
 
   // Local menu links (row 3)
@@ -66,9 +71,7 @@ const Navigation = () => {
     { to: "/properties", icon: <Map size={16} />, label: "Homes" },
     { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
     { to: "/businesses", icon: <Building size={16} />, label: "Services" },
-    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
-    { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+    { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" }
   ];
 
   // List of islands for the dropdown
@@ -86,158 +89,156 @@ const Navigation = () => {
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm ${
-        scrolled ? 'glass-nav py-2' : 'py-3'
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col">
-          {/* Top Row: Logo, Island & Language Dropdowns, Auth */}
-          <div className="flex items-center justify-between py-2">
-            {/* Logo */}
-            <Link 
-              to="/" 
-              className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
-            >
-              <span className="sr-only">CNMI Central Directory</span>
-              <span className="inline-block">
-                <span className="text-gray-900">CNMI</span>
-                <span className="text-gray-600">Central</span>
-              </span>
-            </Link>
-            
-            {/* Island and Language Dropdowns - Center */}
-            <div className="hidden md:flex items-center space-x-4">
-              {/* Island Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
-                  {selectedIsland}
-                  <ChevronDown size={16} className="ml-2" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
-                  {islands.map((island) => (
-                    <DropdownMenuItem
-                      key={island}
-                      className="text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => setSelectedIsland(island)}
-                    >
-                      {island}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm ${
+          scrolled ? 'glass-nav py-2' : 'py-3'
+        }`}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col">
+            {/* Top Row: Logo, Island & Language Dropdowns, Auth */}
+            <div className="flex items-center justify-between py-2">
+              {/* Logo */}
+              <Link 
+                to="/" 
+                className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
+              >
+                <span className="sr-only">CNMI Central Directory</span>
+                <span className="inline-block">
+                  <span className="text-gray-900">CNMI</span>
+                  <span className="text-gray-600">Central</span>
+                </span>
+              </Link>
+              
+              {/* Island and Language Dropdowns - Center */}
+              <div className="hidden md:flex items-center space-x-4">
+                {/* Island Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
+                    {selectedIsland}
+                    <ChevronDown size={16} className="ml-2" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
+                    {islands.map((island) => (
+                      <DropdownMenuItem
+                        key={island}
+                        className="text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => setSelectedIsland(island)}
+                      >
+                        {island}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-              {/* Language Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
-                  <Languages size={16} className="mr-2" />
-                  {selectedLanguage}
-                  <ChevronDown size={16} className="ml-2" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[180px]">
-                  {languages.map((language) => (
-                    <DropdownMenuItem
-                      key={language.name}
-                      className="text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => setSelectedLanguage(language.name)}
-                    >
-                      {language.name}{language.translation ? ` (${language.translation})` : ''}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            
-            {/* Auth links - Right */}
-            <div className="hidden md:flex items-center space-x-2">
-              <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
-                <LogIn size={16} className="mr-1" />
-                <span>Login</span>
-              </Link>
-              <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
-                <User size={16} className="mr-1" />
-                <span>Sign Up</span>
-              </Link>
-            </div>
-            
-            {/* Mobile Navigation */}
-            <div className="md:hidden">
-              <MobileMenu 
-                islands={islands} 
-                languages={languages}
-                selectedIsland={selectedIsland} 
-                setSelectedIsland={setSelectedIsland} 
-                selectedLanguage={selectedLanguage}
-                setSelectedLanguage={setSelectedLanguage} 
-                showIslandSelector={showMobileIslandSelector}
-                setShowIslandSelector={setShowMobileIslandSelector}
-                showLanguageSelector={showMobileLanguageSelector}
-                setShowLanguageSelector={setShowMobileLanguageSelector}
-              />
-            </div>
-          </div>
-          
-          {/* Bottom Rows: Main Navigation */}
-          <div className="hidden md:block pt-2 pb-1">
-            <div className="flex flex-col">
-              {/* Row 2: Visitor Links */}
-              <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
-                <div className="mr-4 font-medium text-gray-500 text-sm whitespace-nowrap">
-                  Visitor's Favorites
-                </div>
-                <nav className="flex items-center space-x-1 overflow-x-auto">
-                  {visitorLinks.map((link) => (
-                    <NavLink 
-                      key={link.to}
-                      to={link.to} 
-                      icon={link.icon} 
-                      label={link.label} 
-                      isActive={isActive(link.to)} 
-                    />
-                  ))}
-                </nav>
+                {/* Language Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
+                    <Languages size={16} className="mr-2" />
+                    {selectedLanguage}
+                    <ChevronDown size={16} className="ml-2" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[180px]">
+                    {languages.map((language) => (
+                      <DropdownMenuItem
+                        key={language.name}
+                        className="text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => setSelectedLanguage(language.name)}
+                      >
+                        {language.name}{language.translation ? ` (${language.translation})` : ''}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
               
-              {/* Row 3: Local Links */}
-              <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
-                <div className="mr-4 font-medium text-gray-500 text-sm whitespace-nowrap">
-                  Local's Favorites
+              {/* Auth links - Right */}
+              <div className="hidden md:flex items-center space-x-2">
+                <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
+                  <LogIn size={16} className="mr-1" />
+                  <span>Login</span>
+                </Link>
+                <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
+                  <User size={16} className="mr-1" />
+                  <span>Sign Up</span>
+                </Link>
+              </div>
+              
+              {/* Mobile Navigation */}
+              <div className="md:hidden">
+                <MobileMenu 
+                  islands={islands} 
+                  languages={languages}
+                  selectedIsland={selectedIsland} 
+                  setSelectedIsland={setSelectedIsland} 
+                  selectedLanguage={selectedLanguage}
+                  setSelectedLanguage={setSelectedLanguage} 
+                  showIslandSelector={showMobileIslandSelector}
+                  setShowIslandSelector={setShowMobileIslandSelector}
+                  showLanguageSelector={showMobileLanguageSelector}
+                  setShowLanguageSelector={setShowMobileLanguageSelector}
+                />
+              </div>
+            </div>
+            
+            {/* Bottom Row: Main Navigation */}
+            <div className="hidden md:block pt-2 pb-1">
+              <div className="flex flex-col">
+                {/* Toggle Tabs */}
+                <div className="flex justify-center mb-4">
+                  <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-2xl">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="visitor">Visitor's Favorites</TabsTrigger>
+                      <TabsTrigger value="local">Local's Favorites</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
-                <nav className="flex items-center space-x-1 overflow-x-auto">
-                  {localLinks.map((link) => (
-                    <NavLink 
-                      key={link.to}
-                      to={link.to} 
-                      icon={link.icon} 
-                      label={link.label} 
-                      isActive={isActive(link.to)} 
-                    />
-                  ))}
-                </nav>
+
+                {/* Navigation Links */}
+                <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
+                  <nav className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
+                    {activeTab === 'visitor' ? (
+                      visitorLinks.map((link) => (
+                        <button
+                          key={link.to}
+                          onClick={() => handleNavigationClick(link.to)}
+                          className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
+                            isActive(link.to) 
+                              ? 'bg-gray-900 text-white' 
+                              : 'text-gray-700 hover:bg-gray-100'
+                          }`}
+                        >
+                          {link.icon}
+                          <span>{link.label}</span>
+                        </button>
+                      ))
+                    ) : (
+                      localLinks.map((link) => (
+                        <button
+                          key={link.to}
+                          onClick={() => handleNavigationClick(link.to)}
+                          className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
+                            isActive(link.to) 
+                              ? 'bg-gray-900 text-white' 
+                              : 'text-gray-700 hover:bg-gray-100'
+                          }`}
+                        >
+                          {link.icon}
+                          <span>{link.label}</span>
+                        </button>
+                      ))
+                    )}
+                  </nav>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </header>
-  );
-};
-
-// NavLink Component
-const NavLink = ({ to, icon, label, isActive }: { to: string, icon: React.ReactNode, label: string, isActive: boolean }) => {
-  return (
-    <Link
-      to={to}
-      className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
-        isActive 
-          ? 'bg-gray-900 text-white' 
-          : 'text-gray-700 hover:bg-gray-100'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </Link>
+      </header>
+      {/* Add a spacer div to prevent content from being hidden under the fixed header */}
+      <div className="h-[100px]"></div>
+    </>
   );
 };
 
@@ -460,16 +461,20 @@ const MobileMenu = ({
 
 // Mobile NavLink Component
 const MobileNavLink = ({ to, icon, label, onClick }: { to: string, icon: React.ReactNode, label: string, onClick: () => void }) => {
+  const { handleNavigationClick } = useNavigationClick();
+
   return (
     <li>
-      <Link
-        to={to}
-        onClick={onClick}
-        className="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-all-300"
+      <button
+        onClick={() => {
+          handleNavigationClick(to);
+          onClick();
+        }}
+        className="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-all-300 w-full text-left"
       >
         <span className="text-gray-500">{icon}</span>
         <span className="font-medium">{label}</span>
-      </Link>
+      </button>
     </li>
   );
 };

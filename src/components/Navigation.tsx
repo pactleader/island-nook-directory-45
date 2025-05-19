@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages, X, Heart, MapPin, Globe } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -292,7 +292,8 @@ const MobileMenu = ({
   showLanguageSelector: boolean,
   setShowLanguageSelector: (show: boolean) => void
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   
   // Visitor menu links
   const visitorLinks: NavLink[] = [
@@ -330,178 +331,110 @@ const MobileMenu = ({
     <div>
       {/* Mobile Menu Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-all-300"
-        aria-expanded={isOpen}
+        aria-expanded={isMobileMenuOpen}
       >
         <span className="sr-only">Open menu</span>
         <div className="w-5 flex flex-col gap-1">
-          <span className={`block h-0.5 bg-current transform transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-          <span className={`block h-0.5 bg-current transition-all duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-          <span className={`block h-0.5 bg-current transform transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+          <span className={`block h-0.5 bg-current transform transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+          <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+          <span className={`block h-0.5 bg-current transform transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
         </div>
       </button>
       
-      {/* Mobile Menu Panel */}
+      {/* Mobile Menu */}
       <div 
-        className={`fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-0 bg-white z-[100] transform transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ backgroundColor: 'white' }}
       >
-        <div className="flex flex-col h-full bg-white">
-          <div className="p-4 flex justify-between items-center border-b bg-white sticky top-0">
-            <span className="font-bold text-xl">
-              <span className="text-gray-900">CNMI</span>
-              <span className="text-gray-600">Central</span>
-            </span>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
-            >
-              <span className="sr-only">Close menu</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Island and Language Selection in Mobile Menu */}
-          <div className="p-4 border-b space-y-4 bg-white sticky top-[73px]">
-            {/* Island Selection in Mobile Menu */}
-            <div className="p-3 rounded-lg bg-white">
-              <div 
-                className="font-medium mb-2 flex justify-between items-center cursor-pointer"
-                onClick={() => setShowIslandSelector(!showIslandSelector)}
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-gray-600 hover:text-gray-900"
               >
-                <span>Selected Island: {selectedIsland}</span>
-                <ChevronDown 
-                  size={16}
-                  className={`transition-transform ${showIslandSelector ? 'rotate-180' : ''}`} 
-                />
-              </div>
-              
-              {showIslandSelector && (
-                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100 bg-white">
-                  {islands.map((island) => (
-                    <button
-                      key={island}
-                      onClick={() => handleIslandSelect(island)}
-                      className={`w-full text-left p-2 rounded-md ${
-                        selectedIsland === island ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
-                      }`}
-                    >
-                      {island}
-                    </button>
-                  ))}
-                </div>
-              )}
+                <X className="h-6 w-6" />
+              </button>
+              <span className="text-lg font-semibold">Menu</span>
             </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                <Search className="h-6 w-6" />
+              </button>
+              <Link
+                to="/favorites"
+                className="text-gray-600 hover:text-gray-900"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Heart className="h-6 w-6" />
+              </Link>
+            </div>
+          </div>
 
-            {/* Language Selection in Mobile Menu */}
-            <div className="p-3 rounded-lg bg-white">
-              <div 
-                className="font-medium mb-2 flex justify-between items-center cursor-pointer"
-                onClick={() => setShowLanguageSelector(!showLanguageSelector)}
-              >
-                <span>Selected Language: {selectedLanguage}</span>
-                <ChevronDown 
-                  size={16}
-                  className={`transition-transform ${showLanguageSelector ? 'rotate-180' : ''}`} 
-                />
-              </div>
-              
-              {showLanguageSelector && (
-                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100 bg-white">
-                  {languages.map((language) => (
-                    <button
-                      key={language.name}
-                      onClick={() => handleLanguageSelect(language.name)}
-                      className={`w-full text-left p-2 rounded-md ${
-                        selectedLanguage === language.name ? 'bg-gray-200 font-medium' : 'hover:bg-gray-100'
-                      }`}
-                    >
-                      {language.name}{language.translation ? ` (${language.translation})` : ''}
-                    </button>
+          {/* Island and Language Selectors */}
+          <div className="sticky top-[73px] bg-white border-b border-gray-200 px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <MapPin className="h-5 w-5 text-gray-600" />
+                <select
+                  value={selectedIsland}
+                  onChange={(e) => setSelectedIsland(e.target.value)}
+                  className="text-sm font-medium text-gray-900 bg-transparent border-none focus:ring-0"
+                >
+                  {islands.map((island) => (
+                    <option key={island} value={island}>
+                      {island}
+                    </option>
                   ))}
-                </div>
-              )}
+                </select>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Globe className="h-5 w-5 text-gray-600" />
+                <select
+                  value={selectedLanguage}
+                  onChange={(e) => setSelectedLanguage(e.target.value)}
+                  className="text-sm font-medium text-gray-900 bg-transparent border-none focus:ring-0"
+                >
+                  {languages.map((lang) => (
+                    <option key={lang.name} value={lang.name}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-          
-          {/* Mobile Navigation Links */}
-          <nav className="flex-1 px-4 py-6 overflow-y-auto bg-white">
-            {/* Visitor Section */}
-            <div className="mb-6 bg-white">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Visitor's Favorites</h3>
-              <ul className="space-y-2">
+
+          {/* Navigation Links */}
+          <div className="flex-1 overflow-y-auto">
+            <nav className="px-4 py-3">
+              <ul className="space-y-4 mt-8">
                 {visitorLinks.map((link) => (
-                  <MobileNavLink 
-                    key={link.to}
-                    to={link.to} 
-                    icon={link.icon} 
-                    label={link.label} 
-                    onClick={() => setIsOpen(false)} 
-                  />
+                  <li key={link.to}>
+                    <Link
+                      to={link.to}
+                      className="flex items-center space-x-3 text-gray-900 hover:text-blue-600"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>{link.icon}</span>
+                      <span>{link.label}</span>
+                    </Link>
+                  </li>
                 ))}
               </ul>
-            </div>
-            
-            {/* Local Section */}
-            <div className="mb-6 bg-white">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Local's Favorites</h3>
-              <ul className="space-y-2">
-                {localLinks.filter(link => 
-                  !visitorLinks.some(vLink => vLink.to === link.to)
-                ).map((link) => (
-                  <MobileNavLink 
-                    key={link.to}
-                    to={link.to} 
-                    icon={link.icon} 
-                    label={link.label} 
-                    onClick={() => setIsOpen(false)} 
-                  />
-                ))}
-              </ul>
-            </div>
-            
-            {/* Auth Links */}
-            <div className="border-t border-gray-200 my-4 pt-4 bg-white">
-              <div className="flex flex-col space-y-2">
-                <Link to="/login" className="flex items-center p-3 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(false)}>
-                  <LogIn size={18} className="text-gray-500 mr-3" />
-                  <span className="font-medium">Login</span>
-                </Link>
-                <Link to="/signup" className="flex items-center p-3 rounded-lg bg-gray-900 text-white" onClick={() => setIsOpen(false)}>
-                  <User size={18} className="mr-3" />
-                  <span className="font-medium">Sign Up</span>
-                </Link>
-              </div>
-            </div>
-          </nav>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
-  );
-};
-
-// Mobile NavLink Component
-const MobileNavLink = ({ to, icon, label, onClick }: { to: string, icon: React.ReactNode, label: string, onClick: () => void }) => {
-  const { handleNavigationClick } = useNavigationClick();
-
-  return (
-    <li>
-      <button
-        onClick={() => {
-          handleNavigationClick(to);
-          onClick();
-        }}
-        className="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-all-300 w-full text-left"
-      >
-        <span className="text-gray-500">{icon}</span>
-        <span className="font-medium">{label}</span>
-      </button>
-    </li>
   );
 };
 

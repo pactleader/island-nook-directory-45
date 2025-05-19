@@ -90,7 +90,7 @@ const Hero = ({
   
   return (
     <div 
-      className={`relative w-full overflow-hidden ${getHeight()} flex items-center justify-center`}
+      className={`relative w-full overflow-hidden ${getHeight()} flex items-center justify-center z-0`}
     >
       {/* Background Image with Lazy Loading */}
       <div 

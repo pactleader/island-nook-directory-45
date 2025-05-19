@@ -117,7 +117,7 @@ const Navigation = () => {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 bg-white shadow-sm ${
           scrolled ? 'glass-nav py-2' : 'py-3'
         }`}
       >
@@ -344,12 +344,13 @@ const MobileMenu = ({
       
       {/* Mobile Menu Panel */}
       <div 
-        className={`fixed inset-0 z-50 bg-white transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ backgroundColor: 'white' }}
       >
-        <div className="flex flex-col h-full">
-          <div className="p-4 flex justify-between items-center border-b">
+        <div className="flex flex-col h-full bg-white">
+          <div className="p-4 flex justify-between items-center border-b bg-white sticky top-0">
             <span className="font-bold text-xl">
               <span className="text-gray-900">CNMI</span>
               <span className="text-gray-600">Central</span>
@@ -366,9 +367,9 @@ const MobileMenu = ({
           </div>
           
           {/* Island and Language Selection in Mobile Menu */}
-          <div className="p-4 border-b space-y-4">
+          <div className="p-4 border-b space-y-4 bg-white sticky top-[73px]">
             {/* Island Selection in Mobile Menu */}
-            <div className="p-3 rounded-lg">
+            <div className="p-3 rounded-lg bg-white">
               <div 
                 className="font-medium mb-2 flex justify-between items-center cursor-pointer"
                 onClick={() => setShowIslandSelector(!showIslandSelector)}
@@ -381,7 +382,7 @@ const MobileMenu = ({
               </div>
               
               {showIslandSelector && (
-                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100">
+                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100 bg-white">
                   {islands.map((island) => (
                     <button
                       key={island}
@@ -398,7 +399,7 @@ const MobileMenu = ({
             </div>
 
             {/* Language Selection in Mobile Menu */}
-            <div className="p-3 rounded-lg">
+            <div className="p-3 rounded-lg bg-white">
               <div 
                 className="font-medium mb-2 flex justify-between items-center cursor-pointer"
                 onClick={() => setShowLanguageSelector(!showLanguageSelector)}
@@ -411,7 +412,7 @@ const MobileMenu = ({
               </div>
               
               {showLanguageSelector && (
-                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100">
+                <div className="space-y-2 mt-2 pt-2 border-t border-gray-100 bg-white">
                   {languages.map((language) => (
                     <button
                       key={language.name}
@@ -429,9 +430,9 @@ const MobileMenu = ({
           </div>
           
           {/* Mobile Navigation Links */}
-          <nav className="flex-1 px-4 py-6 overflow-y-auto">
+          <nav className="flex-1 px-4 py-6 overflow-y-auto bg-white">
             {/* Visitor Section */}
-            <div className="mb-6">
+            <div className="mb-6 bg-white">
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Visitor's Favorites</h3>
               <ul className="space-y-2">
                 {visitorLinks.map((link) => (
@@ -447,11 +448,10 @@ const MobileMenu = ({
             </div>
             
             {/* Local Section */}
-            <div className="mb-6">
+            <div className="mb-6 bg-white">
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Local's Favorites</h3>
               <ul className="space-y-2">
                 {localLinks.filter(link => 
-                  // Filter out duplicate links that already exist in visitorLinks
                   !visitorLinks.some(vLink => vLink.to === link.to)
                 ).map((link) => (
                   <MobileNavLink 
@@ -466,7 +466,7 @@ const MobileMenu = ({
             </div>
             
             {/* Auth Links */}
-            <div className="border-t border-gray-200 my-4 pt-4">
+            <div className="border-t border-gray-200 my-4 pt-4 bg-white">
               <div className="flex flex-col space-y-2">
                 <Link to="/login" className="flex items-center p-3 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(false)}>
                   <LogIn size={18} className="text-gray-500 mr-3" />

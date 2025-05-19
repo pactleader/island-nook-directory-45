@@ -1,8 +1,8 @@
 
 import { ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
 import Navigation from './Navigation';
 import Footer from './Footer';
+import SupportChat from './SupportChat';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -16,6 +16,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
         {children}
       </div>
       <Footer />
+      <SupportChat />
     </div>
   );
 };

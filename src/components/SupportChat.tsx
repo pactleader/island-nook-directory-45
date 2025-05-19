@@ -173,9 +173,6 @@ const SupportChat = () => {
           <div className="flex flex-col h-full pt-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Support Chat</h2>
-              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-                <X className="h-4 w-4" />
-              </Button>
             </div>
             <div className="h-full overflow-hidden">
               <ChatContent />

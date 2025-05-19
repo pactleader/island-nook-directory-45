@@ -117,7 +117,7 @@ const Navigation = () => {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 bg-white shadow-sm ${
+        className={`fixed top-0 left-0 right-0 z-[40] transition-all duration-300 bg-white shadow-sm ${
           scrolled ? 'glass-nav py-2' : 'py-3'
         }`}
       >
@@ -145,7 +145,7 @@ const Navigation = () => {
                     {selectedIsland}
                     <ChevronDown size={16} className="ml-2" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px]">
+                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px] z-[50]">
                     {islands.map((island) => (
                       <DropdownMenuItem
                         key={island}
@@ -165,7 +165,7 @@ const Navigation = () => {
                     {selectedLanguage}
                     <ChevronDown size={16} className="ml-2" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[180px]">
+                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[180px] z-[50]">
                     {languages.map((language) => (
                       <DropdownMenuItem
                         key={language.name}

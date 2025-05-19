@@ -49,18 +49,6 @@ const mockServices: GovernmentService[] = [
   },
   {
     id: "4",
-    title: "Building Permit Office",
-    description: "Apply for and obtain building permits and inspections for construction projects.",
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5",
-    address: "321 Construction Ave, Saipan",
-    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
-    phone: "(670) 664-2200",
-    website: "https://example.gov/permits",
-    category: "Permitting and Climate",
-    featured: false
-  },
-  {
-    id: "5",
     title: "Public School District Office",
     description: "Administrative office for the public school system in the Northern Mariana Islands.",
     image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
@@ -72,19 +60,7 @@ const mockServices: GovernmentService[] = [
     featured: true
   },
   {
-    id: "6",
-    title: "Cultural Heritage Museum",
-    description: "Preserve and celebrate the cultural heritage of the Northern Mariana Islands.",
-    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04",
-    address: "777 History Road, Saipan",
-    hours: "Tuesday-Sunday: 10:00 AM - 5:00 PM",
-    phone: "(670) 664-2160",
-    website: "https://example.gov/museum",
-    category: "Cultural Affairs",
-    featured: false
-  },
-  {
-    id: "7",
+    id: "5",
     title: "Revenue and Taxation Division",
     description: "Manage tax collection and financial services for the government and residents.",
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f",
@@ -96,31 +72,7 @@ const mockServices: GovernmentService[] = [
     featured: false
   },
   {
-    id: "8",
-    title: "Superior Court",
-    description: "The trial court of general jurisdiction for the Northern Mariana Islands.",
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f",
-    address: "999 Justice Boulevard, Saipan",
-    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
-    phone: "(670) 235-4210",
-    website: "https://example.gov/court",
-    category: "Justice and Courts",
-    featured: true
-  },
-  {
-    id: "9",
-    title: "Department of Labor",
-    description: "Protect workers' rights and regulate employment practices throughout the islands.",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216",
-    address: "111 Worker's Plaza, Saipan",
-    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
-    phone: "(670) 664-3196",
-    website: "https://example.gov/labor",
-    category: "Labor and Jobs",
-    featured: false
-  },
-  {
-    id: "10",
+    id: "6",
     title: "Office of the Governor",
     description: "Executive office for the leadership of the Commonwealth of the Northern Mariana Islands.",
     image: "https://images.unsplash.com/photo-1536093058399-3e9f9fad20c8",
@@ -130,30 +82,6 @@ const mockServices: GovernmentService[] = [
     website: "https://example.gov/governor",
     category: "Governors Office",
     featured: true
-  },
-  {
-    id: "11",
-    title: "Saipan Mayor's Office",
-    description: "Local government services and support for the municipality of Saipan.",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4",
-    address: "222 Municipal Drive, Saipan",
-    hours: "Monday-Friday: 7:30 AM - 4:30 PM",
-    phone: "(670) 234-6208",
-    website: "https://example.gov/saipan",
-    category: "Mayors Offices",
-    featured: false
-  },
-  {
-    id: "12",
-    title: "Veterans Affairs Office",
-    description: "Support and resources for military veterans living in the Northern Mariana Islands.",
-    image: "https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c",
-    address: "333 Veterans Memorial Road, Saipan",
-    hours: "Monday-Friday: 8:00 AM - 4:00 PM",
-    phone: "(670) 664-2650",
-    website: "https://example.gov/veterans",
-    category: "Other Programs",
-    featured: false
   }
 ];
 
@@ -259,7 +187,7 @@ const GovernmentServices = () => {
         subtitle="Find official government services, departments, and resources"
         buttonText="Submit a Service"
         buttonLink="/contact"
-        backgroundImage="https://images.unsplash.com/photo-1533165858607-313b98855560?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+        backgroundImage="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2073&auto=format&fit=crop"
         size="medium"
       />
       

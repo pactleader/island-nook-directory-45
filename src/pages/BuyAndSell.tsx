@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Package, Tag, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
@@ -26,7 +26,7 @@ const listings = [
     title: "Leather Sofa - Excellent Condition",
     price: 350,
     location: "Saipan",
-    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04",
+    image: "https://media.furniturevillage.co.uk/i/fv/PRODZFRSP000000000054541_shackleton_4-seater-leather-sofa__lifestyle?$medium$&fmt=auto&fmt=auto&w=579",
     category: "Furniture",
     date: "2 days ago",
   },
@@ -35,7 +35,7 @@ const listings = [
     title: "iPhone 13 Pro - Like New",
     price: 700,
     location: "Tinian",
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
+    image: "https://photos5.appleinsider.com/gallery/47523-92824-New-Alpine-Green-iPhone-13-Pro-xl.jpg",
     category: "Electronics",
     date: "1 day ago",
   },
@@ -53,7 +53,7 @@ const listings = [
     title: "Samsung Refrigerator - 2 years old",
     price: 450,
     location: "Saipan",
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    image: "https://applianceliquidatorsil.com/wp-content/uploads/2019/09/assets2F05535546-9f21-40e0-a043-871a8768146a.jpg",
     category: "Appliances",
     date: "4 days ago",
   },
@@ -147,7 +147,7 @@ export default function BuyAndSell() {
                         </div>
                         <div className="p-4">
                           <div className="flex justify-between items-start">
-                            <h3 className="font-semibold text-gray-900 mb-1">{listing.title}</h3>
+                            <h3 className="font-semibold text-gray-900 mb-1 text-sm">{listing.title}</h3>
                             <span className="font-bold text-gray-900">${listing.price}</span>
                           </div>
                           <div className="flex items-center justify-between text-sm text-gray-500 mt-2">
@@ -157,9 +157,11 @@ export default function BuyAndSell() {
                             </span>
                             <span>{listing.date}</span>
                           </div>
-                          <Button variant="outline" className="w-full mt-4">
-                            View Details
-                          </Button>
+                          <Link to={`/buy-and-sell/${listing.id}`}>
+                            <Button variant="outline" className="w-full mt-4">
+                              View Details
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     ))}
@@ -180,7 +182,6 @@ export default function BuyAndSell() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -36,10 +36,15 @@ import Admin from "./pages/Admin";
 // Import pages
 import Food from "./pages/Food";
 import Shopping from "./pages/Shopping";
+import ShoppingDetails from "./pages/ShoppingDetails";
 import LocalProducts from "./pages/LocalProducts";
+import LocalProductDetails from "./pages/LocalProductDetails";
 import Adventures from "./pages/Adventures";
+import AdventureDetails from "./pages/AdventureDetails";
 import BuyAndSell from "./pages/BuyAndSell";
+import BuyAndSellDetails from "./pages/BuyAndSellDetails";
 import PageTransition from './components/PageTransition';
+import FoodDetails from "./pages/FoodDetails";
 
 const queryClient = new QueryClient();
 
@@ -70,10 +75,15 @@ const App = () => (
               
               {/* Routes */}
               <Route path="/food" element={<PageLayout><Food /></PageLayout>} />
+              <Route path="/food/:id" element={<PageLayout><FoodDetails /></PageLayout>} />
               <Route path="/shopping" element={<PageLayout><Shopping /></PageLayout>} />
+              <Route path="/shopping/:id" element={<PageLayout><ShoppingDetails /></PageLayout>} />
               <Route path="/local-products" element={<PageLayout><LocalProducts /></PageLayout>} />
+              <Route path="/local-products/:id" element={<PageLayout><LocalProductDetails /></PageLayout>} />
               <Route path="/adventures" element={<PageLayout><Adventures /></PageLayout>} />
+              <Route path="/adventures/:id" element={<PageLayout><AdventureDetails /></PageLayout>} />
               <Route path="/buy-and-sell" element={<PageLayout><BuyAndSell /></PageLayout>} />
+              <Route path="/buy-and-sell/:id" element={<PageLayout><BuyAndSellDetails /></PageLayout>} />
               <Route path="/advertise" element={<PageLayout><Advertise /></PageLayout>} />
               <Route path="/admin" element={<PageLayout><Admin /></PageLayout>} />
               

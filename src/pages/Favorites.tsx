@@ -1,6 +1,6 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { useFavorites } from '../contexts/FavoritesContext';
@@ -10,9 +10,28 @@ import BusinessCard from '../components/BusinessCard';
 import { mockProperties, mockVehicles, mockBusinesses } from '../utils/mockData';
 import { Heart, Building, Car, Store, Calendar } from 'lucide-react';
 
+const FAVORITES_TAB_KEY = 'island-nook-favorites-tab';
+
 const Favorites = () => {
   const { favorites } = useFavorites();
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState(() => {
+    // Initialize from localStorage
+    try {
+      return localStorage.getItem(FAVORITES_TAB_KEY) || 'all';
+    } catch (error) {
+      console.error('Error loading favorites tab from localStorage:', error);
+      return 'all';
+    }
+  });
+  
+  // Save tab selection to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(FAVORITES_TAB_KEY, activeTab);
+    } catch (error) {
+      console.error('Error saving favorites tab to localStorage:', error);
+    }
+  }, [activeTab]);
   
   // Filter favorited items by type
   const favoriteProperties = mockProperties.filter(property => 
@@ -50,19 +69,19 @@ const Favorites = () => {
               <h2 className="text-2xl font-semibold text-gray-700 mb-2">No favorites yet</h2>
               <p className="text-gray-500 mb-6">Browse our directories and add items to your favorites</p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/properties" className="btn-secondary px-6 py-3">
+                <Link to="/properties" className="btn-secondary px-6 py-3">
                   Browse Properties
-                </a>
-                <a href="/vehicles" className="btn-secondary px-6 py-3">
+                </Link>
+                <Link to="/vehicles" className="btn-secondary px-6 py-3">
                   Browse Vehicles
-                </a>
-                <a href="/businesses" className="btn-secondary px-6 py-3">
+                </Link>
+                <Link to="/businesses" className="btn-secondary px-6 py-3">
                   Browse Businesses
-                </a>
+                </Link>
               </div>
             </div>
           ) : (
-            <Tabs defaultValue="all" className="w-full" value={activeTab} onValueChange={setActiveTab}>
+            <Tabs defaultValue={activeTab} className="w-full" value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="mb-8 bg-gray-100 p-1 rounded-lg">
                 <TabsTrigger value="all" className="flex items-center rounded-md">
                   <Heart size={16} className="mr-2" />
@@ -145,9 +164,9 @@ const Favorites = () => {
                     <Building size={48} className="mx-auto text-gray-400 mb-4" />
                     <h3 className="text-xl font-semibold text-gray-700 mb-2">No favorited properties</h3>
                     <p className="text-gray-500 mb-6">Browse our properties and add some to your favorites</p>
-                    <a href="/properties" className="btn-secondary px-6 py-2">
+                    <Link to="/properties" className="btn-secondary px-6 py-2">
                       Browse Properties
-                    </a>
+                    </Link>
                   </div>
                 )}
               </TabsContent>
@@ -164,9 +183,9 @@ const Favorites = () => {
                     <Car size={48} className="mx-auto text-gray-400 mb-4" />
                     <h3 className="text-xl font-semibold text-gray-700 mb-2">No favorited vehicles</h3>
                     <p className="text-gray-500 mb-6">Browse our vehicles and add some to your favorites</p>
-                    <a href="/vehicles" className="btn-secondary px-6 py-2">
+                    <Link to="/vehicles" className="btn-secondary px-6 py-2">
                       Browse Vehicles
-                    </a>
+                    </Link>
                   </div>
                 )}
               </TabsContent>
@@ -183,9 +202,9 @@ const Favorites = () => {
                     <Store size={48} className="mx-auto text-gray-400 mb-4" />
                     <h3 className="text-xl font-semibold text-gray-700 mb-2">No favorited businesses</h3>
                     <p className="text-gray-500 mb-6">Browse our businesses and add some to your favorites</p>
-                    <a href="/businesses" className="btn-secondary px-6 py-2">
+                    <Link to="/businesses" className="btn-secondary px-6 py-2">
                       Browse Businesses
-                    </a>
+                    </Link>
                   </div>
                 )}
               </TabsContent>

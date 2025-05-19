@@ -57,7 +57,7 @@ const VehicleDetails = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="container mx-auto px-4 py-8 pt-36 max-w-7xl">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link to="/" className="hover:text-primary">Home</Link>

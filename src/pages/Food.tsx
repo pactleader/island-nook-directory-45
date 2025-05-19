@@ -276,7 +276,6 @@ const Food = () => {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 };

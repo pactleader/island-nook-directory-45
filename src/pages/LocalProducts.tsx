@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -16,7 +15,7 @@ const mockLocalProducts = [
     subcategory: "Oils",
     priceRange: "$$",
     rating: 4.8,
-    imageUrl: "https://images.unsplash.com/photo-1626731427784-fd93d3a788cd?q=80&w=1000",
+    imageUrl: "https://exploreguamevents.com/wp-content/uploads/2023/10/coconut-oil-1024x683.jpg",
     producer: "Island Natural Co-op",
     location: {
       village: "Chalan Kanoa"
@@ -33,7 +32,7 @@ const mockLocalProducts = [
     subcategory: "Honey & Sweeteners",
     priceRange: "$$",
     rating: 4.9,
-    imageUrl: "https://images.unsplash.com/photo-1585054786599-11bc31155e60?q=80&w=1000",
+    imageUrl: "https://lh7-us.googleusercontent.com/docsz/AD_4nXegGI3TiMP1VA7dg9NM9s74UiVjz03ykV6vriPjhueDEFDByeCykWVlt7jQl9_1oXKFwDTTRSONhfuiVYNX6EpBU1I2EaaDIoUuGC2b5NTa4fNYs7o1tTcQ-JDQQyqqAHDAQYmehDfiFW_q4PpjX5_UHQdB?key=sSd4HTTcsx8a0nLkjBPRVA",
     producer: "CNMI Beekeepers Association",
     location: {
       village: "Capitol Hill"
@@ -50,7 +49,7 @@ const mockLocalProducts = [
     subcategory: "Pottery",
     priceRange: "$$$",
     rating: 4.7,
-    imageUrl: "https://images.unsplash.com/photo-1603033172872-c2525115c7b9?q=80&w=1000",
+    imageUrl: "https://live.staticflickr.com/65535/3973762776_04c309b266.jpg",
     producer: "Heritage Arts Collective",
     location: {
       village: "San Jose"
@@ -67,7 +66,7 @@ const mockLocalProducts = [
     subcategory: "Condiments",
     priceRange: "$$",
     rating: 4.6,
-    imageUrl: "https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?q=80&w=1000",
+    imageUrl: "https://micronesiaimports.b-cdn.net/wp-content/uploads/2021/08/Chili-Sauce-1024x683.jpg",
     producer: "Island Spice Company",
     location: {
       village: "Garapan"
@@ -84,7 +83,7 @@ const mockLocalProducts = [
     subcategory: "Textiles",
     priceRange: "$$$",
     rating: 4.5,
-    imageUrl: "https://images.unsplash.com/photo-1603221518932-d0e8371c9247?q=80&w=1000",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/12/Banig.JPG",
     producer: "Weaving Traditions Collective",
     location: {
       village: "Oleai"
@@ -101,7 +100,7 @@ const mockLocalProducts = [
     subcategory: "Spices & Seasonings",
     priceRange: "$$",
     rating: 4.7,
-    imageUrl: "https://images.unsplash.com/photo-1547155011-dcb4aef6c75a?q=80&w=1000",
+    imageUrl: "https://m.media-amazon.com/images/I/81u+HYRigGL.jpg",
     producer: "Ocean Harvest",
     location: {
       village: "Marpi"
@@ -227,10 +226,8 @@ const LocalProducts = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
 
-export default LocalProducts;
+export { LocalProducts as default };

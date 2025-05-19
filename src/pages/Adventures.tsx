@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Search, Filter, Map, MapPin, Mountain, Waves, Compass, Anchor, Plane, Bike, History } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -9,10 +8,10 @@ import { Link } from "react-router-dom";
 // Mock adventure data for display
 const mockAdventures = [
   {
-    id: 1,
+    id: "1",
     title: "Forbidden Island Trek",
     description: "Experience the thrill of exploring this hidden gem with breathtaking cliff views.",
-    image: "/placeholder.svg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/7a/03/15/forbidden-island.jpg?w=2000&h=-1&s=1",
     rating: 4.9,
     price: "$75",
     duration: "4 hours",
@@ -20,10 +19,10 @@ const mockAdventures = [
     location: "North Coast"
   },
   {
-    id: 2,
+    id: "2",
     title: "Blue Hole Diving Adventure",
     description: "Dive into the crystal clear waters of one of the world's most beautiful diving spots.",
-    image: "/placeholder.svg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/8a/74/87/caption.jpg?w=1400&h=-1&s=1",
     rating: 4.8,
     price: "$120",
     duration: "6 hours",
@@ -31,10 +30,10 @@ const mockAdventures = [
     location: "East Bay"
   },
   {
-    id: 3,
+    id: "3",
     title: "Sunset Kayak Tour",
     description: "Paddle through serene lagoons and witness an unforgettable sunset over the ocean.",
-    image: "/placeholder.svg",
+    image: "https://images.unsplash.com/photo-1727380460045-8a319df4c934?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 4.7,
     price: "$65",
     duration: "2.5 hours",
@@ -42,10 +41,10 @@ const mockAdventures = [
     location: "South Bay"
   },
   {
-    id: 4,
+    id: "4",
     title: "Jungle Zipline Experience",
     description: "Soar through the tropical jungle canopy on this exhilarating zipline adventure.",
-    image: "/placeholder.svg",
+    image: "https://images.unsplash.com/photo-1606632512844-b91c1c328235?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 4.6,
     price: "$90",
     duration: "3 hours",
@@ -53,10 +52,10 @@ const mockAdventures = [
     location: "Rainforest Reserve"
   },
   {
-    id: 5,
+    id: "5",
     title: "Mountain Summit Hike",
     description: "Reach the highest peak on the island with panoramic views of the entire archipelago.",
-    image: "/placeholder.svg",
+    image: "https://images.unsplash.com/photo-1640244676144-63c901998a83?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 4.8,
     price: "$55",
     duration: "8 hours",
@@ -64,10 +63,10 @@ const mockAdventures = [
     location: "Central Highlands"
   },
   {
-    id: 6,
+    id: "6",
     title: "Coral Reef Snorkeling",
     description: "Discover vibrant coral reefs and tropical fish in this guided snorkeling experience.",
-    image: "/placeholder.svg",
+    image: "https://images.unsplash.com/photo-1687707939240-2a1ff390459a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 4.7,
     price: "$45",
     duration: "3 hours",
@@ -83,7 +82,7 @@ const attractions = [
     title: 'Managaha Island',
     description: 'A small, beautiful island off the coast of Saipan perfect for snorkeling, swimming, and water sports.',
     category: 'places',
-    image: 'https://images.unsplash.com/photo-1589519160732-576f165b9aad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://exploreguamevents.com/wp-content/uploads/2024/04/managahan-beach.png',
     location: 'Saipan'
   },
   {
@@ -123,7 +122,7 @@ const attractions = [
     title: 'Bird Island',
     description: 'A small uninhabited island and wildlife sanctuary with a scenic lookout point accessible via a short hike.',
     category: 'places',
-    image: 'https://images.unsplash.com/photo-1547550842-9d0127e3f041?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/2c/0a/ed/caption.jpg?w=2000&h=-1&s=1',
     location: 'Saipan'
   },
   {
@@ -147,7 +146,7 @@ const attractions = [
     title: 'Atomic Bomb Pits',
     description: 'Historical site where the atomic bombs were loaded onto planes during World War II.',
     category: 'historical',
-    image: 'https://images.unsplash.com/photo-1533331639-74f1863c7b7c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://img.atlasobscura.com/UAziZbFBbXeZN9IG1ATgsH1cK2yHOSh_cudkC47DtxY/rs:fill:780:520:1/g:ce/q:81/sm:1/scp:1/ar:1/aHR0cHM6Ly9hdGxh/cy1kZXYuczMuYW1h/em9uYXdzLmNvbS91/cGxvYWRzL3BsYWNl/X2ltYWdlcy9teTdo/Z3N0bDQ5azVjZDE1/ZDI5NGNhOWI3ZjA3/OF9HT1BSMzc2My5K/UEc.jpg',
     location: 'Tinian'
   },
   {
@@ -155,7 +154,7 @@ const attractions = [
     title: 'Mariana Skydiving',
     description: 'Experience the thrill of skydiving over the beautiful blue waters and lush landscapes of Saipan.',
     category: 'adventure',
-    image: 'https://images.unsplash.com/photo-1521673252667-37172a97f7a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_164237/20240307095002_7aF71/jpg',
     location: 'Saipan'
   },
   {
@@ -171,7 +170,7 @@ const attractions = [
     title: 'Marpi Point',
     description: 'Historical site and scenic lookout with important World War II significance.',
     category: 'historical',
-    image: 'https://images.unsplash.com/photo-1566176555872-8064459c95af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80',
+    image: 'https://images.unsplash.com/photo-1664787730026-9ff1bc7f1210?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     location: 'Saipan'
   }
 ];
@@ -233,7 +232,7 @@ const Adventures = () => {
     <div className="flex flex-col min-h-screen">
       
       {/* Hero Section */}
-      <div className="relative h-80 md:h-96 w-full bg-cover bg-center" style={{ backgroundImage: 'url(/placeholder.svg)' }}>
+      <div className="relative h-80 md:h-96 w-full bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1668813610741-a9b7edbceeed?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)' }}>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent flex items-center">
           <div className="container mx-auto px-4">
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Island Adventures</h1>
@@ -317,7 +316,9 @@ const Adventures = () => {
                   <Separator className="my-3" />
                   <div className="flex justify-between items-center">
                     <span className="font-bold text-lg">{adventure.price}</span>
-                    <Button size="sm">View Details</Button>
+                    <Link to={`/adventures/${adventure.id}`}>
+                      <Button size="sm">View Details</Button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,3 @@
-
 import GovernmentServiceCard from './GovernmentServiceCard';
 import GovernmentServiceList from './GovernmentServiceList';
 import FeaturedServices from './FeaturedServices';
@@ -37,6 +36,11 @@ const ServiceResultsSection = ({
 }: ServiceResultsSectionProps) => {
   const showFeaturedSection = activeCategory === 'All' && services.length === allServices.length;
   
+  // Filter out featured services from main listing when featured section is shown
+  const displayServices = showFeaturedSection 
+    ? services.filter(service => !service.featured)
+    : services;
+  
   return (
     <div className="lg:col-span-3">
       <ServiceListToggle 
@@ -49,9 +53,9 @@ const ServiceResultsSection = ({
       {showFeaturedSection && <FeaturedServices services={services} />}
       
       {/* Services Listing Grid/List View */}
-      {services.length > 0 ? (
+      {displayServices.length > 0 ? (
         <div className={activeView === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-6'}>
-          {services.map(service => (
+          {displayServices.map(service => (
             activeView === 'grid' ? (
               <GovernmentServiceCard key={service.id} service={service} />
             ) : (

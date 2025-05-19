@@ -12,7 +12,7 @@ const mockHotels = [
     id: "hotel-1",
     name: "Oceanview Hotel & Resort",
     description: "Luxury resort with stunning ocean views, private beach access, and world-class dining.",
-    imageUrl: "https://images.unsplash.com/photo-1566073771259-6a690aa3dc54?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    imageUrl: "https://www.hotelscombined.com/rimg/himg/b5/5a/43/expedia_group-76951-242325539-853630.jpg?width=968&height=607&crop=true",
     pricePerNight: 250,
     rating: 4.5,
     reviews: 120,
@@ -23,7 +23,7 @@ const mockHotels = [
     id: "hotel-2",
     name: "Pacific Island Inn",
     description: "Cozy inn located in the heart of the city, offering comfortable rooms and a convenient location.",
-    imageUrl: "https://images.unsplash.com/photo-1598228723793-52b585b4a67e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    imageUrl: "https://photos.hotelbeds.com/giata/original/71/713256/713256a_hb_w_001.jpg",
     pricePerNight: 120,
     rating: 4.2,
     reviews: 85,
@@ -33,7 +33,7 @@ const mockHotels = [
     id: "hotel-3",
     name: "Tinian Diamond Hotel",
     description: "Elegant hotel on Tinian offering luxurious accommodations and breathtaking views.",
-    imageUrl: "https://images.unsplash.com/photo-1568495286054-8905fa401902?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80",
+    imageUrl: "https://ik.imagekit.io/tvlk/apr-asset/TzEv3ZUmG4-4Dz22hvmO9NUDzw1DGCIdWl4oPtKumOg=/lodging/54000000/53590000/53580200/53580188/b49f5553_z.jpg?_src=imagekit&tr=dpr-2,c-at_max,f-jpg,h-360,pr-true,q-80,w-640",
     pricePerNight: 180,
     rating: 4.0,
     reviews: 60,
@@ -54,7 +54,7 @@ const mockHotels = [
     id: "hotel-5",
     name: "Serenity Sands Inn",
     description: "Budget-friendly inn offering comfortable rooms and a relaxing atmosphere.",
-    imageUrl: "https://images.unsplash.com/photo-1560414262-5140819a8c4d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/56/c5/3a/rota-resort-country-club.jpg?w=2000&h=-1&s=1",
     pricePerNight: 90,
     rating: 3.8,
     reviews: 50,
@@ -201,7 +201,6 @@ const Hotels = () => {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 };

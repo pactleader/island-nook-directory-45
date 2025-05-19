@@ -1,4 +1,3 @@
-
 // Business Listings
 export interface BusinessListing {
   id: string;
@@ -280,292 +279,202 @@ export const businessCategories = {
 // Mock Business Listings
 export const mockBusinesses: BusinessListing[] = [
   {
-    id: "b001",
-    name: "Pacific Lawn Care",
-    category: "yard-services",
-    subcategory: "landscaping",
-    description: "Professional landscaping and lawn maintenance services for residential and commercial properties. We specialize in tropical garden design and maintenance.",
+    id: 'business-1',
+    name: 'Tropical Garden Experts',
+    category: 'yard-services',
+    subcategory: 'landscaping',
+    description: 'Professional landscaping and garden design services for residential and commercial properties.',
     address: {
-      street: "123 Beach Road",
-      village: "Garapan",
-      island: "Saipan",
-      zipCode: "96950"
+      street: '123 Garden Lane',
+      village: 'Chalan Kanoa',
+      island: 'Saipan',
+      zipCode: '96950'
     },
     contact: {
-      phone: "(670) 234-5678",
-      email: "info@pacificlawncare.com",
-      website: "www.pacificlawncare.com"
+      phone: '(670) 234-5678',
+      email: 'info@tropicalgarden.com',
+      website: 'www.tropicalgarden.com'
     },
     hours: {
-      monday: "8:00 AM - 5:00 PM",
-      tuesday: "8:00 AM - 5:00 PM",
-      wednesday: "8:00 AM - 5:00 PM",
-      thursday: "8:00 AM - 5:00 PM",
-      friday: "8:00 AM - 5:00 PM",
-      saturday: "9:00 AM - 2:00 PM",
-      sunday: "Closed"
+      monday: '8:00 AM - 5:00 PM',
+      tuesday: '8:00 AM - 5:00 PM',
+      wednesday: '8:00 AM - 5:00 PM',
+      thursday: '8:00 AM - 5:00 PM',
+      friday: '8:00 AM - 5:00 PM',
+      saturday: '9:00 AM - 2:00 PM',
+      sunday: 'Closed'
     },
-    images: [
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.7,
-    reviews: 28,
+    images: ['https://scontent.fmnl25-8.fna.fbcdn.net/v/t39.30808-6/482065674_1186979553433093_7434324562437702076_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=5PwBilSEVpoQ7kNvwGvVUQ8&_nc_oc=AdkRigxTl_h2rfV1B0qpvJq_-hiiLit7s_O6g6EhCsSenX1y0un9tCog5RX0UAxH68s&_nc_zt=23&_nc_ht=scontent.fmnl25-8.fna&_nc_gid=vGnLa__y_qYcf4tgnmbGSw&oh=00_AfKm3G6WL8jIWlz8tEvGjc_Td9xp4yp3h-0pZ65TSl-Mhw&oe=6830C5E0'],
+    rating: 4.8,
+    reviews: 45,
     featured: true,
-    createdAt: "2023-06-12T08:30:00Z",
-    updatedAt: "2023-11-05T15:45:00Z"
+    createdAt: '2024-01-15T08:00:00Z',
+    updatedAt: '2024-01-15T08:00:00Z'
   },
   {
-    id: "b002",
-    name: "Island Eats Restaurant",
-    category: "restaurants",
-    subcategory: "local-cuisine",
-    description: "Authentic local cuisine featuring fresh seafood and traditional Chamorro dishes. Our oceanfront dining experience offers spectacular sunset views.",
+    id: 'business-2',
+    name: 'Pacific Lawn Care',
+    category: 'yard-services',
+    subcategory: 'lawn-mowing',
+    description: 'Comprehensive lawn care and maintenance services for homes and businesses.',
     address: {
-      street: "456 Coral Tree Avenue",
-      village: "Susupe",
-      island: "Saipan",
-      zipCode: "96950"
+      street: '456 Green Street',
+      village: 'Garapan',
+      island: 'Saipan',
+      zipCode: '96950'
     },
     contact: {
-      phone: "(670) 235-6789",
-      email: "reservations@islandeats.com",
-      website: "www.islandeats.com"
+      phone: '(670) 235-6789',
+      email: 'service@pacificlawn.com',
+      website: 'www.pacificlawn.com'
     },
     hours: {
-      monday: "11:00 AM - 10:00 PM",
-      tuesday: "11:00 AM - 10:00 PM",
-      wednesday: "11:00 AM - 10:00 PM",
-      thursday: "11:00 AM - 10:00 PM",
-      friday: "11:00 AM - 11:00 PM",
-      saturday: "11:00 AM - 11:00 PM",
-      sunday: "11:00 AM - 9:00 PM"
+      monday: '7:00 AM - 6:00 PM',
+      tuesday: '7:00 AM - 6:00 PM',
+      wednesday: '7:00 AM - 6:00 PM',
+      thursday: '7:00 AM - 6:00 PM',
+      friday: '7:00 AM - 6:00 PM',
+      saturday: '8:00 AM - 3:00 PM',
+      sunday: 'Closed'
     },
-    images: [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.8,
+    images: ['https://www.pacificlawnsprinklers.com/portals/0/Images/lawn-sprinkler-system-700x350.jpg'],
+    rating: 4.7,
+    reviews: 38,
+    featured: true,
+    createdAt: '2024-01-10T08:00:00Z',
+    updatedAt: '2024-01-10T08:00:00Z'
+  },
+  {
+    id: 'business-3',
+    name: 'Marianas Healing Arts',
+    category: 'healthcare',
+    subcategory: 'alternative-medicine',
+    description: 'Holistic healing center offering massage therapy, acupuncture, and wellness treatments.',
+    address: {
+      street: '789 Wellness Way',
+      village: 'San Jose',
+      island: 'Tinian',
+      zipCode: '96952'
+    },
+    contact: {
+      phone: '(670) 236-7890',
+      email: 'healing@marianashealing.com',
+      website: 'www.marianashealing.com'
+    },
+    hours: {
+      monday: '9:00 AM - 7:00 PM',
+      tuesday: '9:00 AM - 7:00 PM',
+      wednesday: '9:00 AM - 7:00 PM',
+      thursday: '9:00 AM - 7:00 PM',
+      friday: '9:00 AM - 7:00 PM',
+      saturday: '10:00 AM - 4:00 PM',
+      sunday: 'Closed'
+    },
+    images: ['https://images.shiksha.com/mediadata/images/articles/1594988014phpjHgCGq.jpeg'],
+    rating: 4.9,
+    reviews: 52,
+    featured: true,
+    createdAt: '2024-01-05T08:00:00Z',
+    updatedAt: '2024-01-05T08:00:00Z'
+  },
+  {
+    id: 'business-4',
+    name: 'Mariana Legal Services',
+    category: 'professional-services',
+    subcategory: 'legal',
+    description: 'Full-service law firm providing legal assistance for individuals and businesses.',
+    address: {
+      street: '321 Justice Avenue',
+      village: 'Susupe',
+      island: 'Saipan',
+      zipCode: '96950'
+    },
+    contact: {
+      phone: '(670) 237-8901',
+      email: 'info@marianalegal.com',
+      website: 'www.marianalegal.com'
+    },
+    hours: {
+      monday: '8:30 AM - 5:30 PM',
+      tuesday: '8:30 AM - 5:30 PM',
+      wednesday: '8:30 AM - 5:30 PM',
+      thursday: '8:30 AM - 5:30 PM',
+      friday: '8:30 AM - 5:30 PM',
+      saturday: 'Closed',
+      sunday: 'Closed'
+    },
+    images: ['https://media.istockphoto.com/id/1413828606/photo/handshake-lawyer-legal-services-advice-justice-concept.jpg?s=612x612&w=0&k=20&c=Llmy-jodY6T9Prusc2giWEoHT6_98P_-bigLY3SkkUg='],
+    rating: 4.6,
+    reviews: 29,
+    featured: true,
+    createdAt: '2024-01-01T08:00:00Z',
+    updatedAt: '2024-01-01T08:00:00Z'
+  },
+  {
+    id: 'business-5',
+    name: 'Island Eats Restaurant',
+    category: 'restaurants',
+    subcategory: 'local-cuisine',
+    description: 'Authentic local cuisine with a modern twist, featuring fresh seafood and traditional dishes.',
+    address: {
+      street: '555 Food Street',
+      village: 'Garapan',
+      island: 'Saipan',
+      zipCode: '96950'
+    },
+    contact: {
+      phone: '(670) 238-9012',
+      email: 'dine@islandeats.com',
+      website: 'www.islandeats.com'
+    },
+    hours: {
+      monday: '11:00 AM - 10:00 PM',
+      tuesday: '11:00 AM - 10:00 PM',
+      wednesday: '11:00 AM - 10:00 PM',
+      thursday: '11:00 AM - 10:00 PM',
+      friday: '11:00 AM - 11:00 PM',
+      saturday: '11:00 AM - 11:00 PM',
+      sunday: '11:00 AM - 10:00 PM'
+    },
+    images: ['https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/3f/96/5b/caption.jpg?w=1800&h=1000&s=1'],
+    rating: 4.7,
     reviews: 156,
     featured: true,
-    createdAt: "2023-03-20T10:15:00Z",
-    updatedAt: "2023-12-10T12:30:00Z"
+    createdAt: '2023-12-28T08:00:00Z',
+    updatedAt: '2023-12-28T08:00:00Z'
   },
   {
-    id: "b003",
-    name: "Mariana Legal Services",
-    category: "professional-services",
-    subcategory: "legal",
-    description: "Comprehensive legal services specializing in business law, real estate transactions, and immigration matters for the CNMI and Guam.",
+    id: 'business-6',
+    name: 'Autofix Masters',
+    category: 'mechanics-and-cars',
+    subcategory: 'auto-repair',
+    description: 'Professional auto repair and maintenance services for all makes and models.',
     address: {
-      street: "789 Flame Tree Lane",
-      village: "Capitol Hill",
-      island: "Saipan",
-      zipCode: "96950"
+      street: '888 Auto Avenue',
+      village: 'Chalan Kanoa',
+      island: 'Saipan',
+      zipCode: '96950'
     },
     contact: {
-      phone: "(670) 236-7890",
-      email: "contact@marianalegal.com",
-      website: "www.marianalegal.com"
+      phone: '(670) 239-0123',
+      email: 'service@autofix.com',
+      website: 'www.autofix.com'
     },
     hours: {
-      monday: "9:00 AM - 5:00 PM",
-      tuesday: "9:00 AM - 5:00 PM",
-      wednesday: "9:00 AM - 5:00 PM",
-      thursday: "9:00 AM - 5:00 PM",
-      friday: "9:00 AM - 5:00 PM",
-      saturday: "By Appointment",
-      sunday: "Closed"
+      monday: '7:30 AM - 6:00 PM',
+      tuesday: '7:30 AM - 6:00 PM',
+      wednesday: '7:30 AM - 6:00 PM',
+      thursday: '7:30 AM - 6:00 PM',
+      friday: '7:30 AM - 6:00 PM',
+      saturday: '8:00 AM - 2:00 PM',
+      sunday: 'Closed'
     },
-    images: [
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.9,
-    reviews: 42,
-    featured: false,
-    createdAt: "2023-04-05T09:00:00Z",
-    updatedAt: "2023-10-22T14:15:00Z"
-  },
-  {
-    id: "b004",
-    name: "AutoFix Masters",
-    category: "mechanics-and-cars",
-    subcategory: "auto-repair",
-    description: "Full-service auto repair shop with certified mechanics. We handle everything from routine maintenance to complex repairs for all vehicle makes and models.",
-    address: {
-      street: "101 Industrial Way",
-      village: "Lower Base",
-      island: "Saipan",
-      zipCode: "96950"
-    },
-    contact: {
-      phone: "(670) 237-8901",
-      email: "service@autofixmasters.com",
-      website: "www.autofixmasters.com"
-    },
-    hours: {
-      monday: "8:00 AM - 6:00 PM",
-      tuesday: "8:00 AM - 6:00 PM",
-      wednesday: "8:00 AM - 6:00 PM",
-      thursday: "8:00 AM - 6:00 PM",
-      friday: "8:00 AM - 6:00 PM",
-      saturday: "8:00 AM - 2:00 PM",
-      sunday: "Closed"
-    },
-    images: [
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1563720223185-11ff8a2c45c8?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.6,
-    reviews: 89,
-    featured: false,
-    createdAt: "2023-02-10T11:30:00Z",
-    updatedAt: "2023-09-15T16:45:00Z"
-  },
-  {
-    id: "b005",
-    name: "Island Home Builders",
-    category: "home-contractors",
-    subcategory: "general-contractors",
-    description: "Custom home building and renovation experts serving the CNMI for over 15 years. We specialize in typhoon-resistant construction and tropical home designs.",
-    address: {
-      street: "202 Construction Drive",
-      village: "San Vicente",
-      island: "Saipan",
-      zipCode: "96950"
-    },
-    contact: {
-      phone: "(670) 238-9012",
-      email: "build@islandhomebuilders.com",
-      website: "www.islandhomebuilders.com"
-    },
-    hours: {
-      monday: "7:30 AM - 4:30 PM",
-      tuesday: "7:30 AM - 4:30 PM",
-      wednesday: "7:30 AM - 4:30 PM",
-      thursday: "7:30 AM - 4:30 PM",
-      friday: "7:30 AM - 4:30 PM",
-      saturday: "By Appointment",
-      sunday: "Closed"
-    },
-    images: [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.7,
-    reviews: 64,
-    featured: true,
-    createdAt: "2023-01-15T13:45:00Z",
-    updatedAt: "2023-11-20T09:30:00Z"
-  },
-  {
-    id: "b006",
-    name: "Joeten Supermarket",
-    category: "grocery-stores",
-    subcategory: "supermarkets",
-    description: "Largest supermarket chain in the CNMI offering a wide selection of local and imported groceries, fresh produce, and household goods at competitive prices.",
-    address: {
-      street: "303 Shopping Center Road",
-      village: "Susupe",
-      island: "Saipan",
-      zipCode: "96950"
-    },
-    contact: {
-      phone: "(670) 239-0123",
-      email: "customer@joetensupermarket.com",
-      website: "www.joetensupermarket.com"
-    },
-    hours: {
-      monday: "6:00 AM - 10:00 PM",
-      tuesday: "6:00 AM - 10:00 PM",
-      wednesday: "6:00 AM - 10:00 PM",
-      thursday: "6:00 AM - 10:00 PM",
-      friday: "6:00 AM - 10:00 PM",
-      saturday: "6:00 AM - 10:00 PM",
-      sunday: "6:00 AM - 10:00 PM"
-    },
-    images: [
-      "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.5,
-    reviews: 210,
-    featured: false,
-    createdAt: "2022-12-01T08:00:00Z",
-    updatedAt: "2023-10-05T11:15:00Z"
-  },
-  {
-    id: "b007",
-    name: "Marianas Healing Arts",
-    category: "other",
-    subcategory: "healthcare",
-    description: "Holistic wellness center offering massage therapy, acupuncture, and traditional healing practices combined with modern therapeutic techniques.",
-    address: {
-      street: "404 Wellness Way",
-      village: "San Antonio",
-      island: "Saipan",
-      zipCode: "96950"
-    },
-    contact: {
-      phone: "(670) 240-1234",
-      email: "appointments@marianashealingarts.com",
-      website: "www.marianashealingarts.com"
-    },
-    hours: {
-      monday: "10:00 AM - 7:00 PM",
-      tuesday: "10:00 AM - 7:00 PM",
-      wednesday: "10:00 AM - 7:00 PM",
-      thursday: "10:00 AM - 7:00 PM",
-      friday: "10:00 AM - 7:00 PM",
-      saturday: "10:00 AM - 5:00 PM",
-      sunday: "Closed"
-    },
-    images: [
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop"
-    ],
-    rating: 4.9,
-    reviews: 72,
-    featured: true,
-    createdAt: "2023-05-20T14:20:00Z",
-    updatedAt: "2023-12-15T10:30:00Z"
-  },
-  {
-    id: "b008",
-    name: "Tropical Garden Experts",
-    category: "yard-services",
-    subcategory: "garden-design",
-    description: "Specializing in tropical garden design and installation with a focus on native and adaptive plants that thrive in the Marianas climate.",
-    address: {
-      street: "505 Garden Path",
-      village: "Papago",
-      island: "Saipan",
-      zipCode: "96950"
-    },
-    contact: {
-      phone: "(670) 241-2345",
-      email: "design@tropicalgardenexperts.com",
-      website: "www.tropicalgardenexperts.com"
-    },
-    hours: {
-      monday: "7:00 AM - 4:00 PM",
-      tuesday: "7:00 AM - 4:00 PM",
-      wednesday: "7:00 AM - 4:00 PM",
-      thursday: "7:00 AM - 4:00 PM",
-      friday: "7:00 AM - 4:00 PM",
-      saturday: "8:00 AM - 12:00 PM",
-      sunday: "Closed"
-    },
-    images: [
-      "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&auto=format&fit=crop"
-    ],
+    images: ['https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-6/486708850_122211692192190894_4936200261954004804_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Yil-WzZ78wQQ7kNvwGQiW9D&_nc_oc=Adm0Y-TwwlvW2JGodD3kwwMVu89lXkuHuouAsXl_KTrm7Cv9w9-CBCxzOzlUzcvEaNg&_nc_zt=23&_nc_ht=scontent.fmnl25-4.fna&_nc_gid=a4iav30Uxz_awvwFLzixGg&oh=00_AfL5RrWqvRJAlBl4-FgZ_JpVhxDXWUoo-1a9dFk2jJqC3Q&oe=6830AF53'],
     rating: 4.8,
-    reviews: 36,
-    featured: false,
-    createdAt: "2023-07-10T09:45:00Z",
-    updatedAt: "2023-11-25T13:20:00Z"
+    reviews: 89,
+    featured: true,
+    createdAt: '2023-12-25T08:00:00Z',
+    updatedAt: '2023-12-25T08:00:00Z'
   }
 ];
 
@@ -923,7 +832,7 @@ export const mockVehicles: VehicleListing[] = [
     sellerLocation: 'Songsong, Rota',
     sellerContact: '(670) 788-5678',
     images: [
-      'https://images.unsplash.com/photo-1608494402683-c8cc8e1ed0ec?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1734036404587-abd551b05727?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1626072778346-0ab6604d191c?w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1625593383756-d020e4204b7e?w=800&auto=format&fit=crop'
     ],
@@ -947,26 +856,62 @@ export const mockVehicles: VehicleListing[] = [
     features: [
       'AWD',
       'Panoramic Moonroof',
-      'EyeSight Driver Assist',
-      'Heated Seats',
+      'Backup Camera',
+      'Bluetooth',
       'Apple CarPlay',
       'Android Auto',
-      'X-Mode'
+      'EyeSight Driver Assist'
     ],
-    description: 'Well-maintained 2021 Subaru Forester Premium with Symmetrical All-Wheel Drive. Excellent for all weather conditions with advanced safety features and spacious interior.',
+    description: 'Well-maintained 2021 Subaru Forester Premium with low mileage. Features Subaru\'s renowned AWD system, perfect for island driving conditions.',
     sellerType: 'dealer',
-    sellerName: 'Island Auto Gallery',
-    sellerLocation: 'Chalan Kanoa, Saipan',
-    sellerContact: '(670) 235-7890',
+    sellerName: 'Triple J Motors',
+    sellerLocation: 'Garapan, Saipan',
+    sellerContact: '(670) 234-7135',
     images: [
-      'https://images.unsplash.com/photo-1629897048514-3dd66175e0fe?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1631184973894-12080f5ef4da?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1628859017536-e8e3c4db8754?w=800&auto=format&fit=crop'
+      'https://cdn.jdpower.com/JDPA_2021%20Subaru%20Forester%20Limited%20Gray%20Front%20Quarter%20Right.jpg',
+      'https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&auto=format&fit=crop'
     ],
-    createdAt: '2023-10-30T12:45:00Z'
+    createdAt: '2023-11-18T13:45:00Z'
   },
   {
     id: 'v-007',
+    title: '2020 Toyota Tacoma TRD Off-Road',
+    price: 35995,
+    condition: 'used',
+    year: 2020,
+    make: 'Toyota',
+    model: 'Tacoma',
+    bodyStyle: 'Truck',
+    transmission: 'Automatic',
+    mileage: 22450,
+    exteriorColor: 'Cement Gray',
+    interiorColor: 'Black',
+    fuelType: 'Gasoline',
+    engine: '3.5L V6',
+    features: [
+      '4WD',
+      'TRD Off-Road Package',
+      'Crawl Control',
+      'Multi-Terrain Select',
+      'Backup Camera',
+      'Bluetooth',
+      'Apple CarPlay'
+    ],
+    description: 'Capable 2020 Toyota Tacoma TRD Off-Road with low mileage. Perfect for work and play with its powerful V6 engine and off-road capabilities.',
+    sellerType: 'dealer',
+    sellerName: 'Toyota of Saipan',
+    sellerLocation: 'Garapan, Saipan',
+    sellerContact: '(670) 234-5678',
+    images: [
+      'https://img.philkotse.com/crop/600x338/2025/02/04/q0zvDh8H/img7063-b0be.webp',
+      'https://images.unsplash.com/photo-1563720223185-11ff8a2c45c8?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=800&auto=format&fit=crop'
+    ],
+    createdAt: '2023-10-05T09:15:00Z'
+  },
+  {
+    id: 'v-008',
     title: '2022 Tesla Model Y Long Range',
     price: 56490,
     condition: 'new',
@@ -999,42 +944,6 @@ export const mockVehicles: VehicleListing[] = [
       'https://images.unsplash.com/photo-1615834772906-d676102dd3e8?w=800&auto=format&fit=crop'
     ],
     createdAt: '2024-02-01T10:15:00Z'
-  },
-  {
-    id: 'v-008',
-    title: '2020 Toyota Tacoma TRD Off-Road',
-    price: 36995,
-    condition: 'used',
-    year: 2020,
-    make: 'Toyota',
-    model: 'Tacoma',
-    bodyStyle: 'Truck',
-    transmission: 'Automatic',
-    mileage: 31250,
-    exteriorColor: 'Army Green',
-    interiorColor: 'Black',
-    fuelType: 'Gasoline',
-    engine: '3.5L V6',
-    features: [
-      '4WD',
-      'Off-Road Package',
-      'Bed Liner',
-      'Tow Package',
-      'Navigation',
-      'Blind Spot Monitor',
-      'Wireless Charging'
-    ],
-    description: 'Rugged 2020 Toyota Tacoma TRD Off-Road with upgraded suspension, all-terrain tires, and skid plates. Perfect island truck with 4WD capability and excellent reliability.',
-    sellerType: 'private',
-    sellerName: 'David Torres',
-    sellerLocation: 'San Roque, Saipan',
-    sellerContact: '(670) 788-4321',
-    images: [
-      'https://images.unsplash.com/photo-1612911912304-c3c83c33f895?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1626072225909-ff7e325bead0?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1626072725148-ba70cc34b286?w=800&auto=format&fit=crop'
-    ],
-    createdAt: '2023-11-15T13:30:00Z'
   }
 ];
 

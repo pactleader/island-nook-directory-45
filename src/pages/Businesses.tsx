@@ -407,7 +407,6 @@ const Businesses = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const mockEvents = [
     id: 1,
     title: "Island Cultural Festival",
     description: "Experience the rich traditions and heritage of the Northern Mariana Islands with performances, food, and art.",
-    image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3",
+    image: "https://www.moas.org/z/-vf.0.0.0.4067.D9441D2F68CB9D0D2C64A6016060206979A351A7C4273F969B38C1EA9B05A6C7",
     date: "2023-06-15",
     time: "4:00 PM - 10:00 PM",
     location: "Garapan, Saipan",
@@ -76,19 +76,6 @@ const mockEvents = [
   },
   {
     id: 6,
-    title: "Family Fun Day at the Park",
-    description: "A day filled with games, activities, face painting, and food for the whole family to enjoy.",
-    image: "https://images.unsplash.com/photo-1471967183320-ee018f6e114a",
-    date: "2023-06-24",
-    time: "10:00 AM - 3:00 PM",
-    location: "Civic Center Park, Saipan",
-    category: "Family Friendly",
-    organizer: "Island Parks Department",
-    contact: "parks@cnmigov.org",
-    featured: false
-  },
-  {
-    id: 7,
     title: "Acoustic Sessions Under the Stars",
     description: "Enjoy soothing acoustic performances by local musicians under the beautiful island night sky.",
     image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819",
@@ -99,46 +86,7 @@ const mockEvents = [
     organizer: "Island Music Collective",
     contact: "music@islandcollective.org",
     featured: true
-  },
-  {
-    id: 8,
-    title: "Mangrove Kayaking Tour",
-    description: "Explore the diverse ecosystem of island mangroves with expert guides in this educational kayaking adventure.",
-    image: "https://images.unsplash.com/photo-1544551763-92ab472cad5d",
-    date: "2023-06-22",
-    time: "9:00 AM - 12:00 PM",
-    location: "American Memorial Park, Saipan",
-    category: "Family Friendly",
-    organizer: "Island Eco Tours",
-    contact: "tours@islandeco.org",
-    featured: false
-  },
-  {
-    id: 9,
-    title: "Monthly Stargazing Event",
-    description: "Join local astronomers to observe stars, planets, and celestial events with powerful telescopes.",
-    image: "https://images.unsplash.com/photo-1489549132488-d00b7eee80f1",
-    date: "2023-06-14",
-    time: "8:00 PM - 10:00 PM",
-    location: "Banzai Cliff Lookout, Saipan",
-    category: "Family Friendly",
-    organizer: "Island Astronomy Club",
-    contact: "stars@islandastronomy.org",
-    featured: false
-  },
-  {
-    id: 10,
-    title: "Island Reggae Concert",
-    description: "Dance to the rhythms of local and visiting reggae artists in this beachfront concert event.",
-    image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a",
-    date: "2023-06-30",
-    time: "6:00 PM - 12:00 AM",
-    location: "Hopwood Beach, Saipan",
-    category: "Music",
-    organizer: "Island Vibes Productions",
-    contact: "concerts@islandvibes.com",
-    featured: true
-  },
+  }
 ];
 
 // Event categories with their respective icons
@@ -387,7 +335,9 @@ const Events = () => {
               {/* Events Listing Grid/List View */}
               {filteredEvents.length > 0 ? (
                 <div className={activeView === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-6'}>
-                  {filteredEvents.map(event => (
+                  {filteredEvents
+                    .filter(event => !(activeCategory === 'All' && filteredEvents.length === mockEvents.length && event.featured))
+                    .map(event => (
                     activeView === 'grid' ? (
                       <Link key={event.id} to={`/events/${event.id}`} className="block bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all-300">
                         <div className="relative">
@@ -486,8 +436,6 @@ const Events = () => {
         </div>
       </section>
       
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };

@@ -11,6 +11,8 @@ import { useNavigationClick } from '@/hooks/useNavigationClick';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 
+const NAVIGATION_TAB_KEY = 'island-nook-navigation-tab';
+
 // Define the link type with optional row property
 interface NavLink {
   to: string;
@@ -32,10 +34,27 @@ const Navigation = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [showMobileIslandSelector, setShowMobileIslandSelector] = useState(true);
   const [showMobileLanguageSelector, setShowMobileLanguageSelector] = useState(true);
-  const [activeTab, setActiveTab] = useState('visitor');
+  const [activeTab, setActiveTab] = useState(() => {
+    // Initialize from localStorage
+    try {
+      return localStorage.getItem(NAVIGATION_TAB_KEY) || 'visitor';
+    } catch (error) {
+      console.error('Error loading navigation tab from localStorage:', error);
+      return 'visitor';
+    }
+  });
   const location = useLocation();
   const { handleNavigationClick } = useNavigationClick();
   
+  // Save tab selection to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(NAVIGATION_TAB_KEY, activeTab);
+    } catch (error) {
+      console.error('Error saving navigation tab to localStorage:', error);
+    }
+  }, [activeTab]);
+
   // Handle scroll effect for navigation
   useEffect(() => {
     const handleScroll = () => {
@@ -52,6 +71,12 @@ const Navigation = () => {
 
   // Determine if a link is active
   const isActive = (path: string) => {
+    // For parent routes (like /hotels), check if current path starts with it
+    // This will keep the parent route highlighted when viewing its children
+    if (path !== '/') {
+      return location.pathname.startsWith(path);
+    }
+    // For home route, only highlight when exactly on home
     return location.pathname === path;
   };
 

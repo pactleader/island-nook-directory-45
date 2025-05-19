@@ -1,7 +1,6 @@
-
 import { createContext, useState, useContext, useEffect } from 'react';
 
-export type FavoriteType = 'property' | 'vehicle' | 'business' | 'event' | 'hotel' | 'food' | 'shopping' | 'product' | 'government';
+export type FavoriteType = 'property' | 'vehicle' | 'business' | 'event' | 'hotel' | 'food' | 'shopping' | 'product' | 'government' | 'adventure' | 'buy-and-sell';
 
 export type FavoriteItem = {
   id: string;
@@ -15,6 +14,8 @@ type FavoritesContextType = {
   removeFavorite: (id: string, type: FavoriteType) => void;
   isFavorite: (id: string, type: FavoriteType) => boolean;
 };
+
+const FAVORITES_STORAGE_KEY = 'island-nook-favorites';
 
 export const FavoritesContext = createContext<FavoritesContextType>({
   favorites: [],
@@ -30,19 +31,24 @@ interface FavoritesProviderProps {
 }
 
 export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }) => {
-  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
-  
-  // Load favorites from localStorage on component mount
-  useEffect(() => {
-    const savedFavorites = localStorage.getItem('favorites');
-    if (savedFavorites) {
-      setFavorites(JSON.parse(savedFavorites));
+  const [favorites, setFavorites] = useState<FavoriteItem[]>(() => {
+    // Initialize state from localStorage
+    try {
+      const savedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
+      return savedFavorites ? JSON.parse(savedFavorites) : [];
+    } catch (error) {
+      console.error('Error loading favorites from localStorage:', error);
+      return [];
     }
-  }, []);
+  });
   
   // Save favorites to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    try {
+      localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+    } catch (error) {
+      console.error('Error saving favorites to localStorage:', error);
+    }
   }, [favorites]);
   
   const addFavorite = (id: string, type: FavoriteType) => {

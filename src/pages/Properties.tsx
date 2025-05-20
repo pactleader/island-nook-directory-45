@@ -337,7 +337,7 @@ const Properties = () => {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Map Section - Left side on desktop, toggleable on mobile */}
             {(showMap || window.innerWidth >= 768) && (
-              <div className="md:w-1/2 h-[600px] md:h-[calc(150vh-13rem)] rounded-lg overflow-hidden bg-gray-100 sticky top-24">
+              <div className="md:w-1/2 h-[600px] md:h-[calc(150vh-13rem)] rounded-lg overflow-hidden bg-gray-100 md:sticky md:top-24 relative z-0">
                 <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-600">
                   <div className="text-center p-4">
                     <MapPin size={36} className="mx-auto mb-2" />

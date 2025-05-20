@@ -370,7 +370,7 @@ const MobileMenu = ({
       >
         <div className="h-full flex flex-col">
           {/* Header */}
-          <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between z-[102]">
+          <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -398,7 +398,7 @@ const MobileMenu = ({
           </div>
 
           {/* Island and Language Selectors */}
-          <div className="sticky top-[56px] bg-white border-b border-gray-200 px-4 py-3 z-[101]">
+          <div className="bg-white border-b border-gray-200 px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-gray-600" />
@@ -432,7 +432,7 @@ const MobileMenu = ({
           </div>
 
           {/* Local and Visitor Favorites */}
-          <div className="sticky top-[110px] bg-white border-b border-gray-200 px-4 py-3 z-[100]">
+          <div className="bg-white border-b border-gray-200 px-4 py-3">
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setActiveTab('local')}
@@ -449,10 +449,10 @@ const MobileMenu = ({
             </div>
           </div>
 
-          {/* Navigation Links - scrollable area with top padding */}
-          <div className="flex-1 overflow-y-auto pt-6">
+          {/* Navigation Links - scrollable area */}
+          <div className="flex-1 overflow-y-auto">
             <nav className="px-4 py-3">
-              <ul className="space-y-4 mt-1">
+              <ul className="space-y-4">
                 {(activeTab === 'visitor' ? visitorLinks : localLinks).map((link) => (
                   <li key={link.to}>
                     <Link

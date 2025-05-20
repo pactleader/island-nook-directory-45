@@ -362,8 +362,8 @@ const MobileMenu = ({
       </button>
       
       {/* Mobile Menu */}
-      <div 
-        className={`fixed inset-0 bg-white z-[100] transform transition-transform duration-300 ease-in-out ${
+      <div
+        className={`fixed inset-0 bg-white z-[9999] transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ backgroundColor: 'white' }}

@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
@@ -14,7 +15,7 @@ const Index = () => {
       <Hero 
         title="Discover the Northern Mariana Islands"
         subtitle="Your complete directory for properties, vehicles, and local businesses"
-        backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b"
+        backgroundImage="https://media.istockphoto.com/id/519978553/photo/rota-white-sand.jpg?s=2048x2048&w=is&k=20&c=rnC8WP-QzlXSBApUzVad7WXiWjL4LgVEJY27y9WPLPg="
         size="large"
       />
       

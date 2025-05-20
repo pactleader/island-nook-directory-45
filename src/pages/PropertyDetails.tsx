@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, MapPin, Bed, Bath, Home, Check, Calendar, Heart } from 'lucide-react';
@@ -59,8 +58,8 @@ const PropertyDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-24">
-        <div className="container mx-auto px-4 py-8">
+      <main className="flex-grow pt-20 md:pt-12 pb-8">
+        <div className="container mx-auto px-4">
           {/* Back Button */}
           <Link to="/properties" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-all-300">
             <ArrowLeft size={16} className="mr-2" />

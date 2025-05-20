@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
@@ -122,8 +121,8 @@ const BusinessDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-20">
-        <div className="container mx-auto px-4 py-4">
+      <main className="flex-grow pt-20 md:pt-12 pb-8">
+        <div className="container mx-auto px-4">
           {/* Breadcrumb Navigation */}
           <div className="mb-4">
             <Link to="/businesses" className="text-gray-600 hover:text-gray-900 inline-flex items-center">

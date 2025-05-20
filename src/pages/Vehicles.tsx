@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, Search, Filter, ChevronDown, X, Car } from 'lucide-react';
@@ -282,7 +281,7 @@ const Vehicles = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-16 md:pt-12">
         <div className="container mx-auto px-4 py-4">
           <div className="mb-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Cars & Rentals</h1>

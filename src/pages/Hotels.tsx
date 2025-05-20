@@ -181,10 +181,10 @@ const Hotels = () => {
         size="medium"
       />
 
-      <main className="flex-1 py-10">
-        <div className="container mx-auto px-4">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Hotels</h1>
+      <main className="flex-1 py-6 sm:py-10">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Hotels</h1>
             <SearchFilters
               title="Filter Hotels"
               placeholder="Search for hotels..."
@@ -193,7 +193,7 @@ const Hotels = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {mockHotels.map(hotel => (
               <HotelCard key={hotel.id} hotel={hotel} />
             ))}

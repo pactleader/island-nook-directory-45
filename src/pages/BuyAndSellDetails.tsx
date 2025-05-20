@@ -3,6 +3,7 @@ import { MapPin, Calendar, Phone, Mail, Share2, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import Navigation from "@/components/Navigation";
 
 // Mock data for listings
 const listings = [
@@ -129,115 +130,121 @@ const BuyAndSellDetails = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 pt-36">
-      {/* Breadcrumb */}
-      <div className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
-        <Link to="/" className="hover:text-gray-700">Home</Link>
-        <span>/</span>
-        <Link to="/buy-and-sell" className="hover:text-gray-700">Buy & Sell</Link>
-        <span>/</span>
-        <span className="text-gray-900">{listing.title}</span>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Image and Actions */}
-        <div className="lg:col-span-2">
-          <div className="relative">
-            <AspectRatio ratio={16 / 9}>
-              <img
-                src={listing.image}
-                alt={listing.title}
-                className="rounded-lg object-cover w-full h-full"
-              />
-            </AspectRatio>
-            <div className="absolute top-4 right-4">
-              <FavoriteButton
-                id={listing.id.toString()}
-                type="buy-and-sell"
-              />
-            </div>
+    <div className="min-h-screen flex flex-col">
+      <Navigation />
+      
+      <main className="flex-1 pt-20 md:pt-12 pb-8">
+        <div className="container mx-auto px-4">
+          {/* Breadcrumb */}
+          <div className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
+            <Link to="/" className="hover:text-gray-700">Home</Link>
+            <span>/</span>
+            <Link to="/buy-and-sell" className="hover:text-gray-700">Buy & Sell</Link>
+            <span>/</span>
+            <span className="text-gray-900">{listing.title}</span>
           </div>
 
-          {/* Listing Details */}
-          <div className="mt-6 bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-start">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">{listing.title}</h1>
-                <div className="flex items-center space-x-4 mt-2">
-                  <span className="text-2xl font-bold text-gray-900">${listing.price}</span>
-                  <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-sm">
-                    {listing.condition}
-                  </span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column - Image and Actions */}
+            <div className="lg:col-span-2">
+              <div className="relative">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src={listing.image}
+                    alt={listing.title}
+                    className="rounded-lg object-cover w-full h-full"
+                  />
+                </AspectRatio>
+                <div className="absolute top-4 right-4">
+                  <FavoriteButton
+                    id={listing.id.toString()}
+                    type="buy-and-sell"
+                  />
+                </div>
+              </div>
+
+              {/* Listing Details */}
+              <div className="mt-6 bg-white rounded-lg shadow p-6">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-900">{listing.title}</h1>
+                    <div className="flex items-center space-x-4 mt-2">
+                      <span className="text-2xl font-bold text-gray-900">${listing.price}</span>
+                      <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-sm">
+                        {listing.condition}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-center text-gray-600">
+                    <MapPin className="h-5 w-5 mr-2" />
+                    <span>{listing.location}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    <span>Listed {listing.date}</span>
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <h2 className="text-lg font-semibold mb-2">Description</h2>
+                  <p className="text-gray-600">{listing.description}</p>
+                </div>
+
+                <div className="mt-6">
+                  <h2 className="text-lg font-semibold mb-2">Specifications</h2>
+                  <ul className="list-disc list-inside text-gray-600 space-y-1">
+                    {listing.specifications.map((spec, index) => (
+                      <li key={index}>{spec}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 space-y-4">
-              <div className="flex items-center text-gray-600">
-                <MapPin className="h-5 w-5 mr-2" />
-                <span>{listing.location}</span>
+            {/* Right Column - Seller Info and Actions */}
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg shadow p-6">
+                <h2 className="text-lg font-semibold mb-4">Seller Information</h2>
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-medium">{listing.seller.name}</p>
+                    <div className="flex items-center text-sm text-gray-600">
+                      <span>Member since {listing.seller.memberSince}</span>
+                      <span className="mx-2">•</span>
+                      <span>{listing.seller.rating} ★</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-600">
+                      <Phone className="h-4 w-4 mr-2" />
+                      <span>{listing.contact.phone}</span>
+                    </div>
+                    <div className="flex items-center text-gray-600">
+                      <Mail className="h-4 w-4 mr-2" />
+                      <span>{listing.contact.email}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center text-gray-600">
-                <Calendar className="h-5 w-5 mr-2" />
-                <span>Listed {listing.date}</span>
+
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="space-y-4">
+                  <Button className="w-full">
+                    Contact Seller
+                  </Button>
+                  <Button variant="outline" className="w-full">
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share Listing
+                  </Button>
+                </div>
               </div>
-            </div>
-
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-2">Description</h2>
-              <p className="text-gray-600">{listing.description}</p>
-            </div>
-
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-2">Specifications</h2>
-              <ul className="list-disc list-inside text-gray-600 space-y-1">
-                {listing.specifications.map((spec, index) => (
-                  <li key={index}>{spec}</li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
-
-        {/* Right Column - Seller Info and Actions */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold mb-4">Seller Information</h2>
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium">{listing.seller.name}</p>
-                <div className="flex items-center text-sm text-gray-600">
-                  <span>Member since {listing.seller.memberSince}</span>
-                  <span className="mx-2">•</span>
-                  <span>{listing.seller.rating} ★</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center text-gray-600">
-                  <Phone className="h-4 w-4 mr-2" />
-                  <span>{listing.contact.phone}</span>
-                </div>
-                <div className="flex items-center text-gray-600">
-                  <Mail className="h-4 w-4 mr-2" />
-                  <span>{listing.contact.email}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="space-y-4">
-              <Button className="w-full">
-                Contact Seller
-              </Button>
-              <Button variant="outline" className="w-full">
-                <Share2 className="h-4 w-4 mr-2" />
-                Share Listing
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 };

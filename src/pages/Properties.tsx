@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, MapPin, SlidersHorizontal, ChevronDown, X, Search } from 'lucide-react';
@@ -172,15 +171,15 @@ const Properties = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-20">
-        <div className="container mx-auto px-4 py-4">
-          <div className="mb-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Properties</h1>
-            <p className="text-gray-600">Discover properties throughout the Northern Mariana Islands</p>
+      <main className="flex-grow pt-20 md:pt-12 pb-8">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">Properties</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Discover properties throughout the Northern Mariana Islands</p>
           </div>
           
           {/* Filter Bar - Side by side filters */}
-          <div className="mb-6 flex flex-wrap gap-2">
+          <div className="mb-4 sm:mb-6 flex flex-wrap gap-2">
             {filterGroups.map((group, index) => (
               <div key={index} className="relative inline-block">
                 <button

@@ -100,7 +100,7 @@ const HotelDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow container mx-auto px-4 py-8 mt-16">
+      <main className="flex-grow container mx-auto px-4 pt-20 md:pt-12 pb-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link to="/" className="hover:text-primary">Home</Link>

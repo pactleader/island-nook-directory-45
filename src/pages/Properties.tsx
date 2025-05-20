@@ -490,7 +490,6 @@ const Properties = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

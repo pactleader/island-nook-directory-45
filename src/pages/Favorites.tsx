@@ -213,7 +213,6 @@ const Favorites = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

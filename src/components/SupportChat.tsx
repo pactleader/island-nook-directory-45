@@ -72,7 +72,7 @@ const SupportChat = () => {
       </div>
       
       <div className="border-t p-4">
-        <div className="flex gap-2">
+        <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
           <Textarea
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
@@ -84,9 +84,13 @@ const SupportChat = () => {
                 handleSendMessage();
               }
             }}
+            onClick={(e) => e.stopPropagation()}
           />
           <Button 
-            onClick={handleSendMessage}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSendMessage();
+            }}
             size="icon"
             className="shrink-0"
           >
@@ -119,7 +123,7 @@ const SupportChat = () => {
                 </Button>
               </DrawerTitle>
             </DrawerHeader>
-            <div className="h-full pt-2">
+            <div className="h-full pt-2" onClick={(e) => e.stopPropagation()}>
               <ChatContent />
             </div>
           </DrawerContent>

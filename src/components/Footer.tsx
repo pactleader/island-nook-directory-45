@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -29,31 +28,27 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Directory Links */}
+          {/* Local Favorites Links */}
           <div>
-            <h4 className="font-semibold text-gray-900 mb-4">Directories</h4>
+            <h4 className="font-semibold text-gray-900 mb-4">Local</h4>
             <ul className="space-y-2">
-              <FooterLink to="/properties" label="Properties" />
-              <FooterLink to="/vehicles" label="Vehicles" />
-              <FooterLink to="/businesses" label="Businesses" />
-              <FooterLink to="/hotels" label="Hotels" />
-              <FooterLink to="/food" label="Food" />
-              <FooterLink to="/shopping" label="Shopping" />
-              <FooterLink to="/adventures" label="Adventures" />
-              <FooterLink to="/events" label="Events" />
+              <FooterLink to="/local-favorites/restaurants" label="Restaurants" />
+              <FooterLink to="/local-favorites/shops" label="Shops" />
+              <FooterLink to="/local-favorites/activities" label="Activities" />
+              <FooterLink to="/local-favorites/services" label="Services" />
+              <FooterLink to="/local-favorites/events" label="Events" />
             </ul>
           </div>
           
-          {/* More Links */}
+          {/* Visitor Favorites Links */}
           <div>
-            <h4 className="font-semibold text-gray-900 mb-4">More</h4>
+            <h4 className="font-semibold text-gray-900 mb-4">Visitor</h4>
             <ul className="space-y-2">
-              <FooterLink to="/government-services" label="Government Services" />
-              <FooterLink to="/local-products" label="Local Products" />
-              <FooterLink to="/ask-local" label="Ask a Local" />
-              <FooterLink to="/buy-and-sell" label="Buy & Sell" />
-              <FooterLink to="/blog" label="Blog" />
-              <FooterLink to="/advertise" label="Advertise" />
+              <FooterLink to="/visitor-favorites/attractions" label="Attractions" />
+              <FooterLink to="/visitor-favorites/hotels" label="Hotels" />
+              <FooterLink to="/visitor-favorites/tours" label="Tours" />
+              <FooterLink to="/visitor-favorites/beaches" label="Beaches" />
+              <FooterLink to="/visitor-favorites/dining" label="Dining" />
             </ul>
           </div>
           

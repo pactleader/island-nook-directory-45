@@ -190,7 +190,6 @@ const GovernmentServiceDetails = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

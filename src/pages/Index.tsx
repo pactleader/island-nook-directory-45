@@ -14,7 +14,7 @@ const Index = () => {
       <Hero 
         title="Discover the Northern Mariana Islands"
         subtitle="Your complete directory for properties, vehicles, and local businesses"
-        backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b"
+        backgroundImage="/homepage-hero-image.jpeg"
         size="large"
       />
       

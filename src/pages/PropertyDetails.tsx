@@ -229,7 +229,6 @@ const PropertyDetails = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

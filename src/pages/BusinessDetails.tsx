@@ -584,7 +584,6 @@ const BusinessDetails = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

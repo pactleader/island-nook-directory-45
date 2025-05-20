@@ -267,7 +267,6 @@ const HotelDetails = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

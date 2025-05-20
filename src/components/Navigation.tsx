@@ -35,7 +35,6 @@ const Navigation = () => {
   const [showMobileIslandSelector, setShowMobileIslandSelector] = useState(true);
   const [showMobileLanguageSelector, setShowMobileLanguageSelector] = useState(true);
   const [activeTab, setActiveTab] = useState(() => {
-    // Initialize from localStorage
     try {
       return localStorage.getItem(NAVIGATION_TAB_KEY) || 'visitor';
     } catch (error) {
@@ -204,6 +203,8 @@ const Navigation = () => {
                   setShowIslandSelector={setShowMobileIslandSelector}
                   showLanguageSelector={showMobileLanguageSelector}
                   setShowLanguageSelector={setShowMobileLanguageSelector}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
                 />
               </div>
             </div>
@@ -263,7 +264,7 @@ const Navigation = () => {
         </div>
       </header>
       {/* Add a spacer div to prevent content from being hidden under the fixed header */}
-      <div className="h-[100px]"></div>
+      <div className="h-[100px] hidden md:block"></div>
     </>
   );
 };
@@ -279,7 +280,9 @@ const MobileMenu = ({
   showIslandSelector,
   setShowIslandSelector,
   showLanguageSelector,
-  setShowLanguageSelector
+  setShowLanguageSelector,
+  activeTab,
+  setActiveTab
 }: { 
   islands: string[], 
   languages: Language[],
@@ -290,11 +293,26 @@ const MobileMenu = ({
   showIslandSelector: boolean,
   setShowIslandSelector: (show: boolean) => void,
   showLanguageSelector: boolean,
-  setShowLanguageSelector: (show: boolean) => void
+  setShowLanguageSelector: (show: boolean) => void,
+  activeTab: string,
+  setActiveTab: (tab: string) => void
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   
+  // Disable body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   // Visitor menu links
   const visitorLinks: NavLink[] = [
     { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
@@ -352,7 +370,7 @@ const MobileMenu = ({
       >
         <div className="h-full flex flex-col">
           {/* Header */}
-          <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+          <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between z-[102]">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -380,7 +398,7 @@ const MobileMenu = ({
           </div>
 
           {/* Island and Language Selectors */}
-          <div className="sticky top-[73px] bg-white border-b border-gray-200 px-4 py-3">
+          <div className="sticky top-[56px] bg-white border-b border-gray-200 px-4 py-3 z-[101]">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-gray-600" />
@@ -413,11 +431,29 @@ const MobileMenu = ({
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="flex-1 overflow-y-auto">
+          {/* Local and Visitor Favorites */}
+          <div className="sticky top-[110px] bg-white border-b border-gray-200 px-4 py-3 z-[100]">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => setActiveTab('local')}
+                className={`text-sm font-medium ${activeTab === 'local' ? 'text-blue-600' : 'text-gray-900'}`}
+              >
+                Local Favorites
+              </button>
+              <button
+                onClick={() => setActiveTab('visitor')}
+                className={`text-sm font-medium ${activeTab === 'visitor' ? 'text-blue-600' : 'text-gray-900'}`}
+              >
+                Visitor Favorites
+              </button>
+            </div>
+          </div>
+
+          {/* Navigation Links - scrollable area with top padding */}
+          <div className="flex-1 overflow-y-auto pt-6">
             <nav className="px-4 py-3">
-              <ul className="space-y-4 mt-8">
-                {visitorLinks.map((link) => (
+              <ul className="space-y-4 mt-1">
+                {(activeTab === 'visitor' ? visitorLinks : localLinks).map((link) => (
                   <li key={link.to}>
                     <Link
                       to={link.to}

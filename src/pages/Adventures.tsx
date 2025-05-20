@@ -90,7 +90,7 @@ const attractions = [
     title: 'Mount Tapochau',
     description: 'The highest point on Saipan offering panoramic views of the entire island and surrounding ocean.',
     category: 'hikes',
-    image: 'https://images.unsplash.com/photo-1541789094913-f3809a8f3ba5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://media-cdn.tripadvisor.com/media/photo-s/18/10/97/e4/mt-tapochau-saipan-photo.jpg',
     location: 'Saipan'
   },
   {
@@ -98,7 +98,7 @@ const attractions = [
     title: 'Grotto',
     description: 'A natural limestone cavern and popular diving spot with stunning blue waters and marine life.',
     category: 'diving',
-    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_971/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/ub4nsl0hvicdcolwbauq/SaipanGrottoSnorkeling.jpg',
     location: 'Saipan'
   },
   {
@@ -106,7 +106,7 @@ const attractions = [
     title: 'Micro Beach',
     description: 'A pristine white sand beach with calm waters, perfect for families and beginners learning water sports.',
     category: 'beaches',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80',
+    image: 'https://lh5.googleusercontent.com/proxy/gb4Al9t6IhaBq27SjIWPVespcH90sxuItpeFB-4j_6N8NRUM2_tH-sGeGADhoEuCL2jmd_KFaxri4jTJSvFR467xruLaghRXvImGvMl7-3KX5ONcPTEGxOej6JlPyQOSMLAmH-3pJA',
     location: 'Saipan'
   },
   {
@@ -114,7 +114,7 @@ const attractions = [
     title: 'American Memorial Park',
     description: 'A national park commemorating the Marianas Campaign of World War II with museum exhibits and walking trails.',
     category: 'historical',
-    image: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://www.nps.gov/amme/planyourvisit/images/DSC01771e-small_1.jpg?maxwidth=650&autorotate=false&quality=78&format=webp',
     location: 'Saipan'
   },
   {
@@ -130,7 +130,7 @@ const attractions = [
     title: 'Forbidden Island',
     description: 'A remote, secluded beach accessible via a challenging hike, offering pristine beauty and natural pools.',
     category: 'hikes',
-    image: 'https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80',
+    image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/7a/03/15/forbidden-island.jpg?w=2000&h=-1&s=1',
     location: 'Saipan'
   },
   {
@@ -138,7 +138,7 @@ const attractions = [
     title: 'Tinian Blowhole',
     description: 'A natural sea cave where ocean waves push through a small opening, creating spectacular water spouts.',
     category: 'places',
-    image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1556&q=80',
+    image: 'https://wimg.mk.co.kr/news/cms/202406/22/news-p.v1.20240617.b3af79264fc74923aebbf27789c5290e_P1.png',
     location: 'Tinian'
   },
   {
@@ -162,7 +162,7 @@ const attractions = [
     title: 'Marianas Trench Tours',
     description: 'Guided boat tours to view the deepest part of the world\'s oceans from the surface.',
     category: 'tours',
-    image: 'https://images.unsplash.com/photo-1503177847378-d2048487fa46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://static.wixstatic.com/media/b40a18_5c7df5996a34455cbd1c1537fa2a16aa~mv2.png/v1/fill/w_568,h_336,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b40a18_5c7df5996a34455cbd1c1537fa2a16aa~mv2.png',
     location: 'Saipan'
   },
   {

@@ -32,11 +32,12 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-gray-900 mb-4">Local</h4>
             <ul className="space-y-2">
-              <FooterLink to="/local-favorites/restaurants" label="Restaurants" />
-              <FooterLink to="/local-favorites/shops" label="Shops" />
-              <FooterLink to="/local-favorites/activities" label="Activities" />
-              <FooterLink to="/local-favorites/services" label="Services" />
-              <FooterLink to="/local-favorites/events" label="Events" />
+              <FooterLink to="/properties" label="Homes" />
+              <FooterLink to="/vehicles" label="Cars" />
+              <FooterLink to="/businesses" label="Services" />
+              <FooterLink to="/buy-and-sell" label="Buy & Sell" />
+              <FooterLink to="/events" label="Events" />
+              <FooterLink to="/government-services" label="Government" />
             </ul>
           </div>
           
@@ -44,11 +45,12 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-gray-900 mb-4">Visitor</h4>
             <ul className="space-y-2">
-              <FooterLink to="/visitor-favorites/attractions" label="Attractions" />
-              <FooterLink to="/visitor-favorites/hotels" label="Hotels" />
-              <FooterLink to="/visitor-favorites/tours" label="Tours" />
-              <FooterLink to="/visitor-favorites/beaches" label="Beaches" />
-              <FooterLink to="/visitor-favorites/dining" label="Dining" />
+              <FooterLink to="/hotels" label="Hotels" />
+              <FooterLink to="/food" label="Food" />
+              <FooterLink to="/adventures" label="Adventures" />
+              <FooterLink to="/vehicles" label="Rides" />
+              <FooterLink to="/shopping" label="Shopping" />
+              <FooterLink to="/local-products" label="Local Products" />
             </ul>
           </div>
           

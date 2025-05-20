@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +23,25 @@ const SupportChat = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 1024px)");
   const isMobileOrTablet = useMediaQuery("(max-width: 1024px)");
+
+  // Handle viewport height changes on mobile
+  useEffect(() => {
+    if (isMobile) {
+      const setVH = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      };
+
+      setVH();
+      window.addEventListener('resize', setVH);
+      window.addEventListener('orientationchange', setVH);
+
+      return () => {
+        window.removeEventListener('resize', setVH);
+        window.removeEventListener('orientationchange', setVH);
+      };
+    }
+  }, [isMobile]);
 
   const handleSendMessage = () => {
     if (inputMessage.trim() === '') return;
@@ -85,6 +104,13 @@ const SupportChat = () => {
               }
             }}
             onClick={(e) => e.stopPropagation()}
+            onFocus={(e) => {
+              e.stopPropagation();
+              // Prevent the keyboard from closing
+              if (isMobile) {
+                e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }}
           />
           <Button 
             onClick={(e) => {
@@ -114,7 +140,7 @@ const SupportChat = () => {
         </Button>
 
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerContent className="h-[80vh]">
+          <DrawerContent className="h-[80vh] max-h-[calc(var(--vh,1vh)*80)]">
             <DrawerHeader className="border-b">
               <DrawerTitle className="flex justify-between items-center">
                 <span>Support Chat</span>

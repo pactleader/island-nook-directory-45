@@ -289,7 +289,6 @@ const FoodDetails = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };

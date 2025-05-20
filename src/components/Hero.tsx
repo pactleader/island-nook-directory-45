@@ -128,7 +128,7 @@ const Hero = ({
                 value={searchTerm}
                 onChange={handleSearchChange}
                 onFocus={() => setShowSuggestions(true)}
-                placeholder="Search categories, services, or ask a question..."
+                placeholder="Search anything..."
                 className="w-full px-6 py-4 rounded-full text-lg bg-white/95 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button

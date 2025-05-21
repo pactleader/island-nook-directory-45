@@ -3,6 +3,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import SupportChat from './SupportChat';
 import AdBanner from './AdBanner';
+import ScrollToTop from './ScrollToTop';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 interface PageLayoutProps {
@@ -22,6 +23,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
       <Footer />
       <SupportChat />
       <AdBanner />
+      <ScrollToTop />
     </div>
   );
 };

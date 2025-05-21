@@ -117,6 +117,15 @@ const BuyAndSellDetails = () => {
   const { id } = useParams();
   const listing = listings.find(l => l.id === Number(id));
 
+  const handleMockPayment = () => {
+    // Simulate payment processing
+    alert(`Processing payment of $${listing?.price} for ${listing?.title}...`);
+    // Simulate successful payment after 1 second
+    setTimeout(() => {
+      alert("Payment successful! Thank you for your purchase.");
+    }, 1000);
+  };
+
   if (!listing) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -234,6 +243,12 @@ const BuyAndSellDetails = () => {
                 <div className="space-y-4">
                   <Button className="w-full">
                     Contact Seller
+                  </Button>
+                  <Button 
+                    className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white"
+                    onClick={handleMockPayment}
+                  >
+                    Pay with PayPal
                   </Button>
                   <Button variant="outline" className="w-full">
                     <Share2 className="h-4 w-4 mr-2" />

@@ -51,6 +51,7 @@ const Footer = () => {
               <FooterLink to="/vehicles" label="Rides" />
               <FooterLink to="/shopping" label="Shopping" />
               <FooterLink to="/local-products" label="Local Products" />
+              <FooterLink to="/ask-local" label="Ask a Local" />
             </ul>
           </div>
           

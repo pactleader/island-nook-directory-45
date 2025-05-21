@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages, X, Heart, MapPin, Globe } from 'lucide-react';
+import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages, X, Heart, MapPin, Globe, MessageCircle } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -87,7 +87,8 @@ const Navigation = () => {
     { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
     { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-    { to: "/local-products", icon: <Store size={16} />, label: "Local Products" }
+    { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
+    { to: "/ask-local", icon: <MessageCircle size={16} />, label: "Ask a Local" }
   ];
 
   // Local menu links (row 3)
@@ -321,7 +322,8 @@ const MobileMenu = ({
     { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
     { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
     { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
-    { to: "/local-products", icon: <Store size={18} />, label: "Local Products" }
+    { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
+    { to: "/ask-local", icon: <MessageCircle size={18} />, label: "Ask a Local" }
   ];
 
   // Local menu links

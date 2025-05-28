@@ -220,7 +220,7 @@ const Shopping = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
 
-      <main className="flex-1 pt-20 md:pt-12 pb-10">
+      <main className="flex-1 pt-20 md:pt-[0.2rem] pb-10">
         <div className="container mx-auto px-4">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">Shopping Directory</h1>

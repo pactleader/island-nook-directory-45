@@ -266,7 +266,7 @@ const Navigation = () => {
         </div>
       </header>
       {/* Add a spacer div to prevent content from being hidden under the fixed header */}
-      <div className="h-[100px] hidden md:block"></div>
+      <div className="h-[80px] hidden md:block"></div>
     </>
   );
 };

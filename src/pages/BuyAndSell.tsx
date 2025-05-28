@@ -71,7 +71,7 @@ export default function BuyAndSell() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navigation />
-      <div className="pt-20 md:pt-12 pb-20 flex-grow">
+      <div className="pt-20 md:pt-[0.2rem] pb-20 flex-grow">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between mb-10">
             <div>

@@ -61,7 +61,7 @@ const VehicleDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-1 pt-20 md:pt-12 pb-8">
+      <main className="flex-1 pt-20 md:pt-[0.2rem] pb-8">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">

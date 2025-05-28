@@ -132,7 +132,7 @@ const LocalProductDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-1 pt-20 md:pt-12 pb-8">
+      <main className="flex-1 pt-20 md:pt-[0.2rem] pb-8">
         <div className="container mx-auto px-4">
           {/* Breadcrumb */}
           <nav className="mb-6">

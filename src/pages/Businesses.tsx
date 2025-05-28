@@ -145,7 +145,7 @@ const Businesses = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-16 md:pt-12">
+      <main className="flex-grow pt-20 md:pt-[0.2rem]">
         <div className="container mx-auto px-4 py-4">
           <div className="mb-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Business Directory</h1>

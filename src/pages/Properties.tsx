@@ -171,7 +171,7 @@ const Properties = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow pt-20 md:pt-12 pb-8">
+      <main className="flex-grow pt-20 md:pt-[0.2rem] pb-8">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-4 sm:mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">Properties</h1>

@@ -82,7 +82,26 @@ const mockJobs = [
     description: "Create and execute menu items, manage kitchen staff, and maintain food quality standards.",
     requirements: ["Culinary degree", "5+ years experience", "Menu development experience"],
     postedDate: "3 days ago",
-    category: "Food & Beverage"
+    category: "Food & Beverage",
+    benefits: [
+      "Health insurance",
+      "Paid time off",
+      "Employee meals",
+      "Professional development opportunities"
+    ],
+    responsibilities: [
+      "Create and execute menu items",
+      "Manage kitchen staff",
+      "Maintain food quality standards",
+      "Control food costs",
+      "Ensure kitchen safety and hygiene"
+    ],
+    companyDescription: "Pacific Fusion is a premier restaurant in Garapan, Saipan, offering a unique blend of Pacific Rim and Asian fusion cuisine. We're known for our innovative dishes and exceptional dining experience.",
+    contactInfo: {
+      email: "careers@pacificfusion.com",
+      phone: "+1 (670) 234-5680",
+      website: "www.pacificfusion.com"
+    }
   },
   {
     id: 4,
@@ -94,7 +113,26 @@ const mockJobs = [
     description: "Manage construction projects, coordinate with contractors, and ensure project completion on time and budget.",
     requirements: ["Construction management degree", "10+ years experience", "Project management certification"],
     postedDate: "1 week ago",
-    category: "Construction"
+    category: "Construction",
+    benefits: [
+      "Health insurance",
+      "Paid time off",
+      "Vehicle allowance",
+      "Professional development opportunities"
+    ],
+    responsibilities: [
+      "Manage construction projects",
+      "Coordinate with contractors",
+      "Ensure project completion on time and budget",
+      "Maintain safety standards",
+      "Handle project documentation"
+    ],
+    companyDescription: "Island Builders Inc. is a leading construction company in Saipan, specializing in commercial and residential projects. We're committed to quality construction and sustainable building practices.",
+    contactInfo: {
+      email: "careers@islandbuilders.com",
+      phone: "+1 (670) 234-5681",
+      website: "www.islandbuilders.com"
+    }
   },
   {
     id: 5,
@@ -106,7 +144,26 @@ const mockJobs = [
     description: "Lead diving tours, teach diving courses, and ensure safety of all diving activities.",
     requirements: ["PADI Instructor certification", "First aid certification", "2+ years experience"],
     postedDate: "2 days ago",
-    category: "Tourism"
+    category: "Tourism",
+    benefits: [
+      "Health insurance",
+      "Paid time off",
+      "Equipment allowance",
+      "Professional development opportunities"
+    ],
+    responsibilities: [
+      "Lead diving tours",
+      "Teach diving courses",
+      "Ensure safety of all diving activities",
+      "Maintain diving equipment",
+      "Handle customer inquiries"
+    ],
+    companyDescription: "Marianas Dive Center is a premier diving facility in Saipan, offering diving courses, equipment rental, and guided tours to the best dive sites in the Marianas.",
+    contactInfo: {
+      email: "careers@marianasdive.com",
+      phone: "+1 (670) 234-5682",
+      website: "www.marianasdive.com"
+    }
   },
   {
     id: 6,
@@ -118,7 +175,26 @@ const mockJobs = [
     description: "Provide technical support, maintain network infrastructure, and implement IT solutions.",
     requirements: ["IT degree or certification", "3+ years experience", "Network administration skills"],
     postedDate: "4 days ago",
-    category: "Technology"
+    category: "Technology",
+    benefits: [
+      "Health insurance",
+      "Paid time off",
+      "Remote work options",
+      "Professional development opportunities"
+    ],
+    responsibilities: [
+      "Provide technical support",
+      "Maintain network infrastructure",
+      "Implement IT solutions",
+      "Troubleshoot hardware and software issues",
+      "Manage user accounts and permissions"
+    ],
+    companyDescription: "Pacific Tech Solutions is a leading IT services provider in Saipan, offering comprehensive technology solutions for businesses of all sizes.",
+    contactInfo: {
+      email: "careers@pacifictech.com",
+      phone: "+1 (670) 234-5683",
+      website: "www.pacifictech.com"
+    }
   },
   {
     id: 7,
@@ -130,7 +206,26 @@ const mockJobs = [
     description: "Manage daily store operations, lead sales team, and achieve sales targets.",
     requirements: ["Retail management experience", "Sales background", "Team leadership skills"],
     postedDate: "5 days ago",
-    category: "Retail"
+    category: "Retail",
+    benefits: [
+      "Health insurance",
+      "Paid time off",
+      "Employee discounts",
+      "Performance bonuses"
+    ],
+    responsibilities: [
+      "Manage daily store operations",
+      "Lead sales team",
+      "Achieve sales targets",
+      "Handle inventory management",
+      "Ensure customer satisfaction"
+    ],
+    companyDescription: "Island Fashion is a premier retail store in Garapan, Saipan, offering trendy clothing and accessories for all ages. We're known for our excellent customer service and quality products.",
+    contactInfo: {
+      email: "careers@islandfashion.com",
+      phone: "+1 (670) 234-5684",
+      website: "www.islandfashion.com"
+    }
   },
   {
     id: 8,
@@ -142,7 +237,26 @@ const mockJobs = [
     description: "Monitor environmental impact, develop conservation programs, and ensure compliance with regulations.",
     requirements: ["Environmental science degree", "3+ years experience", "Knowledge of local ecosystems"],
     postedDate: "1 week ago",
-    category: "Environmental"
+    category: "Environmental",
+    benefits: [
+      "Health insurance",
+      "Paid time off",
+      "Field work allowance",
+      "Professional development opportunities"
+    ],
+    responsibilities: [
+      "Monitor environmental impact",
+      "Develop conservation programs",
+      "Ensure compliance with regulations",
+      "Conduct environmental assessments",
+      "Prepare environmental reports"
+    ],
+    companyDescription: "CNMI Environmental Services is a government agency dedicated to protecting and preserving the natural resources of the Northern Mariana Islands. We work to ensure sustainable development and environmental conservation.",
+    contactInfo: {
+      email: "careers@cnmienv.com",
+      phone: "+1 (670) 234-5685",
+      website: "www.cnmienv.com"
+    }
   }
 ];
 

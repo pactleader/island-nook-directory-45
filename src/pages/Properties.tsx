@@ -338,13 +338,16 @@ const Properties = () => {
             {/* Map Section - Left side on desktop, toggleable on mobile */}
             {(showMap || window.innerWidth >= 768) && (
               <div className="md:w-1/2 h-[600px] md:h-[calc(150vh-13rem)] rounded-lg overflow-hidden bg-gray-100 md:sticky md:top-24 relative z-0">
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-600">
-                  <div className="text-center p-4">
-                    <MapPin size={36} className="mx-auto mb-2" />
-                    <p className="text-lg font-medium">Map View</p>
-                    <p className="text-sm text-gray-500">Interactive map will display property locations</p>
-                  </div>
-                </div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d146147.18178589462!2d145.7409003!3d15.2022077!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x66d8b12c0d41abdd%3A0x662f5e089974f80f!2sSaipan!5e1!3m2!1sen!2sph!4v1748433297739!5m2!1sen!2sph"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Saipan Map"
+                ></iframe>
               </div>
             )}
             

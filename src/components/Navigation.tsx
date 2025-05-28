@@ -127,16 +127,26 @@ const Navigation = () => {
             {/* Top Row: Logo, Island & Language Dropdowns, Auth */}
             <div className="flex items-center justify-between py-2">
               {/* Logo */}
-              <Link 
-                to="/" 
-                className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
-              >
-                <span className="sr-only">CNMI Central Directory</span>
-                <span className="inline-block">
-                  <span className="text-gray-900">CNMI</span>
-                  <span className="text-gray-600">Central</span>
-                </span>
-              </Link>
+              <div className="flex items-center space-x-4">
+                <Link 
+                  to="/" 
+                  className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
+                >
+                  <span className="sr-only">CNMI Central Directory</span>
+                  <span className="inline-block">
+                    <span className="text-gray-900">CNMI</span>
+                    <span className="text-gray-600">Central</span>
+                  </span>
+                </Link>
+
+                {/* Small Toggle for Visitor/Local */}
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto">
+                  <TabsList className="h-8">
+                    <TabsTrigger value="visitor" className="text-xs px-2">Visitor</TabsTrigger>
+                    <TabsTrigger value="local" className="text-xs px-2">Local</TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
               
               {/* Island and Language Dropdowns - Center */}
               <div className="hidden md:flex items-center space-x-4">
@@ -214,16 +224,6 @@ const Navigation = () => {
             {/* Bottom Row: Main Navigation */}
             <div className="hidden md:block pt-2 pb-1">
               <div className="flex flex-col">
-                {/* Toggle Tabs */}
-                <div className="flex justify-center mb-4">
-                  <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-2xl">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="visitor">Visitor's Favorites</TabsTrigger>
-                      <TabsTrigger value="local">Local's Favorites</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
-
                 {/* Navigation Links */}
                 <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
                   <nav className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">

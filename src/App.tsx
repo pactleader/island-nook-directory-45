@@ -32,6 +32,8 @@ import Favorites from "./pages/Favorites";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import Advertise from "./pages/Advertise";
 import Admin from "./pages/Admin";
+import Jobs from "./pages/Jobs";
+import JobDetails from "./pages/JobDetails";
 
 // Import pages
 import Food from "./pages/Food";
@@ -71,6 +73,8 @@ const App = () => (
               <Route path="/events/:id" element={<PageLayout><EventDetails /></PageLayout>} />
               <Route path="/government-services" element={<PageLayout><GovernmentServices /></PageLayout>} />
               <Route path="/government-services/:id" element={<PageLayout><GovernmentServiceDetails /></PageLayout>} />
+              <Route path="/jobs" element={<PageLayout><Jobs /></PageLayout>} />
+              <Route path="/jobs/:id" element={<PageLayout><JobDetails /></PageLayout>} />
               <Route path="/ask-local" element={<PageLayout><AskLocal /></PageLayout>} />
               <Route path="/ask-local/:id" element={<PageLayout><AskLocalDetails /></PageLayout>} />
               

@@ -98,7 +98,8 @@ const Navigation = () => {
     { to: "/businesses", icon: <Building size={16} />, label: "Services" },
     { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
     { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" }
+    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+    { to: "/jobs", icon: <List size={16} />, label: "Jobs" }
   ];
 
   // List of islands for the dropdown
@@ -333,7 +334,8 @@ const MobileMenu = ({
     { to: "/businesses", icon: <Building size={18} />, label: "Services" },
     { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
     { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={18} />, label: "Events" }
+    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
+    { to: "/jobs", icon: <List size={18} />, label: "Jobs" }
   ];
 
   // Handle island selection

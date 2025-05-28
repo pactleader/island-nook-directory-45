@@ -304,7 +304,7 @@ export const mockBusinesses: BusinessListing[] = [
       saturday: '9:00 AM - 2:00 PM',
       sunday: 'Closed'
     },
-    images: ['https://scontent.fmnl25-8.fna.fbcdn.net/v/t39.30808-6/482065674_1186979553433093_7434324562437702076_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=5PwBilSEVpoQ7kNvwGvVUQ8&_nc_oc=AdkRigxTl_h2rfV1B0qpvJq_-hiiLit7s_O6g6EhCsSenX1y0un9tCog5RX0UAxH68s&_nc_zt=23&_nc_ht=scontent.fmnl25-8.fna&_nc_gid=vGnLa__y_qYcf4tgnmbGSw&oh=00_AfKm3G6WL8jIWlz8tEvGjc_Td9xp4yp3h-0pZ65TSl-Mhw&oe=6830C5E0'],
+    images: ['https://images.unsplash.com/photo-1558904541-efa843a96f01?w=800&auto=format&fit=crop'],
     rating: 4.8,
     reviews: 45,
     featured: true,
@@ -503,8 +503,8 @@ export const mockProperties: PropertyListing[] = [
     village: "San Vicente",
     island: "Saipan",
     images: [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop"
     ],
     featured: true,
     createdAt: "2023-05-12T08:30:00Z",
@@ -561,8 +561,8 @@ export const mockProperties: PropertyListing[] = [
     village: "Chalan Kanoa",
     island: "Saipan",
     images: [
-      "https://images.unsplash.com/photo-1617713964959-d9a36bbc7b52?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1577905938905-6a6447c64bd4?w=800&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop"
     ],
     featured: true,
     createdAt: "2023-02-05T09:00:00Z",
@@ -625,34 +625,6 @@ export const mockProperties: PropertyListing[] = [
     featured: true,
     createdAt: "2023-03-15T13:45:00Z",
     updatedAt: "2023-07-20T09:30:00Z"
-  },
-  {
-    id: "p006",
-    title: "Qualifying Certificate Eligible Property",
-    propertyType: "economic-incentive",
-    price: 3200000,
-    sqft: 130680, // 3 acres
-    description: "Strategic investment opportunity eligible for CNMI Qualifying Certificate program with tax benefits. Ideal for major development projects with government incentives.",
-    features: [
-      "Qualifying Certificate Eligible",
-      "Tax Incentives",
-      "3 Acres",
-      "Utilities Ready",
-      "Development Ready",
-      "Master Plan Approved",
-      "Environmental Study Complete",
-      "Government Support"
-    ],
-    street: "202 Investment Way",
-    village: "Lower Base",
-    island: "Saipan",
-    images: [
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=800&auto=format&fit=crop"
-    ],
-    featured: false,
-    createdAt: "2022-12-01T08:00:00Z",
-    updatedAt: "2023-06-05T11:15:00Z"
   }
 ];
 

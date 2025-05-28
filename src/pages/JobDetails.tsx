@@ -4,73 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-
-// Mock data for job listings (same as in Jobs.tsx)
-const mockJobs = [
-  {
-    id: 1,
-    title: "Hotel Front Desk Manager",
-    company: "Fiesta Resort & Spa",
-    location: "Garapan, Saipan",
-    type: "Full-time",
-    salary: "$35,000 - $45,000",
-    description: "Oversee front desk operations, manage staff, and ensure excellent guest service. Experience in hospitality management required.",
-    requirements: ["5+ years hotel experience", "Management experience", "Excellent communication skills"],
-    postedDate: "2 days ago",
-    category: "Hospitality",
-    benefits: [
-      "Health insurance",
-      "Paid time off",
-      "Employee discounts",
-      "Professional development opportunities"
-    ],
-    responsibilities: [
-      "Manage front desk staff and operations",
-      "Handle guest complaints and requests",
-      "Ensure high-quality customer service",
-      "Coordinate with other departments",
-      "Maintain accurate records and reports"
-    ],
-    companyDescription: "Fiesta Resort & Spa is a premier luxury resort located in Garapan, Saipan. We pride ourselves on providing exceptional service and creating memorable experiences for our guests.",
-    contactInfo: {
-      email: "careers@fiestaresort.com",
-      phone: "+1 (670) 234-5678",
-      website: "www.fiestaresort.com"
-    }
-  },
-  {
-    id: 2,
-    title: "Tour Guide",
-    company: "Island Adventures",
-    location: "Saipan",
-    type: "Part-time",
-    salary: "$15 - $20/hour",
-    description: "Lead guided tours of historical sites and natural attractions. Share knowledge of local history and culture.",
-    requirements: ["Tour guide certification", "Knowledge of local history", "Fluent in English"],
-    postedDate: "1 day ago",
-    category: "Tourism",
-    benefits: [
-      "Flexible schedule",
-      "Training provided",
-      "Commission opportunities",
-      "Outdoor work environment"
-    ],
-    responsibilities: [
-      "Lead guided tours of historical sites",
-      "Share knowledge of local history and culture",
-      "Ensure guest safety and satisfaction",
-      "Maintain tour equipment and supplies",
-      "Handle tour bookings and logistics"
-    ],
-    companyDescription: "Island Adventures is a leading tour operator in Saipan, specializing in cultural and historical tours. We're passionate about sharing the rich heritage of the Northern Mariana Islands with visitors.",
-    contactInfo: {
-      email: "jobs@islandadventures.com",
-      phone: "+1 (670) 234-5679",
-      website: "www.islandadventures.com"
-    }
-  },
-  // ... other jobs from the mock data
-];
+import { mockJobs } from '@/utils/mockData';
 
 const JobDetails = () => {
   const { id } = useParams();

@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { useNavigationClick } from '@/hooks/useNavigationClick';
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { createPortal } from 'react-dom';
 
@@ -119,7 +118,11 @@ const Navigation = () => {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-[40] transition-all duration-300 bg-white shadow-sm ${
+        className={`fixed top-0 left-0 right-0 z-[40] transition-all duration-300 shadow-sm ${
+          activeTab === 'local' 
+            ? 'bg-blue-50' 
+            : 'bg-white'
+        } ${
           scrolled ? 'glass-nav py-2' : 'py-3'
         }`}
       >
@@ -128,7 +131,7 @@ const Navigation = () => {
             {/* Top Row: Logo, Island & Language Dropdowns, Auth */}
             <div className="flex items-center justify-between py-2">
               {/* Logo */}
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-6">
                 <Link 
                   to="/" 
                   className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
@@ -140,13 +143,29 @@ const Navigation = () => {
                   </span>
                 </Link>
 
-                {/* Small Toggle for Visitor/Local */}
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto">
-                  <TabsList className="h-8">
-                    <TabsTrigger value="visitor" className="text-xs px-2">Visitor</TabsTrigger>
-                    <TabsTrigger value="local" className="text-xs px-2">Local</TabsTrigger>
-                  </TabsList>
-                </Tabs>
+                                 {/* Prominent Toggle for Visitor/Local */}
+                 <div className="flex items-center bg-gray-100 rounded-lg p-1 shadow-sm">
+                   <button
+                     onClick={() => setActiveTab('visitor')}
+                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                       activeTab === 'visitor'
+                         ? 'bg-white text-gray-900 shadow-sm'
+                         : 'text-gray-600 hover:text-gray-900'
+                     }`}
+                   >
+                     Visitor
+                   </button>
+                   <button
+                     onClick={() => setActiveTab('local')}
+                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                       activeTab === 'local'
+                         ? 'bg-blue-600 text-white shadow-sm'
+                         : 'text-gray-600 hover:text-gray-900'
+                     }`}
+                   >
+                     Local
+                   </button>
+                 </div>
               </div>
               
               {/* Island and Language Dropdowns - Center */}
@@ -228,37 +247,37 @@ const Navigation = () => {
                 {/* Navigation Links */}
                 <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
                   <nav className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
-                    {activeTab === 'visitor' ? (
-                      visitorLinks.map((link) => (
-                        <button
-                          key={link.to}
-                          onClick={() => handleNavigationClick(link.to)}
-                          className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
-                            isActive(link.to) 
-                              ? 'bg-gray-900 text-white' 
-                              : 'text-gray-700 hover:bg-gray-100'
-                          }`}
-                        >
-                          {link.icon}
-                          <span>{link.label}</span>
-                        </button>
-                      ))
-                    ) : (
-                      localLinks.map((link) => (
-                        <button
-                          key={link.to}
-                          onClick={() => handleNavigationClick(link.to)}
-                          className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
-                            isActive(link.to) 
-                              ? 'bg-gray-900 text-white' 
-                              : 'text-gray-700 hover:bg-gray-100'
-                          }`}
-                        >
-                          {link.icon}
-                          <span>{link.label}</span>
-                        </button>
-                      ))
-                    )}
+                                         {activeTab === 'visitor' ? (
+                       visitorLinks.map((link) => (
+                         <button
+                           key={link.to}
+                           onClick={() => handleNavigationClick(link.to)}
+                           className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
+                             isActive(link.to) 
+                               ? 'bg-gray-900 text-white' 
+                               : 'text-gray-700 hover:bg-gray-100'
+                           }`}
+                         >
+                           {link.icon}
+                           <span>{link.label}</span>
+                         </button>
+                       ))
+                     ) : (
+                       localLinks.map((link) => (
+                         <button
+                           key={link.to}
+                           onClick={() => handleNavigationClick(link.to)}
+                           className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
+                             isActive(link.to) 
+                               ? 'bg-blue-600 text-white' 
+                               : 'text-gray-700 hover:bg-blue-50'
+                           }`}
+                         >
+                           {link.icon}
+                           <span>{link.label}</span>
+                         </button>
+                       ))
+                     )}
                   </nav>
                 </div>
               </div>
@@ -435,23 +454,33 @@ const MobileMenu = ({
               </div>
             </div>
 
-            {/* Local and Visitor Favorites */}
-            <div className="bg-white border-b border-gray-200 px-4 py-3">
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={() => setActiveTab('local')}
-                  className={`text-sm font-medium ${activeTab === 'local' ? 'text-blue-600' : 'text-gray-900'}`}
-                >
-                  Local Favorites
-                </button>
-                <button
-                  onClick={() => setActiveTab('visitor')}
-                  className={`text-sm font-medium ${activeTab === 'visitor' ? 'text-blue-600' : 'text-gray-900'}`}
-                >
-                  Visitor Favorites
-                </button>
-              </div>
-            </div>
+                         {/* Local and Visitor Favorites */}
+             <div className="bg-white border-b border-gray-200 px-4 py-3">
+               <div className="flex items-center justify-center">
+                 <div className="flex items-center bg-gray-100 rounded-lg p-1 shadow-sm">
+                   <button
+                     onClick={() => setActiveTab('visitor')}
+                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                       activeTab === 'visitor'
+                         ? 'bg-white text-gray-900 shadow-sm'
+                         : 'text-gray-600 hover:text-gray-900'
+                     }`}
+                   >
+                     Visitor
+                   </button>
+                   <button
+                     onClick={() => setActiveTab('local')}
+                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                       activeTab === 'local'
+                         ? 'bg-blue-600 text-white shadow-sm'
+                         : 'text-gray-600 hover:text-gray-900'
+                     }`}
+                   >
+                     Local
+                   </button>
+                 </div>
+               </div>
+             </div>
 
             {/* Navigation Links */}
             <div className="flex-1 overflow-y-auto">

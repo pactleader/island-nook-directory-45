@@ -14,7 +14,6 @@ import {
   User
 } from 'lucide-react';
 import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -206,41 +205,30 @@ const UserMessages = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <div className="flex items-center justify-center flex-grow">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading messages...</p>
-          </div>
+      <div className="flex items-center justify-center flex-grow">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading messages...</p>
         </div>
-        <Footer />
       </div>
     );
   }
 
   if (!listing) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <div className="flex items-center justify-center flex-grow">
-          <div className="text-center">
-            <p className="text-gray-600">Listing not found.</p>
-            <Button onClick={() => navigate('/profile')} className="mt-4">
-              Back to Profile
-            </Button>
-          </div>
+      <div className="flex items-center justify-center flex-grow">
+        <div className="text-center">
+          <p className="text-gray-600">Listing not found.</p>
+          <Button onClick={() => navigate('/profile')} className="mt-4">
+            Back to Profile
+          </Button>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      
-      <main className="flex-grow container mx-auto px-4 py-8 mt-16">
+    <main className="flex-grow container mx-auto px-4 py-8 mt-16">
         <div className="mb-6">
           <Button variant="ghost" onClick={() => navigate('/user-listings')} className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to listings
@@ -432,9 +420,6 @@ const UserMessages = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
-    </div>
   );
 };
 

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,43 +15,32 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
   
   // Check if form is complete
   useEffect(() => {
     setFormComplete(email.trim() !== '' && password.trim() !== '');
   }, [email, password]);
   
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+
+    try {
+      const success = await login(email, password);
       
-      // Accept any dummy credentials for demo purposes
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userEmail', email);
-      
-      // Create a demo user profile if one doesn't exist
-      if (!localStorage.getItem('userProfile')) {
-        const demoProfile = {
-          fullName: 'Demo User',
-          mailingAddress: '123 Island Street',
-          village: 'San Vicente',
-          island: 'Saipan',
-          birthDate: '1990-01-01',
-          phoneNumber: '670-123-4567',
-          whatsappNumber: '670-123-4567',
-        };
-        localStorage.setItem('userProfile', JSON.stringify(demoProfile));
-        localStorage.setItem('advertisingCredit', '10'); // Demo credit
-        localStorage.setItem('isVerified', 'true');
+      if (success) {
+        toast.success("Successfully logged in!");
+        navigate('/profile');
+      } else {
+        toast.error('Invalid credentials. Please try again.');
       }
-      
-      toast.success("Successfully logged in!");
-      navigate('/profile'); // Navigate directly to profile page
-    }, 1000);
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   const handleSocialLogin = (provider: string) => {

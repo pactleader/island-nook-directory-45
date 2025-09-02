@@ -48,6 +48,7 @@ import BuyAndSellDetails from "./pages/BuyAndSellDetails";
 import PageTransition from './components/PageTransition';
 import FoodDetails from "./pages/FoodDetails";
 import BlogDetails from './pages/BlogDetails';
+import VirtualTour from "./pages/VirtualTour";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ const App = () => (
           <PageTransition>
             <Routes>
               <Route path="/" element={<PageLayout><Index /></PageLayout>} />
+              <Route path="/virtual-tour" element={<PageLayout><VirtualTour /></PageLayout>} />
               <Route path="/properties" element={<PageLayout><Properties /></PageLayout>} />
               <Route path="/properties/:id" element={<PageLayout><PropertyDetails /></PageLayout>} />
               <Route path="/vehicles" element={<PageLayout><Vehicles /></PageLayout>} />

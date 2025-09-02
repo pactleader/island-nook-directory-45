@@ -1,58 +1,40 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, List, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, Languages, X, Heart, MapPin, Globe, MessageCircle } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+import { Map, Car, Building, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, X, Heart, Plane, Home, Briefcase, Wrench, ShoppingBag, Star, List, Settings } from 'lucide-react';
 import { useNavigationClick } from '@/hooks/useNavigationClick';
 import { Button } from "@/components/ui/button";
 import { createPortal } from 'react-dom';
+import SettingsModal from './SettingsModal';
 
-const NAVIGATION_TAB_KEY = 'island-nook-navigation-tab';
+// Cookie utility functions
+const getCookie = (name: string): string | null => {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+};
 
-// Define the link type with optional row property
+// Define the link type
 interface NavLink {
   to: string;
   icon: React.ReactNode;
   label: string;
-}
-
-// Define language interface with translated name
-interface Language {
-  name: string;
-  translation: string;
-  code: string;
+  subItems?: NavLink[];
 }
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedIsland, setSelectedIsland] = useState('All Islands');
-  const [selectedLanguage, setSelectedLanguage] = useState('English');
-  const [showMobileIslandSelector, setShowMobileIslandSelector] = useState(true);
-  const [showMobileLanguageSelector, setShowMobileLanguageSelector] = useState(true);
-  const [activeTab, setActiveTab] = useState(() => {
-    try {
-      return localStorage.getItem(NAVIGATION_TAB_KEY) || 'visitor';
-    } catch (error) {
-      console.error('Error loading navigation tab from localStorage:', error);
-      return 'visitor';
-    }
-  });
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [hasCheckedFirstTime, setHasCheckedFirstTime] = useState(false);
   const location = useLocation();
   const { handleNavigationClick } = useNavigationClick();
-  
-  // Save tab selection to localStorage whenever it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(NAVIGATION_TAB_KEY, activeTab);
-    } catch (error) {
-      console.error('Error saving navigation tab to localStorage:', error);
-    }
-  }, [activeTab]);
 
   // Handle scroll effect for navigation
   useEffect(() => {
@@ -68,6 +50,31 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Cleanup dropdown timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [dropdownTimeout]);
+
+  // Check if this is the first time visiting the website
+  useEffect(() => {
+    if (!hasCheckedFirstTime) {
+      const hasVisitedBefore = getCookie('hasVisitedBefore');
+      if (hasVisitedBefore === null) {
+        // First time visitor - show settings modal after a short delay
+        const timer = setTimeout(() => {
+          setIsSettingsOpen(true);
+        }, 1000); // Show after 1 second
+        
+        return () => clearTimeout(timer);
+      }
+      setHasCheckedFirstTime(true);
+    }
+  }, [hasCheckedFirstTime]);
+
   // Determine if a link is active
   const isActive = (path: string) => {
     // For parent routes (like /hotels), check if current path starts with it
@@ -79,248 +86,206 @@ const Navigation = () => {
     return location.pathname === path;
   };
 
-  // Visitor menu links (row 2)
-  const visitorLinks: NavLink[] = [
-    { to: "/hotels", icon: <Building size={16} />, label: "Hotels" },
-    { to: "/food", icon: <Utensils size={16} />, label: "Food" },
-    { to: "/adventures", icon: <Map size={16} />, label: "Adventures" },
-    { to: "/vehicles", icon: <Car size={16} />, label: "Rides" },
-    { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" },
-    { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
-    { to: "/ask-local", icon: <MessageCircle size={16} />, label: "Ask a Local" }
-  ];
+  // Handle dropdown mouse enter with delay
+  const handleDropdownEnter = (label: string) => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setActiveDropdown(label);
+  };
 
-  // Local menu links (row 3)
-  const localLinks: NavLink[] = [
-    { to: "/properties", icon: <Map size={16} />, label: "Homes" },
-    { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
-    { to: "/businesses", icon: <Building size={16} />, label: "Services" },
-    { to: "/buy-and-sell", icon: <Package size={16} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={16} />, label: "Events" },
-    { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
-    { to: "/jobs", icon: <List size={16} />, label: "Jobs" }
-  ];
+  // Handle dropdown mouse leave with delay
+  const handleDropdownLeave = () => {
+    const timeout = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 500); // 500ms delay - increased for better UX
+    setDropdownTimeout(timeout);
+  };
 
-  // List of islands for the dropdown
-  const islands = ["All Islands", "Saipan", "Tinian", "Rota", "Northern Islands"];
-  
-  // List of languages for the dropdown with translations
-  const languages: Language[] = [
-    { name: "English", translation: "", code: "en" },
-    { name: "Chamorro", translation: "Chamoru", code: "ch" },
-    { name: "Carolinian", translation: "Refaluwasch", code: "cr" },
-    { name: "Korean", translation: "한국어", code: "ko" },
-    { name: "Filipino", translation: "Tagalog", code: "fil" },
-    { name: "Japanese", translation: "日本語", code: "ja" },
-    { name: "Chinese", translation: "中文", code: "zh" },
+  // Main navigation menu based on the image structure
+  const mainNavItems: NavLink[] = [
+    { 
+      to: "/virtual-tour", 
+      icon: <Plane size={16} />, 
+      label: "Virtual Tour" 
+    },
+    { 
+      to: "/hotels", 
+      icon: <Building size={16} />, 
+      label: "Hotel",
+      subItems: [
+        { to: "/hotels/rent", icon: <Home size={16} />, label: "Rent" },
+        { to: "/hotels/buy-sell", icon: <Store size={16} />, label: "Buy & Sell" },
+        { to: "/hotels/taxi", icon: <Car size={16} />, label: "Taxi" }
+      ]
+    },
+    { 
+      to: "/vehicles", 
+      icon: <Car size={16} />, 
+      label: "Cars" 
+    },
+    { 
+      to: "/food", 
+      icon: <Utensils size={16} />, 
+      label: "Food",
+      subItems: [
+        { to: "/food/restaurants", icon: <Utensils size={16} />, label: "Restaurant" },
+        { to: "/food/bars", icon: <Store size={16} />, label: "Bar & Grill" },
+        { to: "/food/groceries", icon: <ShoppingBag size={16} />, label: "Groceries" }
+      ]
+    },
+    { 
+      to: "/experiences", 
+      icon: <Star size={16} />, 
+      label: "Experiences",
+      subItems: [
+                 { to: "/events", icon: <Calendar size={16} />, label: "Events" },
+        { to: "/experiences/cultural", icon: <Landmark size={16} />, label: "Cultural Activities" },
+        { to: "/experiences/adventures", icon: <Map size={16} />, label: "Outdoor Adventures" },
+                 { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" }
+      ]
+    },
+         { 
+       to: "/buy-and-sell", 
+       icon: <Package size={16} />, 
+       label: "Buy & Sell",
+      subItems: [
+                 { to: "/local-products", icon: <Store size={16} />, label: "Local Products" },
+                 { to: "/properties", icon: <Home size={16} />, label: "Homes & Real Estate" },
+                 { to: "/vehicles", icon: <Car size={16} />, label: "Cars" },
+        { to: "/buy-sell/everyday", icon: <ShoppingBag size={16} />, label: "Everyday Items" },
+                 { to: "/shopping", icon: <ShoppingCart size={16} />, label: "Shopping" }
+      ]
+    },
+    { 
+      to: "/services", 
+      icon: <Wrench size={16} />, 
+      label: "Services",
+      subItems: [
+        { to: "/services/emergency", icon: <Briefcase size={16} />, label: "Emergency & Medical" },
+        { to: "/government-services", icon: <Landmark size={16} />, label: "Government" },
+        { to: "/businesses", icon: <Building size={16} />, label: "Local Businesses" }
+      ]
+    }
   ];
 
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-[40] transition-all duration-300 shadow-sm ${
-          activeTab === 'local' 
-            ? 'bg-blue-50' 
-            : 'bg-white'
-        } ${
+        className={`fixed top-0 left-0 right-0 z-[40] transition-all duration-300 shadow-sm bg-white ${
           scrolled ? 'glass-nav py-2' : 'py-3'
         }`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col">
-            {/* Top Row: Logo, Island & Language Dropdowns, Auth */}
-            <div className="flex items-center justify-between py-2">
-              {/* Logo */}
-              <div className="flex items-center space-x-6">
-                <Link 
-                  to="/" 
-                  className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
-                >
-                  <span className="sr-only">CNMI Central Directory</span>
-                  <span className="inline-block">
-                    <span className="text-gray-900">CNMI</span>
-                    <span className="text-gray-600">Central</span>
-                  </span>
-                </Link>
-
-                                 {/* Prominent Toggle for Visitor/Local */}
-                 <div className="flex items-center bg-gray-100 rounded-lg p-1 shadow-sm">
-                   <button
-                     onClick={() => setActiveTab('visitor')}
-                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                       activeTab === 'visitor'
-                         ? 'bg-white text-gray-900 shadow-sm'
-                         : 'text-gray-600 hover:text-gray-900'
-                     }`}
-                   >
-                     Visitor
-                   </button>
-                   <button
-                     onClick={() => setActiveTab('local')}
-                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                       activeTab === 'local'
-                         ? 'bg-blue-600 text-white shadow-sm'
-                         : 'text-gray-600 hover:text-gray-900'
-                     }`}
-                   >
-                     Local
-                   </button>
-                 </div>
-              </div>
-              
-              {/* Island and Language Dropdowns - Center */}
-              <div className="hidden md:flex items-center space-x-4">
-                {/* Island Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
-                    {selectedIsland}
-                    <ChevronDown size={16} className="ml-2" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[150px] z-[50]">
-                    {islands.map((island) => (
-                      <DropdownMenuItem
-                        key={island}
-                        className="text-gray-700 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => setSelectedIsland(island)}
-                      >
-                        {island}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/* Language Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100">
-                    <Languages size={16} className="mr-2" />
-                    {selectedLanguage}
-                    <ChevronDown size={16} className="ml-2" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white shadow-lg rounded-md border border-gray-200 mt-1 min-w-[180px] z-[50]">
-                    {languages.map((language) => (
-                      <DropdownMenuItem
-                        key={language.name}
-                        className="text-gray-700 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => setSelectedLanguage(language.name)}
-                      >
-                        {language.name}{language.translation ? ` (${language.translation})` : ''}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              
-              {/* Auth links - Right */}
-              <div className="hidden md:flex items-center space-x-2">
-                <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
-                  <LogIn size={16} className="mr-1" />
-                  <span>Login</span>
-                </Link>
-                <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
-                  <User size={16} className="mr-1" />
-                  <span>Sign Up</span>
-                </Link>
-              </div>
-              
-              {/* Mobile Navigation */}
-              <div className="md:hidden">
-                <MobileMenu 
-                  islands={islands} 
-                  languages={languages}
-                  selectedIsland={selectedIsland} 
-                  setSelectedIsland={setSelectedIsland} 
-                  selectedLanguage={selectedLanguage}
-                  setSelectedLanguage={setSelectedLanguage} 
-                  showIslandSelector={showMobileIslandSelector}
-                  setShowIslandSelector={setShowMobileIslandSelector}
-                  showLanguageSelector={showMobileLanguageSelector}
-                  setShowLanguageSelector={setShowMobileLanguageSelector}
-                  activeTab={activeTab}
-                  setActiveTab={setActiveTab}
-                />
-              </div>
+          {/* Single Row Navigation */}
+          <div className="flex items-center justify-between py-3">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link 
+                to="/" 
+                className="font-bold text-xl tracking-tight hover:opacity-80 transition-all-300 flex items-center"
+              >
+                <span className="sr-only">CNMI Central Directory</span>
+                <span className="inline-block">
+                  <span className="text-gray-900">CNMI</span>
+                  <span className="text-gray-600">Central</span>
+                </span>
+              </Link>
             </div>
             
-            {/* Bottom Row: Main Navigation */}
-            <div className="hidden md:block pt-2 pb-1">
-              <div className="flex flex-col">
-                {/* Navigation Links */}
-                <div className="flex items-center justify-center border-t border-gray-100 pt-2 pb-1">
-                  <nav className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
-                                         {activeTab === 'visitor' ? (
-                       visitorLinks.map((link) => (
-                         <button
-                           key={link.to}
-                           onClick={() => handleNavigationClick(link.to)}
-                           className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
-                             isActive(link.to) 
-                               ? 'bg-gray-900 text-white' 
-                               : 'text-gray-700 hover:bg-gray-100'
-                           }`}
-                         >
-                           {link.icon}
-                           <span>{link.label}</span>
-                         </button>
-                       ))
-                     ) : (
-                       localLinks.map((link) => (
-                         <button
-                           key={link.to}
-                           onClick={() => handleNavigationClick(link.to)}
-                           className={`px-3 py-2 rounded-full text-sm font-medium transition-all-300 flex items-center space-x-1 ${
-                             isActive(link.to) 
-                               ? 'bg-blue-600 text-white' 
-                               : 'text-gray-700 hover:bg-blue-50'
-                           }`}
-                         >
-                           {link.icon}
-                           <span>{link.label}</span>
-                         </button>
-                       ))
-                     )}
-                  </nav>
+            {/* Main Navigation Links */}
+            <div className="hidden md:flex items-center space-x-6">
+              {mainNavItems.map((item) => (
+                <div key={item.to} className="relative group">
+                  <div
+                    className="relative"
+                    onMouseEnter={() => handleDropdownEnter(item.label)}
+                    onMouseLeave={handleDropdownLeave}
+                  >
+                    <button
+                      onClick={() => handleNavigationClick(item.to)}
+                      className="px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md text-sm font-medium transition-all-300 flex items-center space-x-1"
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                      {item.subItems && <ChevronDown size={14} className="ml-1" />}
+                    </button>
+                    
+                    {/* Dropdown for sub-items */}
+                    {item.subItems && activeDropdown === item.label && (
+                      <>
+                        {/* Transparent bridge to prevent gap */}
+                        <div className="absolute top-full left-0 w-full h-2 bg-transparent" />
+                        <div className="absolute top-full left-0 mt-0 bg-white border border-gray-200 rounded-md shadow-lg py-2 min-w-[200px] z-50">
+                          {item.subItems.map((subItem) => (
+                            <Link
+                              key={subItem.to}
+                              to={subItem.to}
+                              className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm"
+                            >
+                              {subItem.icon}
+                              <span>{subItem.label}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+            
+            {/* Settings and Auth links - Right */}
+            <div className="hidden md:flex items-center space-x-2">
+              {/* Settings Icon */}
+              <button
+                onClick={() => setIsSettingsOpen(true)}
+                className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-full transition-all-300"
+                title="Settings"
+              >
+                <Settings size={18} />
+              </button>
+              
+              <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
+                <LogIn size={16} className="mr-1" />
+                <span>Login</span>
+              </Link>
+              <Link to="/signup" className="px-3 py-2 bg-gray-900 text-white rounded-full text-sm flex items-center transition-all-300 hover:bg-gray-800">
+                <User size={16} className="mr-1" />
+                <span>Sign Up</span>
+              </Link>
+            </div>
+            
+            {/* Mobile Navigation */}
+            <div className="md:hidden">
+              <MobileMenu navItems={mainNavItems} />
             </div>
           </div>
         </div>
       </header>
       {/* Add a spacer div to prevent content from being hidden under the fixed header */}
       <div className="h-[80px] hidden md:block"></div>
+      
+             {/* Settings Modal */}
+       <SettingsModal 
+         isOpen={isSettingsOpen} 
+         onClose={() => setIsSettingsOpen(false)} 
+         isFirstTime={!hasCheckedFirstTime && getCookie('hasVisitedBefore') === null}
+       />
     </>
   );
 };
 
 // Mobile Menu Component
 const MobileMenu = ({ 
-  islands, 
-  languages, 
-  selectedIsland, 
-  setSelectedIsland,
-  selectedLanguage,
-  setSelectedLanguage,
-  showIslandSelector,
-  setShowIslandSelector,
-  showLanguageSelector,
-  setShowLanguageSelector,
-  activeTab,
-  setActiveTab
+  navItems
 }: { 
-  islands: string[], 
-  languages: Language[],
-  selectedIsland: string, 
-  setSelectedIsland: (island: string) => void,
-  selectedLanguage: string,
-  setSelectedLanguage: (language: string) => void,
-  showIslandSelector: boolean,
-  setShowIslandSelector: (show: boolean) => void,
-  showLanguageSelector: boolean,
-  setShowLanguageSelector: (show: boolean) => void,
-  activeTab: string,
-  setActiveTab: (tab: string) => void
+  navItems: NavLink[]
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   
   // Disable body scroll when mobile menu is open
   useEffect(() => {
@@ -335,38 +300,13 @@ const MobileMenu = ({
     };
   }, [isMobileMenuOpen]);
 
-  // Visitor menu links
-  const visitorLinks: NavLink[] = [
-    { to: "/hotels", icon: <Building size={18} />, label: "Hotels" },
-    { to: "/food", icon: <Utensils size={18} />, label: "Food" },
-    { to: "/adventures", icon: <Map size={18} />, label: "Adventures" },
-    { to: "/vehicles", icon: <Car size={18} />, label: "Rides" },
-    { to: "/shopping", icon: <ShoppingCart size={18} />, label: "Shopping" },
-    { to: "/local-products", icon: <Store size={18} />, label: "Local Products" },
-    { to: "/ask-local", icon: <MessageCircle size={18} />, label: "Ask a Local" }
-  ];
-
-  // Local menu links
-  const localLinks: NavLink[] = [
-    { to: "/properties", icon: <Map size={18} />, label: "Homes" },
-    { to: "/vehicles", icon: <Car size={18} />, label: "Cars" },
-    { to: "/businesses", icon: <Building size={18} />, label: "Services" },
-    { to: "/government-services", icon: <Landmark size={18} />, label: "Government" },
-    { to: "/buy-and-sell", icon: <Package size={18} />, label: "Buy & Sell" },
-    { to: "/events", icon: <Calendar size={18} />, label: "Events" },
-    { to: "/jobs", icon: <List size={18} />, label: "Jobs" }
-  ];
-
-  // Handle island selection
-  const handleIslandSelect = (island: string) => {
-    setSelectedIsland(island);
-    setShowIslandSelector(false);
-  };
-
-  // Handle language selection
-  const handleLanguageSelect = (language: string) => {
-    setSelectedLanguage(language);
-    setShowLanguageSelector(false);
+  // Toggle expanded state for items with sub-items
+  const toggleExpanded = (label: string) => {
+    setExpandedItems(prev => 
+      prev.includes(label) 
+        ? prev.filter(item => item !== label)
+        : [...prev, label]
+    );
   };
 
   return (
@@ -405,6 +345,13 @@ const MobileMenu = ({
               </div>
               <div className="flex items-center space-x-4">
                 <button
+                  onClick={() => setIsSettingsOpen(true)}
+                  className="text-gray-600 hover:text-gray-900"
+                  title="Settings"
+                >
+                  <Settings className="h-6 w-6" />
+                </button>
+                <button
                   onClick={() => setIsSearchOpen(true)}
                   className="text-gray-600 hover:text-gray-900"
                 >
@@ -420,82 +367,98 @@ const MobileMenu = ({
               </div>
             </div>
 
-            {/* Island and Language Selectors */}
-            <div className="bg-white border-b border-gray-200 px-4 py-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-5 w-5 text-gray-600" />
-                  <select
-                    value={selectedIsland}
-                    onChange={(e) => setSelectedIsland(e.target.value)}
-                    className="text-sm font-medium text-gray-900 bg-transparent border-none focus:ring-0"
-                  >
-                    {islands.map((island) => (
-                      <option key={island} value={island}>
-                        {island}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Globe className="h-5 w-5 text-gray-600" />
-                  <select
-                    value={selectedLanguage}
-                    onChange={(e) => setSelectedLanguage(e.target.value)}
-                    className="text-sm font-medium text-gray-900 bg-transparent border-none focus:ring-0"
-                  >
-                    {languages.map((lang) => (
-                      <option key={lang.name} value={lang.name}>
-                        {lang.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            {/* Auth Links */}
+            <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+              <div className="flex items-center justify-center space-x-3">
+                <Link 
+                  to="/login" 
+                  className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg text-sm font-medium text-center hover:bg-gray-50 transition-all-300"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <LogIn size={16} className="inline mr-2" />
+                  Login
+                </Link>
+                <Link 
+                  to="/signup" 
+                  className="flex-1 px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium text-center hover:bg-gray-800 transition-all-300"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <User size={16} className="inline mr-2" />
+                  Sign Up
+                </Link>
               </div>
             </div>
-
-                         {/* Local and Visitor Favorites */}
-             <div className="bg-white border-b border-gray-200 px-4 py-3">
-               <div className="flex items-center justify-center">
-                 <div className="flex items-center bg-gray-100 rounded-lg p-1 shadow-sm">
-                   <button
-                     onClick={() => setActiveTab('visitor')}
-                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                       activeTab === 'visitor'
-                         ? 'bg-white text-gray-900 shadow-sm'
-                         : 'text-gray-600 hover:text-gray-900'
-                     }`}
-                   >
-                     Visitor
-                   </button>
-                   <button
-                     onClick={() => setActiveTab('local')}
-                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                       activeTab === 'local'
-                         ? 'bg-blue-600 text-white shadow-sm'
-                         : 'text-gray-600 hover:text-gray-900'
-                     }`}
-                   >
-                     Local
-                   </button>
-                 </div>
-               </div>
-             </div>
+            
+            {/* Settings Link */}
+            <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+              <button
+                onClick={() => {
+                  setIsSettingsOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg text-sm font-medium text-center hover:bg-gray-50 transition-all-300 flex items-center justify-center"
+              >
+                <Settings size={16} className="mr-2" />
+                Settings
+              </button>
+            </div>
 
             {/* Navigation Links */}
             <div className="flex-1 overflow-y-auto">
               <nav className="px-4 py-3">
-                <ul className="space-y-4">
-                  {(activeTab === 'visitor' ? visitorLinks : localLinks).map((link) => (
-                    <li key={link.to}>
-                      <Link
-                        to={link.to}
-                        className="flex items-center space-x-3 text-gray-900 hover:text-blue-600"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <span>{link.icon}</span>
-                        <span>{link.label}</span>
-                      </Link>
+                <ul className="space-y-2">
+                  {navItems.map((item) => (
+                    <li key={item.to}>
+                      <div>
+                        <Link
+                          to={item.to}
+                          className="flex items-center justify-between w-full px-3 py-2 text-gray-900 hover:text-blue-600 rounded-md hover:bg-gray-50"
+                          onClick={() => {
+                            if (!item.subItems) {
+                              setIsMobileMenuOpen(false);
+                            }
+                          }}
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span>{item.icon}</span>
+                            <span>{item.label}</span>
+                          </div>
+                          {item.subItems && (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleExpanded(item.label);
+                              }}
+                              className="p-1"
+                            >
+                              <ChevronDown 
+                                size={16} 
+                                className={`transition-transform ${
+                                  expandedItems.includes(item.label) ? 'rotate-180' : ''
+                                }`}
+                              />
+                            </button>
+                          )}
+                        </Link>
+                        
+                        {/* Sub-items */}
+                        {item.subItems && expandedItems.includes(item.label) && (
+                          <ul className="ml-6 mt-2 space-y-1">
+                            {item.subItems.map((subItem) => (
+                              <li key={subItem.to}>
+                                <Link
+                                  to={subItem.to}
+                                  className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:text-blue-600 text-sm"
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                  <span>{subItem.icon}</span>
+                                  <span>{subItem.label}</span>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>

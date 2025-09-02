@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '../contexts/AuthContext';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +19,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
   const navigate = useNavigate();
+  const { signup } = useAuth();
   
   // Check if form is complete
   useEffect(() => {
@@ -30,7 +32,7 @@ const Signup = () => {
     );
   }, [name, email, password, confirmPassword, termsAccepted]);
   
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -44,34 +46,28 @@ const Signup = () => {
       return;
     }
     
-    setIsLoading(true);
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return;
+    }
     
-    // Simulate API call
-    setTimeout(() => {
+    setIsLoading(true);
+
+    try {
+      const success = await signup(name, email, password);
+      
+      if (success) {
+        toast.success("Account created successfully!");
+        navigate('/profile');
+      } else {
+        toast.error('Account creation failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      toast.error('An error occurred. Please try again.');
+    } finally {
       setIsLoading(false);
-      
-      // Accept any dummy credentials for demo purposes
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userName', name);
-      localStorage.setItem('userEmail', email);
-      
-      // Create a demo user profile
-      const demoProfile = {
-        fullName: name,
-        mailingAddress: '123 Island Street',
-        village: 'San Vicente',
-        island: 'Saipan',
-        birthDate: '1990-01-01',
-        phoneNumber: '670-123-4567',
-        whatsappNumber: '670-123-4567',
-      };
-      localStorage.setItem('userProfile', JSON.stringify(demoProfile));
-      localStorage.setItem('advertisingCredit', '10'); // Demo credit
-      localStorage.setItem('isVerified', 'true');
-      
-      toast.success("Account created successfully!");
-      navigate('/profile');
-    }, 1000);
+    }
   };
   
   const handleSocialSignup = (provider: string) => {

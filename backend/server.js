@@ -27,6 +27,15 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`📥 ${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log(`🌐 Origin: ${req.get('Origin') || 'No origin'}`);
+  console.log(`🏠 Host: ${req.get('Host') || 'No host'}`);
+  console.log(`🔗 Referer: ${req.get('Referer') || 'No referer'}`);
+  next();
+});
+
 // Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -51,12 +60,17 @@ testConnection().then(success => {
 
 // Add this temporarily after your routes
 app.get('/api/test-db', async (req, res) => {
+  console.log('🔍 /api/test-db route accessed');
+  console.log('📅 Timestamp:', new Date().toISOString());
+  console.log('🌐 Request URL:', req.url);
+  console.log('🏠 Request hostname:', req.hostname);
+  
   try {
     const { executeQuery } = require('./config/database');
     
     // Test basic connection
     const testResult = await executeQuery('SELECT 1 as test');
-    console.log('Basic query test:', testResult);
+    console.log('✅ Basic query test:', testResult);
     
     // Check if users table exists
     const tableCheck = await executeQuery(`
@@ -65,28 +79,51 @@ app.get('/api/test-db', async (req, res) => {
       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'users'
     `, [process.env.DB_NAME]);
     
+    console.log('📋 Table check result:', tableCheck);
+    
     // Check table structure
     let tableStructure = [];
     if (tableCheck.length > 0) {
       tableStructure = await executeQuery(`
         DESCRIBE users
       `);
+      console.log('🏗️ Table structure:', tableStructure);
     }
     
-    res.json({
+    const response = {
       success: true,
       connection: 'Working',
       database: process.env.DB_NAME,
       usersTableExists: tableCheck.length > 0,
-      tableStructure: tableStructure
-    });
+      tableStructure: tableStructure,
+      timestamp: new Date().toISOString(),
+      serverInfo: {
+        nodeVersion: process.version,
+        environment: process.env.NODE_ENV,
+        port: PORT
+      }
+    };
+    
+    console.log('📤 Sending response:', response);
+    res.json(response);
   } catch (error) {
-    console.error('Database test error:', error);
+    console.error('❌ Database test error:', error);
     res.status(500).json({
       success: false,
-      error: error.message
+      error: error.message,
+      timestamp: new Date().toISOString()
     });
   }
+});
+
+// Add a simple test route to verify the server is working
+app.get('/api/test', (req, res) => {
+  console.log('🧪 /api/test route accessed');
+  res.json({ 
+    message: 'API is working!', 
+    timestamp: new Date().toISOString(),
+    server: 'CNMI Central Backend'
+  });
 });
 
 

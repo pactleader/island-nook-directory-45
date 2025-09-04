@@ -65,12 +65,12 @@ const SettingsModal = ({ isOpen, onClose, isFirstTime }: SettingsModalProps) => 
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 z-[99999] flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black bg-opacity-50 z-[99999] flex items-center justify-center p-2 sm:p-4"
       onClick={isFirstTime ? undefined : onClose} // Prevent closing by clicking outside for first-time visitors
     >
-      <div className="bg-white rounded-lg shadow-xl w-[500px] h-[520px] mx-4 relative flex flex-col">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-[500px] max-h-[90vh] mx-2 sm:mx-4 relative flex flex-col">
                             {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                    <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200">
                       <h2 className="text-lg font-semibold text-blue-600">
                         {isFirstTime ? 'Welcome! Let\'s personalize your experience' : 'To improve your journey...'}
                       </h2>
@@ -85,9 +85,9 @@ const SettingsModal = ({ isOpen, onClose, isFirstTime }: SettingsModalProps) => 
                     </div>
 
         {/* Content */}
-        <div className="flex-1 p-4 space-y-4">
+        <div className="flex-1 p-3 sm:p-4 space-y-3 sm:space-y-4 overflow-y-auto">
           {/* Language Preference */}
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <h3 className="text-sm font-medium text-gray-900">Language Preference</h3>
             <div className="space-y-1.5">
               {['English', 'Korean', 'Japanese', 'Chinese'].map((language) => (
@@ -116,7 +116,7 @@ const SettingsModal = ({ isOpen, onClose, isFirstTime }: SettingsModalProps) => 
           </div>
 
           {/* Island Preference */}
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <h3 className="text-sm font-medium text-gray-900">Island Preference</h3>
             <div className="space-y-1.5">
               {['All Islands', 'Saipan', 'Tinian', 'Rota'].map((island) => (
@@ -144,38 +144,11 @@ const SettingsModal = ({ isOpen, onClose, isFirstTime }: SettingsModalProps) => 
             </div>
           </div>
 
-          {/* Visitor Type */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-gray-900">Visitor Type</h3>
-            <div className="space-y-1.5">
-              {['Visitor', 'Local'].map((type) => (
-                <label key={type} className="flex items-center space-x-2 cursor-pointer">
-                  <div className="relative">
-                    <input
-                      type="radio"
-                      name="visitorType"
-                      value={type}
-                      checked={localPreferences.visitorType === type}
-                      onChange={(e) => handlePreferenceChange('visitorType', e.target.value)}
-                      className="sr-only"
-                    />
-                    <div className={`w-3.5 h-3.5 rounded-full border-2 border-blue-600 flex items-center justify-center ${
-                      localPreferences.visitorType === type ? 'bg-blue-600' : 'bg-white'
-                    }`}>
-                      {localPreferences.visitorType === type && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-sm text-gray-700">{type}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t border-gray-200">
+        <div className="px-3 sm:px-4 py-3 border-t border-gray-200">
           <Button
             onClick={handleSave}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm py-2"

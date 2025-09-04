@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Map, Car, Building, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, X, Heart, Plane, Home, Briefcase, Wrench, ShoppingBag, Star, List, Settings } from 'lucide-react';
+import { Map, Car, Building, Calendar, Landmark, User, LogIn, Store, Utensils, ShoppingCart, ChevronDown, Package, Search, X, Heart, Plane, Home, Briefcase, Wrench, ShoppingBag, Star, List, Globe } from 'lucide-react';
 import { useNavigationClick } from '@/hooks/useNavigationClick';
 import { Button } from "@/components/ui/button";
 import { createPortal } from 'react-dom';
@@ -32,6 +32,7 @@ const Navigation = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [hasCheckedFirstTime, setHasCheckedFirstTime] = useState(false);
   const location = useLocation();
   const { handleNavigationClick } = useNavigationClick();
@@ -125,6 +126,8 @@ const Navigation = () => {
       icon: <Car size={16} />, 
       label: "Cars" 
     },
+    
+    
     { 
       to: "/food", 
       icon: <Utensils size={16} />, 
@@ -238,13 +241,13 @@ const Navigation = () => {
             
             {/* Settings and Auth links - Right */}
             <div className="hidden md:flex items-center space-x-2">
-              {/* Settings Icon */}
+              {/* Globe Icon */}
               <button
                 onClick={() => setIsSettingsOpen(true)}
                 className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-full transition-all-300"
                 title="Settings"
               >
-                <Settings size={18} />
+                <Globe size={18} />
               </button>
               
               <Link to="/login" className="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-full text-sm flex items-center transition-all-300">
@@ -259,7 +262,11 @@ const Navigation = () => {
             
             {/* Mobile Navigation */}
             <div className="md:hidden">
-              <MobileMenu navItems={mainNavItems} />
+              <MobileMenu 
+                navItems={mainNavItems} 
+                setIsSettingsOpen={setIsSettingsOpen}
+                setIsSearchOpen={setIsSearchOpen}
+              />
             </div>
           </div>
         </div>
@@ -279,12 +286,15 @@ const Navigation = () => {
 
 // Mobile Menu Component
 const MobileMenu = ({ 
-  navItems
+  navItems,
+  setIsSettingsOpen,
+  setIsSearchOpen
 }: { 
-  navItems: NavLink[]
+  navItems: NavLink[];
+  setIsSettingsOpen: (open: boolean) => void;
+  setIsSearchOpen: (open: boolean) => void;
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   
   // Disable body scroll when mobile menu is open
@@ -349,7 +359,7 @@ const MobileMenu = ({
                   className="text-gray-600 hover:text-gray-900"
                   title="Settings"
                 >
-                  <Settings className="h-6 w-6" />
+                  <Globe className="h-6 w-6" />
                 </button>
                 <button
                   onClick={() => setIsSearchOpen(true)}
@@ -398,7 +408,7 @@ const MobileMenu = ({
                 }}
                 className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg text-sm font-medium text-center hover:bg-gray-50 transition-all-300 flex items-center justify-center"
               >
-                <Settings size={16} className="mr-2" />
+                <Globe size={16} className="mr-2" />
                 Settings
               </button>
             </div>
